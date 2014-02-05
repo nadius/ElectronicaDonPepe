@@ -1,0 +1,10 @@
+127.0.0.1 - - [13/Dec/2013:10:19:51 -0300] "GET /TpFinal/login HTTP/1.1" 200 936 http-bio-8080-exec-1 214
+127.0.0.1 - - [13/Dec/2013:10:19:51 -0300] "GET /TpFinal/css/amelia.css HTTP/1.1" 200 133389 http-bio-8080-exec-2 5
+127.0.0.1 - - [13/Dec/2013:10:19:52 -0300] "GET /favicon.ico HTTP/1.1" 404 - http-bio-8080-exec-3 0
+127.0.0.1 - - [13/Dec/2013:10:19:52 -0300] "GET /favicon.ico HTTP/1.1" 404 - http-bio-8080-exec-4 0
+127.0.0.1 - - [13/Dec/2013:10:19:57 -0300] "POST /TpFinal/login HTTP/1.1" 200 1035 http-bio-8080-exec-5 242
+127.0.0.1 - - [13/Dec/2013:10:20:04 -0300] "POST /TpFinal/login HTTP/1.1" 200 1035 http-bio-8080-exec-6 72
+127.0.0.1 - - [13/Dec/2013:10:20:51 -0300] "POST /TpFinal/login HTTP/1.1" 200 2121 http-bio-8080-exec-7 119
+127.0.0.1 - - [13/Dec/2013:10:20:51 -0300] "GET /TpFinal/js/bootstrap.js HTTP/1.1" 200 58411 http-bio-8080-exec-8 2
+127.0.0.1 - - [13/Dec/2013:10:20:54 -0300] "GET /TpFinal/adicional/reporte HTTP/1.1" 200 10852 http-bio-8080-exec-9 133
+127.0.0.1 - - [13/Dec/2013:10:23:18 -0300] "POST /TpFinal/adicional/reporte HTTP/1.1" 200 15668 http-bio-8080-exec-10 121360

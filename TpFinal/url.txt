@@ -1,0 +1,5 @@
+ localhost:8080\TpFinal\index
+ 
+ ---Base de datos---
+Nombre: test
+url: mysql://localhost:3306/test
