@@ -47,7 +47,7 @@
 					<div class="col-md-2">
 						<form action="alta" method="post">
 							<label id="id">Numero de factura:</label>
-							<input type="text" id="id" name="id" class="form-control" placeholder="opcional"> <br>
+							<input type="text" alt="integer" id="id" name="id" class="form-control" placeholder="id"> <br>
 							<input type="hidden" name="accion" value="guardar">
 							<button class="btn btn-lg btn-primary btn-block" type="submit">Cerrar venta</button>
 						</form>
@@ -95,6 +95,7 @@
 		</div>
 		<script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
 		<!-- <script src="js/bootstrap.min.js"></script> -->
+		<script type="text/javascript" src="${origen}/js/meiomask.js" charset="utf-8" ></script>
 		<script src="${origen}/js/bootstrap.js"></script>
 	</body>
 </html>

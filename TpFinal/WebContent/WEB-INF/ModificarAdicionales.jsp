@@ -85,7 +85,7 @@
 												<td><center>${item.id}</center></td>
 												<td><center>${item.min}</center></td>
 												<td><center>${item.max}</center></td>
-												<td><center><input type="text" name="cVenta${item.id}Valor" class="form-group" value="${item.monto}"></center></td>
+												<td><center><input type="text" name="cVenta${item.id}Valor" alt="decimal" class="form-group" value="${item.monto}"></center></td>
 											</tr>
 										</c:forEach>
 									</tbody>
@@ -121,7 +121,7 @@
 											<tr>
 												<td><center>${item.id}</center></td>
 												<td><center>${item.producto.id} - ${item.producto.nombre}</center></td>
-												<td><center><input type="text" name="cProducto${item.id}Valor" class="form-group" value="${item.monto}"></center></td>
+												<td><center><input type="text" name="cProducto${item.id}Valor" alt="decimal" class="form-group" value="${item.monto}"></center></td>
 											</tr>
 										</c:forEach>
 									</tbody>
@@ -160,7 +160,7 @@
 												<c:if test="${item.campania == 'false'}">
 													<td><center>Mejor vendedor mes</center></td>
 												</c:if>
-												<td><center><input type="text" name="Premio${item.id}Valor" class="form-group" value="${item.monto}"></center></td>
+												<td><center><input type="text" name="Premio${item.id}Valor" alt="decimal" class="form-group" value="${item.monto}"></center></td>
 											</tr>
 										</c:forEach>
 									</tbody>
@@ -178,6 +178,7 @@
 <%--    		</c:if> --%>
 		<script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
 		<!-- <script src="js/bootstrap.min.js"></script> -->
+		<script type="text/javascript" src="${origen}/js/meiomask.js" charset="utf-8" ></script>
 		<script src="${origen}/js/bootstrap.js"></script>
 	</body>
 </html>

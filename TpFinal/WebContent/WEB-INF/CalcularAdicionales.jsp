@@ -44,17 +44,17 @@
 					<div>
 						<label id="desde">Desde: </label><br>
 						<div class="row" id="desde">
-							<div class="col-md-2"><input name="desdeDia" type="text" class="form-control" placeholder="dia"></div>
-							<div class="col-md-2"><input name="desdeMes" type="text" class="form-control" placeholder="mes"></div>
-							<div class="col-md-2"><input name="desdeAnio" type="text" class="form-control" placeholder="año"></div>
+							<div class="col-md-2"><input name="desdeDia" type="text" alt="dia" class="form-control" placeholder="dia"></div>
+							<div class="col-md-2"><input name="desdeMes" type="text" alt="mes" class="form-control" placeholder="mes"></div>
+							<div class="col-md-2"><input name="desdeAnio" type="text" alt="anio" class="form-control" placeholder="año"></div>
 						</div>
 					</div>
 					<div>
 						<label id="hasta">Hasta: </label><br>
 						<div class="row" id="hasta">
-						<div class="col-md-2"><input name="hastaDia" type="text" class="form-control" placeholder="dia"></div>
-						<div class="col-md-2"><input name="hastaMes" type="text" class="form-control" placeholder="mes"></div>
-						<div class="col-md-2"><input name="hastaAnio" type="text" class="form-control" placeholder="año"></div>
+						<div class="col-md-2"><input name="hastaDia" type="text" alt="dia" class="form-control" placeholder="dia"></div>
+						<div class="col-md-2"><input name="hastaMes" type="text" alt="mes" class="form-control" placeholder="mes"></div>
+						<div class="col-md-2"><input name="hastaAnio" type="text" alt="anio" class="form-control" placeholder="año"></div>
 						</div>
 					</div>
 					<br>
@@ -455,6 +455,7 @@
 <%--    		</c:if> --%>
 		<script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
 		<!-- <script src="js/bootstrap.min.js"></script> -->
+		<script type="text/javascript" src="${origen}/js/meiomask.js" charset="utf-8" ></script>
 		<script src="${origen}/js/bootstrap.js"></script>
 	</body>
 </html>

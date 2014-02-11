@@ -99,8 +99,8 @@
 												<td><input type="hidden" name="accion" value="nuevoUsuario"><label>Nuevo:</label></td>
 												<td><input id="username" name="username" type="text" class="form-control" placeholder="Nombre de usuario"></td>
 											  	<td><input id="password" name="password" type="text" class="form-control" placeholder="Contraseña"></td>
-											  	<td><input id="rol" name="rol" type="text" class="form-control" placeholder="1: RRHH, 2: Vendedor, 3: Admin"></td>
-											  	<td><input id="vendedor" name="vendedor" type="text" class="form-control" placeholder="Id del vendedor (si el rol es vendedor)"></td>
+											  	<td><input id="rol" name="rol" type="text" alt="integer" maxlength="1" class="form-control" placeholder="1: RRHH, 2: Vendedor, 3: Admin"></td>
+											  	<td><input id="vendedor" name="vendedor" type="text" alt="integer" class="form-control" placeholder="Id del vendedor (si el rol es vendedor)"></td>
 											  	<td><input type="submit" value="Guardar"></td>
 											</form>
 										<!-- </td> -->
@@ -205,6 +205,7 @@
 		</div>
 		<script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
 		<!-- <script src="js/bootstrap.min.js"></script> -->
+		<script type="text/javascript" src="${origen}/js/meiomask.js" charset="utf-8" ></script>
 		<script src="${origen}/js/bootstrap.js"></script>
 	</body>
 </html>

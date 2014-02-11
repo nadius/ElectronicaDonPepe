@@ -53,7 +53,7 @@ public class VentaNueva extends HttpServlet {
 		Vendedor vendedor = cuenta.getVendedor();
 		listaTodos= dataAccess.getProductos();
 		String error="";
-		String id=request.getParameter("id");
+		String id=request.getParameter("id");//el id es obligatorio 
 		
 		//setListaNombreProducto();
 		
@@ -63,11 +63,14 @@ public class VentaNueva extends HttpServlet {
 			Agregar(request.getParameter("id"));
 		if (accion.equals("guardar"))
 		{//TODO: hacer una test que recalcule el importe total de las ventas, por las dudas.
-			if (id.equals(""))
+			/*if (id.equals(""))
 				error=Guardar(vendedor);
 			else
-				error=Guardar(vendedor, id);
+				error=Guardar(vendedor, id);*/
 			
+			if (!id.equals(""))//el campo id no debe ser vacio porque es obligatorio
+				error=Guardar(vendedor, id);
+				
 			if (error.equals(""))//todo salio bien
 				request.setAttribute("ok", "La venta se guardo correctamente.");
 			else
