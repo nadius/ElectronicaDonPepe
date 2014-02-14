@@ -49,7 +49,7 @@
 							<label id="id">Numero de factura:</label>
 							<input type="text" alt="integer" id="id" name="id" class="form-control" placeholder="id"> <br>
 							<input type="hidden" name="accion" value="guardar">
-							<button class="btn btn-lg btn-primary btn-block" type="submit">Cerrar venta</button>
+							<button class="btn btn-group btn-primary btn-block" type="submit">Cerrar venta</button>
 						</form>
 					</div>
 				</div>
@@ -57,6 +57,14 @@
 				<p class="text-left">
 					<b>Total:</b> ${total}
 				</p>
+				
+				<c:if test="${not empty error}">
+	   				<div class="alert alert-danger">${error}</div>
+	   			</c:if>
+	   			<c:if test="${not empty ok}">
+	   				<div class="alert alert-success">${ok}</div>
+	   			</c:if>
+				
 				<table class="table">
 					<thead>
 						<tr>
@@ -86,16 +94,11 @@
 					</tbody>
 				</table>
 			</div>
-			<c:if test="${not empty error}">
-   				<div class="alert alert-danger">${error}</div>
-   			</c:if>
-   			<c:if test="${not empty ok}">
-   				<div class="alert alert-success">${ok}</div>
-   			</c:if>
 		</div>
 		<script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
 		<!-- <script src="js/bootstrap.min.js"></script> -->
-		<script type="text/javascript" src="${origen}/js/meiomask.js" charset="utf-8" ></script>
 		<script src="${origen}/js/bootstrap.js"></script>
+		<script type="text/javascript" src="${origen}/js/jquery.meiomask.js" charset="utf-8" ></script>
+		<script type="text/javascript" src="${origen}/js/MeioMaskStart.js"></script>
 	</body>
 </html>

@@ -30,17 +30,18 @@
 				<ul class="nav navbar-nav navbar-right">
 					<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">${usuario.username}<b class="caret"></b></a>
 						<ul class="dropdown-menu">
-							<li><a href="${origen}/logout">Cerrar sesión</a></li>
+							<li>
+								<a href="${origen}/logout">Cerrar sesión</a>
+							</li>
 						</ul>
 					</li>
 				</ul>
 			</div>
-			<!-- /.navbar-collapse -->
 		</nav>
 		<div class="container">
-			<h3>Detalles de la venta del ${venta.fecha}</h3>
-			<div>
-				<table class="hero-unit">
+			<div class="page-header">
+				<h3>Detalles de la venta del ${venta.fecha}</h3>
+				<table class="table">
 					<thead>
 						<tr>
 							<td><center>Id</center></td>

@@ -68,7 +68,7 @@ public class VentaNueva extends HttpServlet {
 			else
 				error=Guardar(vendedor, id);*/
 			
-			if (!id.equals(""))//el campo id no debe ser vacio porque es obligatorio
+			//if (!id.equals(""))//el campo id no debe ser vacio porque es obligatorio
 				error=Guardar(vendedor, id);
 				
 			if (error.equals(""))//todo salio bien
@@ -126,6 +126,9 @@ public class VentaNueva extends HttpServlet {
 	
 	public String Guardar(Vendedor vendedor, String id)
 	{
+		if (id.equals(""))
+			return "Por favor ingrese un id";
+		
 		Venta nuevaVenta=new Venta();
 		Venta busquedaVenta=dataAccess.getVenta(Integer.parseInt(id));
 		

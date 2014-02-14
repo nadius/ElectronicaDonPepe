@@ -38,72 +38,75 @@
 			<!-- /.navbar-collapse -->
 		</nav>
 		<div class="container">
-			<h4>Logueado como ${usuario.vendedor.nombre} ${usuario.vendedor.apellido}</h4><br>
-			<h3>Fechas a filtrar</h3>
-			<div>
-				<form action="consulta" method="post">
-					<div>
-						<label id="desde">Desde: </label><br>
-						<div class="row">
-							<div class="col-md-2"><input name="desdeDia" type="text" class="form-control" placeholder="dia"></div>
-							<div class="col-md-2"><input name="desdeMes" type="text" class="form-control" placeholder="mes"></div>
-							<div class="col-md-2"><input name="desdeAnio" type="text" class="form-control" placeholder="año"></div>
+			<div class="page-header">
+				<h3>Logueado como ${usuario.vendedor.nombre} ${usuario.vendedor.apellido}</h4><br>
+				<h4>Fechas a filtrar</h3>
+				<div>
+					<form action="consulta" method="post">
+						<div>
+							<label id="desde">Desde: </label><br>
+							<div class="row">
+								<div class="col-md-2"><input name="desdeDia" type="text" alt="dia" class="form-control" placeholder="dia"></div>
+								<div class="col-md-2"><input name="desdeMes" type="text" alt="mes" class="form-control" placeholder="mes"></div>
+								<div class="col-md-2"><input name="desdeAnio" type="text" alt="anio" class="form-control" placeholder="año"></div>
+							</div>
 						</div>
-					</div>
-					<div>
-						<label id="hasta">Hasta: </label><br>
-						<div class="row">
-						<div class="col-md-2">
-						<input name="hastaDia" type="text" class="form-control" placeholder="dia"></div>
-						<div class="col-md-2"><input name="hastaMes" type="text" class="form-control" placeholder="mes"></div>
-						<div class="col-md-2"><input name="hastaAnio" type="text" class="form-control" placeholder="año"></div>
+						<div>
+							<label id="hasta">Hasta: </label><br>
+							<div class="row">
+							<div class="col-md-2"><input name="hastaDia" type="text" alt="dia" class="form-control" placeholder="dia"></div>
+							<div class="col-md-2"><input name="hastaMes" type="text" alt="mes" class="form-control" placeholder="mes"></div>
+							<div class="col-md-2"><input name="hastaAnio" type="text" alt="anio" class="form-control" placeholder="año"></div>
+							</div>
 						</div>
-					</div>
-					<input type="submit" value="Aceptar">
-				</form>
-			</div>
-			<br>
-			<div class="row">
-				<div class="col-md-8">
-					<table class="table">
-						<thead>
-							<tr>
-								<td><center>Nro</center></td>
-								<td><center>Fecha</center></td>
-								<td><center>Importe</center></td>
-								<td><center>Vendedor</center></td>
-								<td><center>Detalles</center></td>
-							</tr>
-						</thead>
-						<tbody>
-							<c:if test="${not empty lista}">
-								<c:forEach items="${lista}" var="item">
-									<tr>
-										<td><center>${item.id}</center></td>
-										<td><center>${item.fecha}</center></td>
-										<td><center>${item.importe}</center></td>
-										<td><center>${item.vendedor.nombre} ${item.vendedor.apellido}</center></td>
-										<td><center><a href="${origen}/venta/consulta/detalle?venta=${item.id}">Ir</a></center></td>
-									</tr>
-								</c:forEach>
-							</c:if>
-							<c:if test="${empty lista}">
-								<tr><td rowspan="4">No existen resultados</td></tr>
-							</c:if>
-						</tbody>
-					</table>
+						<input type="submit" value="Aceptar">
+					</form>
 				</div>
-				<!-- <div class="col-md-4">
-					<c:if test="${detalle}">
-						<c:forEach items="${lista}" var="item">
-						<div><label id="nombre">${detalle.nombre}</label></div><br>
-						</c:forEach>
-					</c:if>
-				</div> -->
+				<br>
+				<div class="row">
+					<div class="col-md-8">
+						<table class="table">
+							<thead>
+								<tr>
+									<td><center>Nro</center></td>
+									<td><center>Fecha</center></td>
+									<td><center>Importe</center></td>
+									<td><center>Vendedor</center></td>
+									<td><center>Detalles</center></td>
+								</tr>
+							</thead>
+							<tbody>
+								<c:if test="${not empty lista}">
+									<c:forEach items="${lista}" var="item">
+										<tr>
+											<td><center>${item.id}</center></td>
+											<td><center>${item.fecha}</center></td>
+											<td><center>${item.importe}</center></td>
+											<td><center>${item.vendedor.nombre} ${item.vendedor.apellido}</center></td>
+											<td><center><a href="${origen}/venta/consulta/detalle?venta=${item.id}">Ir</a></center></td>
+										</tr>
+									</c:forEach>
+								</c:if>
+								<c:if test="${empty lista}">
+									<tr><td rowspan="4">No existen resultados</td></tr>
+								</c:if>
+							</tbody>
+						</table>
+					</div>
+					<!-- <div class="col-md-4">
+						<c:if test="${detalle}">
+							<c:forEach items="${lista}" var="item">
+							<div><label id="nombre">${detalle.nombre}</label></div><br>
+							</c:forEach>
+						</c:if>
+					</div> -->
+				</div>
 			</div>
 		</div>
 		<script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
 		<!-- <script src="js/bootstrap.min.js"></script> -->
 		<script src="${origen}/js/bootstrap.js"></script>
+		<script type="text/javascript" src="${origen}/js/jquery.meiomask.js" charset="utf-8" ></script>
+		<script type="text/javascript" src="${origen}/js/MeioMaskStart.js"></script>
 	</body>
 </html>

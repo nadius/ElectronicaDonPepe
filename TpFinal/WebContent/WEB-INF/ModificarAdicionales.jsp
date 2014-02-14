@@ -178,7 +178,8 @@
 <%--    		</c:if> --%>
 		<script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
 		<!-- <script src="js/bootstrap.min.js"></script> -->
-		<script type="text/javascript" src="${origen}/js/meiomask.js" charset="utf-8" ></script>
 		<script src="${origen}/js/bootstrap.js"></script>
+		<script type="text/javascript" src="${origen}/js/jquery.meiomask.js" charset="utf-8" ></script>
+		<script type="text/javascript" src="${origen}/js/MeioMaskStart.js"></script>
 	</body>
 </html>
