@@ -42,20 +42,20 @@ public class Comision implements Serializable {
 	@Column(nullable=false)
 	private int unidades=0;
 	@Column(nullable=false)
-	private double importe=0;
+	private float importe=0;
 	
 	public Comision() {
 		
 	}
 	
-	public Comision(int unidades, double importe) {
+	public Comision(int unidades, float importe) {
 		this.unidades= unidades;
 		this.importe = importe;
 	}
 	
 	
 	
-	public Comision(Date fechaCreacion, Date fechaDesde, Date fechaHasta, Vendedor vendedor, int unidades, double importe) {
+	public Comision(Date fechaCreacion, Date fechaDesde, Date fechaHasta, Vendedor vendedor, int unidades, float importe) {
 		this.fechaCreacion = fechaCreacion;
 		this.fechaDesde = fechaDesde;
 		this.fechaHasta = fechaHasta;
@@ -112,11 +112,11 @@ public class Comision implements Serializable {
 		this.unidades=unidades;
 	}
 	
-	public double getImporte() {
+	public float getImporte() {
 		return importe;
 	}
 	
-	public void setImporte(double importe) {
+	public void setImporte(float importe) {
 		this.importe = importe;
 	}
 }

@@ -19,14 +19,14 @@ public class PremioMonto implements Serializable{
 	@Column(nullable=false)
 	private boolean campania;
 	@Column(nullable=false)
-	private double monto;
+	private float monto;
 	
 	public PremioMonto()
 	{
 		
 	}
 	
-	public PremioMonto(boolean campania, double monto) {
+	public PremioMonto(boolean campania, float monto) {
 		super();
 		this.campania = campania;
 		this.monto = monto;
@@ -48,11 +48,11 @@ public class PremioMonto implements Serializable{
 		this.campania = campania;
 	}
 
-	public double getMonto() {
+	public float getMonto() {
 		return monto;
 	}
 
-	public void setMonto(double monto) {
+	public void setMonto(float monto) {
 		this.monto = monto;
 	}
 }

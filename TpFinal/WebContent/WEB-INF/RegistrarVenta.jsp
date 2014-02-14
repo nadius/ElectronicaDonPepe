@@ -30,7 +30,9 @@
 				<ul class="nav navbar-nav navbar-right">
 					<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">${usuario.username}<b class="caret"></b></a>
 						<ul class="dropdown-menu">
-							<li><form action="${origen}/logout" method="post"><input type="submit" value="Cerrar sesion"></form></li>
+							<li>
+								<a href="${origen}/logout">Cerrar sesión</a>
+							</li>
 						</ul>
 					</li>
 				</ul>

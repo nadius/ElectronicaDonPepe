@@ -3,9 +3,9 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 19-12-2013 a las 11:22:39
--- Versión del servidor: 5.5.32
--- Versión de PHP: 5.3.10-1ubuntu3.8
+-- Tiempo de generación: 14-02-2014 a las 19:16:12
+-- Versión del servidor: 5.5.35
+-- Versión de PHP: 5.3.10-1ubuntu3.9
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -54,7 +54,7 @@ CREATE TABLE IF NOT EXISTS `Comision` (
   `fechaCreacion` datetime NOT NULL,
   `fechaDesde` datetime NOT NULL,
   `fechaHasta` datetime NOT NULL,
-  `importe` double NOT NULL,
+  `importe` float NOT NULL,
   `unidades` int(11) NOT NULL,
   `vendedor_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -72,7 +72,7 @@ CREATE TABLE IF NOT EXISTS `ComisionProducto` (
   `fechaCreacion` datetime NOT NULL,
   `fechaDesde` datetime NOT NULL,
   `fechaHasta` datetime NOT NULL,
-  `importe` double NOT NULL,
+  `importe` float NOT NULL,
   `unidades` int(11) NOT NULL,
   `vendedor_id` int(11) DEFAULT NULL,
   `producto_id` int(11) DEFAULT NULL,
@@ -92,7 +92,7 @@ CREATE TABLE IF NOT EXISTS `ComisionVenta` (
   `fechaCreacion` datetime NOT NULL,
   `fechaDesde` datetime NOT NULL,
   `fechaHasta` datetime NOT NULL,
-  `importe` double NOT NULL,
+  `importe` float NOT NULL,
   `unidades` int(11) NOT NULL,
   `vendedor_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -120,7 +120,7 @@ CREATE TABLE IF NOT EXISTS `ComisionVenta_Venta` (
 
 CREATE TABLE IF NOT EXISTS `Comision_Producto_Monto` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `monto` double NOT NULL,
+  `monto` float NOT NULL,
   `producto_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FK4F0ED58AAE234610` (`producto_id`)
@@ -136,7 +136,7 @@ CREATE TABLE IF NOT EXISTS `Comision_Venta_Monto` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `max` int(11) DEFAULT NULL,
   `min` int(11) NOT NULL,
-  `monto` double NOT NULL,
+  `monto` float NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
 
@@ -162,14 +162,14 @@ CREATE TABLE IF NOT EXISTS `Premio` (
   `fechaCreacion` datetime NOT NULL,
   `fechaDesde` datetime NOT NULL,
   `fechaHasta` datetime NOT NULL,
-  `importe` double NOT NULL,
+  `importe` float NOT NULL,
   `isCampania` bit(1) NOT NULL,
   `premiado_id` int(11) DEFAULT NULL,
   `producto_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FK8EF9B8F0AE234610` (`producto_id`),
   KEY `FK8EF9B8F0C925830A` (`premiado_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 
 -- --------------------------------------------------------
 
@@ -180,7 +180,7 @@ CREATE TABLE IF NOT EXISTS `Premio` (
 CREATE TABLE IF NOT EXISTS `Premio_Monto` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `campania` bit(1) NOT NULL,
-  `monto` double NOT NULL,
+  `monto` float NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 
@@ -193,7 +193,7 @@ CREATE TABLE IF NOT EXISTS `Premio_Monto` (
 CREATE TABLE IF NOT EXISTS `Producto` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nombre` varchar(255) NOT NULL,
-  `precioUnitario` double NOT NULL,
+  `precioUnitario` float NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=16 ;
 
@@ -250,11 +250,11 @@ CREATE TABLE IF NOT EXISTS `Vendedor` (
 CREATE TABLE IF NOT EXISTS `Venta` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `fecha` datetime NOT NULL,
-  `importe` double DEFAULT NULL,
+  `importe` float DEFAULT NULL,
   `vendedor_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FK4EB7A2CA06644B0` (`vendedor_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=14 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=15 ;
 
 -- --------------------------------------------------------
 
@@ -296,8 +296,8 @@ ALTER TABLE `Comision`
 -- Filtros para la tabla `ComisionProducto`
 --
 ALTER TABLE `ComisionProducto`
-  ADD CONSTRAINT `FKEE5D365DAE234610` FOREIGN KEY (`producto_id`) REFERENCES `Producto` (`id`),
-  ADD CONSTRAINT `FKDFC02DDDA06644B0ee5d365d` FOREIGN KEY (`vendedor_id`) REFERENCES `Vendedor` (`id`);
+  ADD CONSTRAINT `FKDFC02DDDA06644B0ee5d365d` FOREIGN KEY (`vendedor_id`) REFERENCES `Vendedor` (`id`),
+  ADD CONSTRAINT `FKEE5D365DAE234610` FOREIGN KEY (`producto_id`) REFERENCES `Producto` (`id`);
 
 --
 -- Filtros para la tabla `ComisionVenta`
@@ -322,8 +322,8 @@ ALTER TABLE `Comision_Producto_Monto`
 -- Filtros para la tabla `Premio`
 --
 ALTER TABLE `Premio`
-  ADD CONSTRAINT `FK8EF9B8F0C925830A` FOREIGN KEY (`premiado_id`) REFERENCES `Vendedor` (`id`),
-  ADD CONSTRAINT `FK8EF9B8F0AE234610` FOREIGN KEY (`producto_id`) REFERENCES `Producto` (`id`);
+  ADD CONSTRAINT `FK8EF9B8F0AE234610` FOREIGN KEY (`producto_id`) REFERENCES `Producto` (`id`),
+  ADD CONSTRAINT `FK8EF9B8F0C925830A` FOREIGN KEY (`premiado_id`) REFERENCES `Vendedor` (`id`);
 
 --
 -- Filtros para la tabla `Usuario`

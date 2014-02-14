@@ -271,12 +271,12 @@ public class Adicionales extends HttpServlet {
 		return new GregorianCalendar(anio,mes-1,dia,0,0,0);
 	}
 
-	public void actualizarRegistroPremio(Double[] valores) {
+	public void actualizarRegistroPremio(float[] valores) {
 		PremioMonto registro=new PremioMonto();
 		ArrayList<Premio> premios=service.getPremio();
 /*		//Verificar
 		System.out.print("Premios \t Actualizar: ");
-		for (Double item : valores)
+		for (float item : valores)
 			System.out.print(item.toString() + " ");
 		System.out.print("\n");*/
 		
@@ -298,13 +298,13 @@ public class Adicionales extends HttpServlet {
 		}
 	}
 
-	public void actualizarRegistroComisionProducto(Double[] valores) {
+	public void actualizarRegistroComisionProducto(float[] valores) {
 		ComisionProductoMonto registro=new ComisionProductoMonto();
 		ArrayList<ComisionProducto> comisiones=service.getComisionProducto();
 
 /*		//Verificar
 		System.out.print("Comision Producto \t Actualizar: ");
-		for (Double item : valores)
+		for (float item : valores)
 			System.out.print(item.toString() + " ");
 		System.out.print("\n");*/
 		
@@ -326,13 +326,13 @@ public class Adicionales extends HttpServlet {
 		}
 	}
 
-	public void actualizarRegistroComisionVenta(Double[] valores) {
+	public void actualizarRegistroComisionVenta(float[] valores) {
 		ComisionVentaMonto registro=new ComisionVentaMonto();
 		ArrayList<ComisionVenta> comisiones=service.getComisionVenta();
 
 /*		//Verificar
 		System.out.print("Comision Producto \t Actualizar: ");
-		for (Double item : valores)
+		for (float item : valores)
 			System.out.print(item.toString() + " ");
 		System.out.print("\n");*/
 		

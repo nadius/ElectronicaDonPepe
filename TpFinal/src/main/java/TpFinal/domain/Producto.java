@@ -19,14 +19,14 @@ public class Producto implements Serializable {
 	@Column(nullable=false)
 	private String nombre;
 	@Column(nullable=false)
-	private double precioUnitario;
+	private float precioUnitario;
 	
 	public Producto() {/*
 		this.nombre = null;
 		this.precioUnitario = 0;*/
 	}
 	
-	public Producto(String nombre, double precioUnitario) {
+	public Producto(String nombre, float precioUnitario) {
 		super();
 		this.nombre = nombre;
 		this.precioUnitario = precioUnitario;
@@ -44,10 +44,10 @@ public class Producto implements Serializable {
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
-	public double getPrecioUnitario() {
+	public float getPrecioUnitario() {
 		return precioUnitario;
 	}
-	public void setPrecioUnitario(double precioUnitario) {
+	public void setPrecioUnitario(float precioUnitario) {
 		this.precioUnitario = precioUnitario;
 	}
 }

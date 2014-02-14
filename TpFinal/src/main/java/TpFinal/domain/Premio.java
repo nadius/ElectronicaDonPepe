@@ -35,7 +35,7 @@ public class Premio implements Serializable {
 	@Column(nullable=false)
 	private boolean isCampania;//sólo en el caso de comisión por campaña
 	@Column(nullable=false)
-	private double importe;
+	private float importe;
 	
 	public Premio() {/*
 		this.ventas = null;
@@ -43,7 +43,7 @@ public class Premio implements Serializable {
 		this.importe = 0;*/
 	}
 	
-	public Premio(Date fechaCreacion, Date fechaDesde, Date fechaHasta, Vendedor premiado, boolean isCampania, Producto producto, double importe) {
+	public Premio(Date fechaCreacion, Date fechaDesde, Date fechaHasta, Vendedor premiado, boolean isCampania, Producto producto, float importe) {
 		super();
 		this.fechaCreacion=fechaCreacion;
 		this.fechaDesde=fechaDesde;
@@ -92,10 +92,10 @@ public class Premio implements Serializable {
 	public void setCampania(boolean isCampania) {
 		this.isCampania = isCampania;
 	}
-	public double getImporte() {
+	public float getImporte() {
 		return importe;
 	}
-	public void setImporte(double importe) {
+	public void setImporte(float importe) {
 		this.importe = importe;
 	}
 

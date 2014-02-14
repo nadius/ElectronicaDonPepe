@@ -21,14 +21,14 @@ public class ComisionVentaMonto implements Serializable{
 	@Column(nullable=true)
 	private int max;
 	@Column(nullable=false)
-	private double monto;
+	private float monto;
 	
 	public ComisionVentaMonto()
 	{
 		
 	}
 
-	public ComisionVentaMonto(int min, int max, double monto) {
+	public ComisionVentaMonto(int min, int max, float monto) {
 		super();
 		this.min = min;
 		this.max = max;
@@ -59,11 +59,11 @@ public class ComisionVentaMonto implements Serializable{
 		this.max = max;
 	}
 
-	public double getMonto() {
+	public float getMonto() {
 		return monto;
 	}
 
-	public void setMonto(double monto) {
+	public void setMonto(float monto) {
 		this.monto = monto;
 	}
 }

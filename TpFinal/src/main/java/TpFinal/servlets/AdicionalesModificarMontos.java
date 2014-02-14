@@ -64,9 +64,9 @@ public class AdicionalesModificarMontos extends Adicionales {
 		super.init(config);
 	}
 	
-	public Double[] recuperarValores (HttpServletRequest request, String nombreCampo)
+	public float[] recuperarValores (HttpServletRequest request, String nombreCampo)
 	{
-		Double[] valores;
+		float[] valores;
 		Integer cantidad=0, i, j=0;
 		String[] valoresString;
 		
@@ -80,7 +80,7 @@ public class AdicionalesModificarMontos extends Adicionales {
 		if (nombreCampo.equals("Premio"))
 			cantidad=service.getMontosPremio().size();		
 		
-		valores = new Double[cantidad];
+		valores = new float[cantidad];
 		valoresString = new String[cantidad];
 		
 		for (i=1; i<=cantidad; i++)//recupero todos los parametros
@@ -97,11 +97,11 @@ public class AdicionalesModificarMontos extends Adicionales {
 		//paso los valores al array
 		for (i=0; i<valoresString.length; i++)
 			if (valoresString[i]!=null)
-				valores[j++]=Double.parseDouble(valoresString[i]);
+				valores[j++]=Float.parseFloat(valoresString[i]);
 		
-		//Verificacion 2 (Double)
-		System.out.print("\t Double:");
-		for (Double valor : valores)
+		//Verificacion 2 (float)
+		System.out.print("\t float:");
+		for (float valor : valores)
 			System.out.print(" " + valor);
 		System.out.print("\n");
 		

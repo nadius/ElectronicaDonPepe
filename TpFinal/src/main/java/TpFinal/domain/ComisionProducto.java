@@ -30,12 +30,12 @@ public class ComisionProducto extends Comision{
 		productos=new List<Producto>();*/
 	}
 
-	public ComisionProducto(int unidades, double importe, Producto producto) {
+	public ComisionProducto(int unidades, float importe, Producto producto) {
 		super(unidades, importe);
 		this.producto = producto;
 	}	
 
-	public ComisionProducto(Date fechaCreacion, Date fechaDesde, Date fechaHasta, Vendedor vendedor, int unidades, double importe, Producto producto) {
+	public ComisionProducto(Date fechaCreacion, Date fechaDesde, Date fechaHasta, Vendedor vendedor, int unidades, float importe, Producto producto) {
 		super(fechaCreacion, fechaDesde, fechaHasta, vendedor, unidades, importe);
 		this.producto = producto;
 	}

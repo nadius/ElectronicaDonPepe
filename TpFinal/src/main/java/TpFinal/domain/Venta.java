@@ -31,7 +31,7 @@ public class Venta implements Serializable {
 	@Fetch(value = FetchMode.SUBSELECT)
 	private List<Producto> productos=null;
 	@Column(nullable=true)
-	private double importe=0;
+	private float importe=0;
 	@OneToOne//(cascade=CascadeType.ALL, fetch= FetchType.LAZY)
 	private Vendedor vendedor=null;
 	
@@ -42,13 +42,13 @@ public class Venta implements Serializable {
 		this.vendedor = null;*/
 	}
 	
-	public Venta(List<Producto> productos, double importe, Vendedor vendedor) {
+	public Venta(List<Producto> productos, float importe, Vendedor vendedor) {
 		this.productos = productos;
 		this.importe = importe;
 		this.vendedor = vendedor;
 	}
 	
-	public Venta(Date fecha, List<Producto> productos, double importe, Vendedor vendedor) {
+	public Venta(Date fecha, List<Producto> productos, float importe, Vendedor vendedor) {
 		this.fecha = fecha;
 		this.productos = productos;
 		this.importe = importe;
@@ -73,10 +73,10 @@ public class Venta implements Serializable {
 	public void setProductos(List<Producto> productos) {
 		this.productos = productos;
 	}
-	public double getImporte() {
+	public float getImporte() {
 		return importe;
 	}
-	public void setImporte(double importe) {
+	public void setImporte(float importe) {
 		this.importe = importe;
 	}
 	public Vendedor getVendedor() {

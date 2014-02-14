@@ -150,9 +150,9 @@ public class VentaNueva extends HttpServlet {
 		return mensaje;
 	}
 	
-	public double calcularImporte()
+	public float calcularImporte()
 	{
-		double importe=0;
+		float importe=0;
 		for (Producto item : listaComprados)
 			importe+=item.getPrecioUnitario();
 		return importe;

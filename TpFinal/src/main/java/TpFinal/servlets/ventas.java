@@ -20,7 +20,7 @@ public class ventas extends HttpServlet {
 	//private ArrayList<String> listaNombreProductos = null;
 	private ArrayList<Producto> listaComprados=null;
 	private DataAccess dataAccess;
-	private double total=0;
+	private float total=0;
    
 	public ventas() {
         super();

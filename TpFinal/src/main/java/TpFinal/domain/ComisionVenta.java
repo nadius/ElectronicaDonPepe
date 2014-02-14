@@ -26,7 +26,7 @@ public class ComisionVenta extends Comision{
 		elementos=new List<Venta>();*/
 	}
 
-	public ComisionVenta(int unidades, double importe, List<Venta> elementos) {
+	public ComisionVenta(int unidades, float importe, List<Venta> elementos) {
 		super(unidades, importe);
 		this.elementos = elementos;
 	}

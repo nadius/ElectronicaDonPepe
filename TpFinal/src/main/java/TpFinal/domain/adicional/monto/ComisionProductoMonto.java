@@ -22,14 +22,14 @@ public class ComisionProductoMonto implements Serializable{
 	@OneToOne
 	private Producto producto;
 	@Column(nullable=false)
-	private double monto;
+	private float monto;
 	
 	public ComisionProductoMonto()
 	{
 		
 	}
 
-	public ComisionProductoMonto(Producto producto, double monto) {
+	public ComisionProductoMonto(Producto producto, float monto) {
 		this.producto = producto;
 		this.monto = monto;
 	}
@@ -50,11 +50,11 @@ public class ComisionProductoMonto implements Serializable{
 		this.producto = producto;
 	}
 
-	public double getMonto() {
+	public float getMonto() {
 		return monto;
 	}
 
-	public void setMonto(double monto) {
+	public void setMonto(float monto) {
 		this.monto = monto;
 	}
 }
