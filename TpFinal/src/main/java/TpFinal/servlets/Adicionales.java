@@ -108,7 +108,7 @@ public class Adicionales extends HttpServlet {
 		
 		if (ventas.isEmpty())
 		{
-			//System.out.println("No se encontraron ventas para el período buscado");
+			System.out.println("No se encontraron ventas para el período buscado");
 			return null;
 		}
 		

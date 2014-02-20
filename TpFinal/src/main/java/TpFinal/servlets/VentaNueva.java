@@ -28,11 +28,14 @@ public class VentaNueva extends HttpServlet {
 	
 	private ArrayList<Producto> listaTodos = null;
 	private ArrayList<Producto> listaComprados=null;
-	private float total=0F;
+	private float total=0;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	//verificacion de usuario
 		Usuario usuario=(Usuario) request.getSession().getAttribute("usuario");
+		listaTodos=null;//lista de compra
+		total=0;//subtotal de compra
+		
 		if (usuario==null)
 			response.sendRedirect(request.getContextPath() + "/login");
 		else

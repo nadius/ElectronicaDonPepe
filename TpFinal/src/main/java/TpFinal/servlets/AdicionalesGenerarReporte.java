@@ -119,7 +119,9 @@ public class AdicionalesGenerarReporte extends Adicionales {
 		
 		//PRODUCTO
 		System.out.println("Producto campania: " + request.getParameter("productoCampania"));
-		Producto productoCampania=service.getProducto(Integer.parseInt(request.getParameter("productoCampania")));
+		Producto productoCampania=null;
+		if (request.getParameter("productoCampania")!=null && !request.getParameter("productoCampania").equals(""))//"" es el equivalente del null
+			productoCampania=service.getProducto(Integer.parseInt(request.getParameter("productoCampania")));
 		
 		//calculo los premios
 		Premio mejorVendedorMes = new Premio();
@@ -132,13 +134,16 @@ public class AdicionalesGenerarReporte extends Adicionales {
 		else
 			mejorVendedorMes=service.getPremioMejorVendedorMes(desde);//lo traigo de la base
 		
-		if (service.getPremioCampania(desde, hasta, productoCampania)==null)//si no hay un registro para esa fecha
+		if (productoCampania!=null)
 		{
-			campania = calcularPremioCampania(desde, hasta, productoCampania);
-			service.guardarPremio(campania);
+			if (service.getPremioCampania(desde, hasta, productoCampania)==null)//si no hay un registro para esa fecha
+			{
+				campania = calcularPremioCampania(desde, hasta, productoCampania);
+				service.guardarPremio(campania);
+			}
+			else
+				campania=service.getPremioCampania(desde, hasta, productoCampania);//lo traigo de la base
 		}
-		else
-			campania=service.getPremioCampania(desde, hasta, productoCampania);//lo traigo de la base
 				
 		//calculo los adicionales en general
 		Adicional adicional=new Adicional();
