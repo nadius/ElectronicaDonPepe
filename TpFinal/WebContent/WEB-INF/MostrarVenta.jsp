@@ -64,7 +64,6 @@
 				</div>
 				<br>
 				<div class="row">
-					<div class="col-md-8">
 						<table class="table">
 							<thead>
 								<tr>
@@ -83,7 +82,40 @@
 											<td><center>${item.fecha}</center></td>
 											<td><center>${item.importe}</center></td>
 											<td><center>${item.vendedor.nombre} ${item.vendedor.apellido}</center></td>
-											<td><center><a href="${origen}/venta/consulta/detalle?venta=${item.id}">Ir</a></center></td>
+											<%-- <td><center><a href="${origen}/venta/consulta/detalle?venta=${item.id}">Ir</a></center></td> --%>
+											<td><center><button class="btn btn-link" data-toggle="modal" data-target="#item${item.id}"> Ver</button></center>
+											<div class="modal fade" id="item${item.id}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+											  <div class="modal-dialog">
+											    <div class="modal-content">
+											      <div class="modal-header">
+											        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+											        <h4 class="modal-title" id="myModalLabel">Venta id ${item.id} del ${item.fecha}</h4>
+											      </div>
+											      <div class="modal-body">
+											       <table class="table">
+														<thead>
+															<tr>
+																<td><center>Id</center></td>
+																<td><center>Nombre</center></td>
+																<td><center>Precio Unitario</center></td>
+															</tr>
+														</thead>
+														<tbody>
+																<c:forEach items="${item.productos}" var="vendido">
+																	<tr>
+																		<td><center>${vendido.id}</center></td>
+																		<td><center>${vendido.nombre}</center></td>
+																		<td><center>${vendido.precioUnitario}</center></td>
+																	</tr>
+																</c:forEach>
+														</tbody>
+													</table>
+													Total: ${item.importe}
+											      </div><!-- /.modal-body -->
+											    </div><!-- /.modal-content -->
+											  </div><!-- /.modal-dialog -->
+											</div><!-- /.modal -->
+											</td>
 										</tr>
 									</c:forEach>
 								</c:if>
@@ -100,7 +132,6 @@
 							</c:forEach>
 						</c:if>
 					</div> -->
-				</div>
 			</div>
 		</div>
 		<script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>

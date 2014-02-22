@@ -56,9 +56,7 @@
 					</div>
 				</div>
 				<br>
-				<p class="text-left">
-					<b>Total:</b> ${total}
-				</p>
+				
 				
 				<c:if test="${not empty error}">
 	   				<div class="alert alert-danger">${error}</div>
@@ -66,35 +64,86 @@
 	   			<c:if test="${not empty ok}">
 	   				<div class="alert alert-success">${ok}</div>
 	   			</c:if>
+	   			
+				 <div class="panel panel-default">
+				    <div class="panel-heading">
+				      <h4 class="panel-title">
+				        <a data-toggle="collapse" data-parent="#accordion" href="#detalles">
+				        	<b>Detalles</b> (Subtotal: ${total})
+				        </a>
+				      </h4>
+				    </div>
+				    <div id="detalles" class="panel-collapse collapse">
+				      <div class="panel-body">
+							<table class="table">
+								<thead>
+									<tr>
+										<td><center>Nro</center></td>
+										<td><center>Nombre</center></td>
+ 										<%-- <td><center>Cantidad</center></td> --%>
+										<td><center>Precio</center></td>
+									</tr>
+								</thead>
+								<tbody>
+									<c:if test="${empty listaComprados}">
+										<tr><td colspan="3"><center>Lista vacía.</center></td></tr>
+									</c:if>
+									<c:forEach items="${listaComprados}" var="item" varStatus="i">
+										<tr>
+											<td><center>${item.id}</center></td>
+											<td><center>${item.nombre}</center></td>
+											<%-- <td><center>${item.cantidad}</center></td> --%>
+											<td><center>${item.precioUnitario}</center></td>
+										</tr>
+									</c:forEach>
+								</tbody>
+							</table>
+				      </div>
+				    </div>
+				  </div>
+				  
+				  <div class="panel panel-default">
+				    <div class="panel-heading">
+				      <h4 class="panel-title">
+				        <a data-toggle="collapse" data-parent="#accordion" href="#premios">
+				          Productos disponibles
+				        </a>
+				      </h4>
+				    </div>
+				    <div id="premios" class="panel-collapse collapse">
+				      <div class="panel-body">
+							<table class="table">
+								<thead>
+									<tr>
+										<td><center>Nro</center></td>
+										<td><center>Nombre</center></td>
+										<td><center>Precio</center></td>
+										<td><center>Agregar?</center></td>
+									</tr>
+								</thead>
+								<tbody>
+									<c:forEach items="${productos}" var="producto" varStatus="i">
+										<tr>
+											<td><center>${producto.id}</center></td>
+											<td><center>${producto.nombre}</center></td>
+											<td><center>${producto.precioUnitario}</center></td>
+											<td>
+												<center>
+													<form action="alta" method="post">
+														<input type="hidden" name="accion" value="agregar">
+														<input type="hidden" name="id" value="${producto.id}">
+														<input type="submit" value="Si">
+													</form>
+												</center>
+											</td>
+										</tr>
+									</c:forEach>
+								</tbody>
+							</table>
+				      </div>
+				    </div>
+				  </div>
 				
-				<table class="table">
-					<thead>
-						<tr>
-							<td><center>Nro</center></td>
-							<td><center>Nombre</center></td>
-							<td><center>Precio</center></td>
-							<td><center>Agregar?</center></td>
-						</tr>
-					</thead>
-					<tbody>
-						<c:forEach items="${productos}" var="producto" varStatus="i">
-							<tr>
-								<td><center>${producto.id}</center></td>
-								<td><center>${producto.nombre}</center></td>
-								<td><center>${producto.precioUnitario}</center></td>
-								<td>
-									<center>
-										<form action="alta" method="post">
-											<input type="hidden" name="accion" value="agregar">
-											<input type="hidden" name="id" value="${producto.id}">
-											<input type="submit" value="Si">
-										</form>
-									</center>
-								</td>
-							</tr>
-						</c:forEach>
-					</tbody>
-				</table>
 			</div>
 		</div>
 		<script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>

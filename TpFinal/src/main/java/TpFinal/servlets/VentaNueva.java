@@ -33,7 +33,7 @@ public class VentaNueva extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	//verificacion de usuario
 		Usuario usuario=(Usuario) request.getSession().getAttribute("usuario");
-		listaTodos=null;//lista de compra
+		listaComprados=null;//lista de compra
 		total=0;//subtotal de compra
 		
 		if (usuario==null)
@@ -44,6 +44,7 @@ public class VentaNueva extends HttpServlet {
 			{
 				listaTodos=dataAccess.getProductos();
 				request.setAttribute("productos", listaTodos);
+				request.setAttribute("total", total);//para que se muestre que el subtotal está en cero
 				request.getRequestDispatcher("/WEB-INF/RegistrarVenta.jsp").forward(request, response);
 			}
 			else
@@ -81,6 +82,7 @@ public class VentaNueva extends HttpServlet {
 		}
 		
 		request.setAttribute("productos", listaTodos);
+		request.setAttribute("listaComprados", listaComprados);
 		request.setAttribute("total", total);
 		
 		request.getRequestDispatcher("/WEB-INF/RegistrarVenta.jsp").forward(request, response);
@@ -148,7 +150,11 @@ public class VentaNueva extends HttpServlet {
 		
 		String mensaje=verificarDatos(nuevaVenta);//si todo salio bien
 		if (mensaje.equals(""))
+		{
 			dataAccess.guardarVenta(nuevaVenta);
+			listaComprados=null;//reseteo la lista de comprados
+			total=0;//y el subtotal
+		}
 		
 		return mensaje;
 	}

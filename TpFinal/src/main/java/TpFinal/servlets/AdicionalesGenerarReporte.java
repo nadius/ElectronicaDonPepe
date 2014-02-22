@@ -103,6 +103,7 @@ public class AdicionalesGenerarReporte extends Adicionales {
 		return vendedoresElegidosInteger;
 	}
 	
+	@SuppressWarnings("null")
 	public void calcular(HttpServletRequest request)
 	{
 		ArrayList<Adicional> adicionales = new ArrayList<Adicional>(); 
@@ -118,10 +119,11 @@ public class AdicionalesGenerarReporte extends Adicionales {
 		setVendedores(recuperarVendedores(vendedoresElegidos));
 		
 		//PRODUCTO
-		System.out.println("Producto campania: " + request.getParameter("productoCampania"));
+		String productoString = request.getParameter("productoCampania");
+		System.out.println("Producto campania: " + productoString);
 		Producto productoCampania=null;
-		if (request.getParameter("productoCampania")!=null && !request.getParameter("productoCampania").equals(""))//"" es el equivalente del null
-			productoCampania=service.getProducto(Integer.parseInt(request.getParameter("productoCampania")));
+		if (productoString!=null || !productoString.equals("null") || !productoString.equals(""))//si no hay un producto para una campaña seleccionado 
+			productoCampania=service.getProducto(Integer.parseInt(productoString));
 		
 		//calculo los premios
 		Premio mejorVendedorMes = new Premio();
