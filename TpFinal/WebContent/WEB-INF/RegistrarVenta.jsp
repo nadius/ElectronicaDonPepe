@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -69,7 +70,7 @@
 				    <div class="panel-heading">
 				      <h4 class="panel-title">
 				        <a data-toggle="collapse" data-parent="#accordion" href="#detalles">
-				        	<b>Detalles</b> (Subtotal: ${total})
+				        	<b>Detalles</b> (Subtotal: <fmt:formatNumber type="currency" currencyCode="ARS">${total}</fmt:formatNumber>)
 				        </a>
 				      </h4>
 				    </div>
@@ -93,7 +94,7 @@
 											<td><center>${item.id}</center></td>
 											<td><center>${item.nombre}</center></td>
 											<%-- <td><center>${item.cantidad}</center></td> --%>
-											<td><center>${item.precioUnitario}</center></td>
+											<td><center><fmt:formatNumber type="currency" currencyCode="ARS">${item.precioUnitario}</fmt:formatNumber></center></td>
 										</tr>
 									</c:forEach>
 								</tbody>
@@ -126,7 +127,7 @@
 										<tr>
 											<td><center>${producto.id}</center></td>
 											<td><center>${producto.nombre}</center></td>
-											<td><center>${producto.precioUnitario}</center></td>
+											<td><center><fmt:formatNumber type="currency" currencyCode="ARS">${producto.precioUnitario}</fmt:formatNumber></center></td>
 											<td>
 												<center>
 													<form action="alta" method="post">

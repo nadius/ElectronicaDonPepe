@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -89,7 +90,7 @@
 											    <div class="modal-content">
 											      <div class="modal-header">
 											        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-											        <h4 class="modal-title" id="myModalLabel">Venta id ${item.id} del ${item.fecha}</h4>
+											        <h4 class="modal-title" id="myModalLabel">Venta id ${item.id} del <fmt:formatDate type="date" value="${item.fecha}"/></h4>
 											      </div>
 											      <div class="modal-body">
 											       <table class="table">
@@ -105,12 +106,12 @@
 																	<tr>
 																		<td><center>${vendido.id}</center></td>
 																		<td><center>${vendido.nombre}</center></td>
-																		<td><center>${vendido.precioUnitario}</center></td>
+																		<td><center><fmt:formatNumber type="currency" currencyCode="ARS">${vendido.precioUnitario}</fmt:formatNumber></center></td>
 																	</tr>
 																</c:forEach>
 														</tbody>
 													</table>
-													Total: ${item.importe}
+													Total: <fmt:formatNumber type="currency" currencyCode="ARS">${item.importe}</fmt:formatNumber>
 											      </div><!-- /.modal-body -->
 											    </div><!-- /.modal-content -->
 											  </div><!-- /.modal-dialog -->
