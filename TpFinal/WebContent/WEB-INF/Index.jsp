@@ -54,6 +54,9 @@
 							<a href="${origen}/adicional/reporte">Obtener reporte</a>
 						</li>
 						<li>
+							<a href="${origen}/adicional/campania">Administrar campanias</a>
+						</li>
+						<li>
 							<a href="${origen}/adicional/modificar">Actualizar Montos</a>
 						</li>
 					</ul>

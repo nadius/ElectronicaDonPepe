@@ -1,6 +1,7 @@
 /home/yo/Programacion/git/ElectronicaDonPepe/TpFinal/src/main/java/TpFinal/service/Service.java
 /home/yo/Programacion/git/ElectronicaDonPepe/TpFinal/src/main/java/TpFinal/security/Usuario.java
 /home/yo/Programacion/git/ElectronicaDonPepe/TpFinal/src/main/java/TpFinal/servlets/Administrador.java
+/home/yo/Programacion/git/ElectronicaDonPepe/TpFinal/src/main/java/TpFinal/servlets/AdicionalesAdministrarCampanias.java
 /home/yo/Programacion/git/ElectronicaDonPepe/TpFinal/src/main/java/TpFinal/domain/adicional/monto/PremioMonto.java
 /home/yo/Programacion/git/ElectronicaDonPepe/TpFinal/src/main/java/TpFinal/servlets/Logout.java
 /home/yo/Programacion/git/ElectronicaDonPepe/TpFinal/src/main/java/TpFinal/service/ServiceBasico.java
@@ -15,6 +16,7 @@
 /home/yo/Programacion/git/ElectronicaDonPepe/TpFinal/src/main/java/TpFinal/dataccess/DataAccessHibernateTemplate.java
 /home/yo/Programacion/git/ElectronicaDonPepe/TpFinal/src/main/java/TpFinal/domain/Comision.java
 /home/yo/Programacion/git/ElectronicaDonPepe/TpFinal/src/main/java/TpFinal/servlets/index.java
+/home/yo/Programacion/git/ElectronicaDonPepe/TpFinal/src/main/java/TpFinal/domain/Campania.java
 /home/yo/Programacion/git/ElectronicaDonPepe/TpFinal/src/main/java/TpFinal/servlets/VentaNueva.java
 /home/yo/Programacion/git/ElectronicaDonPepe/TpFinal/src/main/java/TpFinal/servlets/VerificacionRolUsuario.java
 /home/yo/Programacion/git/ElectronicaDonPepe/TpFinal/src/main/java/TpFinal/servlets/AdicionalesGenerarReporte.java
