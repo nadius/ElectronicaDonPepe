@@ -8,6 +8,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import TpFinal.domain.Adicional;
+import TpFinal.domain.Campania;
 import TpFinal.domain.ComisionProducto;
 import TpFinal.domain.ComisionVenta;
 import TpFinal.domain.Payroll;
@@ -760,6 +761,47 @@ public class DataAccessPlano implements DataAccess
 		abrirConexion();
 		Transaction tx = session.beginTransaction();
 		session.update(payroll);
+		tx.commit();
+		cerrarConexion();
+	}
+
+//Campania
+	@Override
+	public Campania getCampania(Integer id) {
+		Campania rta = new Campania();
+		abrirConexion();
+		@SuppressWarnings("unchecked")
+		List<Campania> seleccion = session.createQuery("from TpFinal.adicional.Campania item where item.id ="+id.toString()).list();
+		if(seleccion.size()>0)
+			rta = seleccion.get(0);
+		
+		cerrarConexion();
+		return rta;
+	}
+
+	@Override
+	public ArrayList<Campania> getCampania() {
+		abrirConexion();
+		@SuppressWarnings("unchecked")
+		List<Campania> seleccion = session.createQuery("from TpFinal.domain.adicional.Campania item").list();
+		cerrarConexion();
+		return (ArrayList<Campania>) seleccion;
+	}
+
+	@Override
+	public void actualizarCampania(Campania item) {
+		abrirConexion();
+		Transaction tx = session.beginTransaction();
+		session.update(item);
+		tx.commit();
+		cerrarConexion();
+	}
+
+	@Override
+	public void guardarCampania(Campania item) {
+		abrirConexion();
+		Transaction tx = session.beginTransaction();
+		session.save(item);
 		tx.commit();
 		cerrarConexion();
 	}

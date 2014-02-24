@@ -6,6 +6,7 @@ import java.util.GregorianCalendar;
 
 import TpFinal.dataccess.DataAccess;
 import TpFinal.domain.Adicional;
+import TpFinal.domain.Campania;
 import TpFinal.domain.ComisionProducto;
 import TpFinal.domain.ComisionVenta;
 import TpFinal.domain.Payroll;
@@ -763,5 +764,55 @@ public class ServiceBasico implements Service {
 	@Override
 	public void guardarPayroll(Payroll payroll) {
 		dataAccess.guardarPayroll(payroll);
+	}
+
+	@Override
+	public Campania getCampania(Integer id) {
+		return dataAccess.getCampania(id);
+	}
+
+	@Override
+	public ArrayList<Campania> getCampanias() {
+		return dataAccess.getCampania();
+	}
+
+	@Override
+	public ArrayList<Campania> getCampaniasActivas() {
+		ArrayList<Campania> todos = getCampanias();
+		ArrayList<Campania> rta= new ArrayList<Campania>();
+		for (Campania item : todos)
+			if (item.isActivo()==true)
+				rta.add(item);
+		return rta;
+	}
+
+	@Override
+	public ArrayList<Campania> getCampaniasNoActivas() {
+		ArrayList<Campania> todos = getCampanias();
+		ArrayList<Campania> rta= new ArrayList<Campania>();
+		for (Campania item : todos)
+			if (item.isActivo()==false)
+				rta.add(item);
+		return rta;
+	}
+
+	@Override
+	public void actualizarCampania(Campania item) {
+		dataAccess.guardarCampania(item);
+	}
+
+	@Override
+	public void guardarCampania(Campania item) {
+		dataAccess.actualizarCampania(item);
+	}
+
+	@Override
+	public Campania getCampania(Producto producto) {
+		ArrayList<Campania> todos = getCampanias();
+		Campania rta= new Campania();
+		for (Campania item : todos)
+			if (item.getProducto().getId()==producto.getId())
+				return rta;
+		return null;
 	}
 }
