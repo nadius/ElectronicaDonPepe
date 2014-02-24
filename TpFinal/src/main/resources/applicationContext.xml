@@ -49,6 +49,7 @@
 				<value>TpFinal.domain.ComisionProducto</value>
 				<value>TpFinal.domain.ComisionVenta</value>
 				<value>TpFinal.domain.Premio</value>
+				<value>TpFinal.domain.Campania</value>
 				<!-- <value>TpFinal.domain.Payroll</value> -->
 				<value>TpFinal.domain.adicional.monto.ComisionProductoMonto</value>
 				<value>TpFinal.domain.adicional.monto.ComisionVentaMonto</value>

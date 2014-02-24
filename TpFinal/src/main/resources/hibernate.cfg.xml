@@ -22,6 +22,7 @@
 		<mapping class="TpFinal.domain.ComisionProducto"></mapping>
 		<mapping class="TpFinal.domain.ComisionVenta"></mapping>
 		<mapping class="TpFinal.domain.Premio"></mapping>
+		<mapping class="TpFinal.domain.Campania"></mapping>
 		<!-- <mapping class="TpFinal.domain.Payroll"></mapping> -->
 		<mapping class="TpFinal.domain.adicional.monto.ComisionProductoMonto"></mapping>
 		<mapping class="TpFinal.domain.adicional.monto.ComisionVentaMonto"></mapping>
