@@ -128,6 +128,48 @@
 								</table>
 								<button class="btn btn-primary" type="submit">Actualizar</button>
 							</form>
+								
+							<div class="col-md-2"><button class="btn btn-primary" data-toggle="modal" data-target="#productos"> Agregar producto</button></div>
+							<!-- Modal -->
+							<div class="modal fade" id="productos" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+							  <div class="modal-dialog">
+							    <div class="modal-content">
+							      <div class="modal-header">
+							        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+							        <h4 class="modal-title" id="myModalLabel">Productos</h4>
+							      </div>
+							      <div class="modal-body">
+							        <table class="table">
+										<thead>
+											<tr>
+												<td><center>Nro</center></td>
+												<td><center>Nombre</center></td>
+												<td><center>Agregar</center></td>
+											</tr>
+										</thead>
+										<tbody>
+											<c:if test="${empty productos }">
+												<tr>
+													<td colspan="3"><center>Lista vacía</center></td>
+												</tr>
+											</c:if>
+											<c:forEach items="${productos}" var="producto" varStatus="i">
+												<tr>
+													<td><center>${producto.id}</center></td>
+													<td><center>${producto.nombre}</center></td>
+													<td>
+														<form>
+															<center><input type="radio" name="nuevaComisionProducto" value="${producto.id}"></center>
+														</form>
+													</td>
+												</tr>
+											</c:forEach>
+										</tbody>
+									</table>
+							      </div><!-- /.modal-body -->
+							    </div><!-- /.modal-content -->
+							  </div><!-- /.modal-dialog -->
+							</div><!-- /.modal -->
 				      </div>
 				    </div>
 				  </div>

@@ -100,7 +100,7 @@
 	<!-- 				<div class="checkbox"><label><input type="checkbox" name="accion" value="Comisiones"> Comisiones</label></div> -->
 	<!-- 				<div class="checkbox"><label><input type="checkbox" name="accion" value="Premios"> Premios</label></div> -->
 					
-					<div class="form-group">
+					<%-- <div class="form-group">
 						<div class="row">
 					    <div class="col-md-2"><label>Producto de la campaña</label></div>
 	<!-- 				    <div class="col-md-5"><input type="text" class="form-control" name="vendedoresElegidos"></div> -->
@@ -137,7 +137,8 @@
 						    </div><!-- /.modal-content -->
 						  </div><!-- /.modal-dialog -->
 						</div><!-- /.modal -->
-					</div>
+					</div> --%>
+					
 					<br>
 					<input type="hidden" name="accion" value="calcular">
 					<button class="btn btn-lg btn-primary btn-block" type="submit">Calcular adicionales</button>

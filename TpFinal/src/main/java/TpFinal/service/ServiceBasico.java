@@ -369,11 +369,11 @@ public class ServiceBasico implements Service {
 		
 		for (Adicional adicional : todos)
 		{
-			if (adicional.getCampania()!=null && adicional.getCampania().getProducto()==null)
+/*if (adicional.getCampania()!=null && adicional.getCampania().getProducto()==null)
 				adicional.setCampania(null);
 			
 			if (adicional.getMejorVendedorMes()!=null && adicional.getMejorVendedorMes().getProducto()!=null)
-				adicional.setMejorVendedorMes(null);
+				adicional.setMejorVendedorMes(null);*/
 			
 /*			adicional.setCampania(getPremioCampania(adicional.getFechaDesde(), adicional.getFechaHasta(), adicional.getVendedor()));
 			adicional.setMejorVendedorMes(getPremioMejorVendedorMes(adicional.getFechaDesde(), adicional.getVendedor().getId()));
