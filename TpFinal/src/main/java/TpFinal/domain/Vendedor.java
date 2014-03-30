@@ -17,15 +17,15 @@ public class Vendedor implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 	@Column(nullable=false)
-	private String nombre="";
+	private String nombre;
 	@Column(nullable=false)
-	private String apellido="";
+	private String apellido;
 	@Column(nullable=false) 
 	private boolean activo=true;
 	
-	public Vendedor() {/*
-		this.nombre = null;
-		this.apellido = null;*/
+	public Vendedor() {
+		this.nombre="";
+		this.apellido="";
 	}
 
 	public Vendedor(String nombre, String apellido) {

@@ -73,7 +73,7 @@
 											<tr>
 												<td><center>${item.id}</center></td>
 												<td><center><fmt:formatDate type="date" value="${item.fechaCreacion}"/> </center></td>
-												<td><center>${item.producto.nombre}</center></td>
+												<td><center>${item.producto.id} - ${item.producto.nombre}</center></td>
 												<td><center><fmt:formatNumber type="currency" currencyCode="ARS">${item.producto.precioUnitario}</fmt:formatNumber></center></td>
 												<td>
 													<center>

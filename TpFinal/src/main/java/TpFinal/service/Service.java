@@ -261,4 +261,7 @@ public interface Service {
 		
 	//Guardar
 	public void guardarPayroll(Payroll payroll);
+
+	boolean existenVentas(Vendedor vendedor, GregorianCalendar desde,
+			GregorianCalendar hasta);
 }

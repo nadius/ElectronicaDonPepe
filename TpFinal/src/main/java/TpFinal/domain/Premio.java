@@ -37,10 +37,11 @@ public class Premio implements Serializable {
 	@Column(nullable=false)
 	private float importe;
 	
-	public Premio() {/*
-		this.ventas = null;
+	public Premio() {
+		this.premiado = new Vendedor();
+		this.producto = new Producto();
 		this.isCampania = false;
-		this.importe = 0;*/
+		this.importe = 0F;
 	}
 	
 	public Premio(Date fechaCreacion, Date fechaDesde, Date fechaHasta, Vendedor premiado, boolean isCampania, Producto producto, float importe) {

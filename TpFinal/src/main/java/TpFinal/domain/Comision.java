@@ -45,7 +45,7 @@ public class Comision implements Serializable {
 	private float importe=0;
 	
 	public Comision() {
-		
+		this.vendedor= new Vendedor();
 	}
 	
 	public Comision(int unidades, float importe) {

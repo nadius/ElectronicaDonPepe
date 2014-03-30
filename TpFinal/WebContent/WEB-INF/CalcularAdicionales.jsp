@@ -296,11 +296,12 @@
 							<td><center>Comision por producto</center></td>
 							<td><center>Premio Vendedor</center></td>
 							<td><center>Comision campania</center></td>
+							<td><center>Total</center></td>
 						</tr>
 					</thead>
 					<tbody>
 						<c:if test="${empty adicionales }">
-							<tr><td colspan="8"><center>No hay adicionales calculados</center></td></tr>
+							<tr><td colspan="9"><center>No hay adicionales calculados</center></td></tr>
 						</c:if>
 						<c:forEach items="${adicionales}" var="adicional" varStatus="i">
 							<tr>
@@ -311,7 +312,13 @@
 								<td><center>${adicional.vendedor.nombre} ${adicional.vendedor.apellido}</center></td>
 								<td>
 									<c:if test="${not empty adicional.comisionVentas}">
-										<center><button class="btn btn-link" data-toggle="modal" data-target="#adicional${i.count}ComisionVenta">Ver</button></center>
+										<center>
+											<button class="btn btn-link" data-toggle="modal" data-target="#adicional${i.count}ComisionVenta">
+												<fmt:formatNumber type="currency" currencyCode="ARS">
+													${adicional.comisionVentas.importe}
+												</fmt:formatNumber>
+											</button>
+										</center>
 										 <!-- Modal -->
 										<div class="modal fade" id="adicional${i.count}ComisionVenta" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 										  <div class="modal-dialog">
@@ -335,7 +342,7 @@
 															<td><center>${adicional.comisionVentas.id}</center></td>
 									        				<td><center><fmt:formatDate type="date" value="${adicional.comisionVentas.fechaCreacion}"/></center></td>
 									        				<td><center>${adicional.comisionVentas.unidades}</center></td>
-									        				<td><center>${adicional.comisionVentas.importe}</center></td>
+									        				<td><center><fmt:formatNumber type="currency" currencyCode="ARS">${adicional.comisionVentas.importe}</fmt:formatNumber></center></td>
 														</tr>
 													</tbody>
 												</table>
@@ -350,7 +357,13 @@
 								</td>
 								<td>
 									<c:if test="${not empty adicional.comisionesProducto}">
-										<center><button class="btn btn-link" data-toggle="modal" data-target="#adicional${i.count}ComisionesProducto">Ver</button></center>
+										<center>
+											<button class="btn btn-link" data-toggle="modal" data-target="#adicional${i.count}ComisionesProducto">
+												<fmt:formatNumber type="currency" currencyCode="ARS">
+													${adicional.totalComisionProducto}
+												</fmt:formatNumber>
+											</button>
+										</center>
 										<!-- Modal -->
 										<div class="modal fade" id="adicional${i.count}ComisionesProducto" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 										  <div class="modal-dialog">
@@ -377,12 +390,22 @@
 										        				<td><center><fmt:formatDate type="date" value="${comisionProducto.fechaCreacion}"/></center></td>
 										        				<td><center>${comisionProducto.producto.id} - ${comisionProducto.producto.nombre}</center></td>
 										        				<td><center>${comisionProducto.unidades}</center></td>
-										        				<td><center>${comisionProducto.importe}</center></td>
+										        				<td><center>
+										        					<fmt:formatNumber type="currency" currencyCode="ARS">
+										        						${comisionProducto.importe}
+										        					</fmt:formatNumber>
+										        				</center></td>
 										        			</tr>
 									        			</c:forEach>
 									      			</tbody>
 												</table>
-										      </div><!-- /.modal-body -->
+												<label>
+							        				<b>Total:</b>
+							        				<fmt:formatNumber type="currency" currencyCode="ARS">
+							        					${adicional.totalComisionProducto}
+							        				</fmt:formatNumber>
+							        			</label>
+											  </div><!-- /.modal-body -->
 										    </div><!-- /.modal-content -->
 										  </div><!-- /.modal-dialog -->
 										</div><!-- /.modal -->
@@ -393,7 +416,11 @@
 								</td>
 								<td>
 									<c:if test="${not empty adicional.mejorVendedorMes}">
-										<center><button class="btn btn-link" data-toggle="modal" data-target="#adicional${i.count}PremioVendedorMes">Ver</button></center>
+										<center><button class="btn btn-link" data-toggle="modal" data-target="#adicional${i.count}PremioVendedorMes">
+											<fmt:formatNumber type="currency" currencyCode="ARS">
+												${adicional.mejorVendedorMes.importe}
+												</fmt:formatNumber>
+											</button></center>
 										<!-- Modal -->
 										<div class="modal fade" id="adicional${i.count}PremioVendedorMes" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 										  <div class="modal-dialog">
@@ -406,7 +433,14 @@
 										        <div class="form-group">
 									      			<div><label><b>Id: </b></label> <label>${adicional.mejorVendedorMes.id}</label></div>
 									      			<div><label><b>Fecha creacion: </b></label> <label><fmt:formatDate type="date" value="${adicional.mejorVendedorMes.fechaCreacion}"/></label></div>
-									      			<div><label><b>Importe: </b></label> <label>${adicional.mejorVendedorMes.importe}</label></div>
+									      			<div>
+									      				<label><b>Importe: </b></label>
+									      				<label>
+									      					<fmt:formatNumber type="currency" currencyCode="ARS">
+									      						${adicional.mejorVendedorMes.importe}
+									      					</fmt:formatNumber>
+									      				</label>
+									      			</div>
 									      		</div>
 										      </div><!-- /.modal-body -->
 										    </div><!-- /.modal-content -->
@@ -418,8 +452,14 @@
 									</c:if>
 								</td>
 								<td>
-									<c:if test="${not empty adicional.campania}">
-										<center><button class="btn btn-link" data-toggle="modal" data-target="#adicional${i.count}PremioCampania">Ver</button></center>
+									<c:if test="${not empty adicional.campanias}">
+										<center>
+											<button class="btn btn-link" data-toggle="modal" data-target="#adicional${i.count}PremioCampania">
+												<fmt:formatNumber type="currency" currencyCode="ARS">
+													${adicional.totalPremiosCampania}
+												</fmt:formatNumber>
+											</button>
+										</center>
 										<!-- Modal -->
 										<div class="modal fade" id="adicional${i.count}PremioCampania" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 										  <div class="modal-dialog">
@@ -430,19 +470,52 @@
 										      </div>
 										      <div class="modal-body">
 										        <div class="form-group">
-									      			<div><label><b>Id: </b></label> <label>${adicional.campania.id}</label></div>
-									      			<div><label><b>Fecha creacion: </b></label> <label><fmt:formatDate type="date" value="${adicional.campania.fechaCreacion}"/></label></div>
-									      			<div><label><b>Producto campania: </b></label> <label>${adicional.campania.producto.id} - ${adicional.campania.producto.nombre}</label></div>
-									      			<div><label><b>Importe: </b></label> <label>${adicional.campania.importe}</label></div>
+										        	<table class="table">
+										        		<thead>
+										      				<tr>
+										      					<td><center>Id</center></td>
+										      					<td><center>Fecha creacion</center></td>
+										        				<td><center>Producto</center></td>
+										        				<td><center>Importe</center></td>
+										      				</tr>
+										      			</thead>
+										      			<tbody>
+										      				<c:forEach items="${adicional.campanias}" var="comisionProducto">
+											        			<tr>
+											        				<td><center>${registro.id}</center></td>
+											        				<td><center><fmt:formatDate type="date" value="${registro.fechaCreacion}"/></center></td>
+											        				<td><center>${registro.producto.id} - ${registro.producto.nombre}</center></td>
+											        				<td><center>
+											        					<fmt:formatNumber type="currency" currencyCode="ARS">
+											        						${registro.importe}
+											        					</fmt:formatNumber>
+											        				</center></td>
+											        			</tr>
+										        			</c:forEach>
+										      			</tbody>
+										        	</table>
+										        	<label>
+										        		<b>Total: </b>
+										        		<fmt:formatNumber type="currency" currencyCode="ARS">
+										        			${adicional.totalPremiosCampania}
+										        		</fmt:formatNumber>
+										        	</label>
 									      		</div>
 										      </div><!-- /.modal-body -->
 										    </div><!-- /.modal-content -->
 										  </div><!-- /.modal-dialog -->
 										</div><!-- /.modal -->
 									</c:if>
-									<c:if test="${empty adicional.campania}">
+									<c:if test="${empty adicional.campanias}">
 										<center>No</center>
 									</c:if>
+								</td>
+								<td>
+									<center>
+										<fmt:formatNumber type="currency" currencyCode="ARS">
+											${adicional.totalAdicionales}
+										</fmt:formatNumber>
+									</center>
 								</td>
 							</tr>
 						</c:forEach>
@@ -454,7 +527,7 @@
 <%-- 		<c:if test="${not empty error}"> --%>
 <%--    				<div class="alert alert-danger">${error}</div> --%>
 <%--    		</c:if> --%>
-		<script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+		<script src="${origen}/js/jquery.min.js"></script>
 		<!-- <script src="js/bootstrap.min.js"></script> -->
 		<script src="${origen}/js/bootstrap.js"></script>
 		<script type="text/javascript" src="${origen}/js/jquery.meiomask.js" charset="utf-8" ></script>
