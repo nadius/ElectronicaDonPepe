@@ -15,6 +15,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Transient;
 
 import org.hibernate.annotations.Fetch;
@@ -41,17 +42,18 @@ public class Adicional implements Serializable {
 	private Date fechaHasta;
 	@ManyToOne
 	private Vendedor vendedor;
-	@OneToOne//(cascade=CascadeType.ALL)
-	@JoinColumn(name="id")
+	@OneToOne(cascade=CascadeType.ALL, fetch= FetchType.EAGER)
+	@JoinColumn(name="ComisionVenta_id")
+	//@PrimaryKeyJoinColumn
 	private ComisionVenta comisionVentas;
 	@ManyToMany(cascade=CascadeType.ALL, fetch= FetchType.EAGER)
 	@Fetch(value = FetchMode.SUBSELECT)
 	private List<ComisionProducto> comisionesProducto;
 	@OneToOne//(cascade=CascadeType.ALL)
-	@JoinColumn(name="id")
+	@JoinColumn(name="PremioVendedor_id")
 	private Premio mejorVendedorMes;
 	@OneToOne//(cascade=CascadeType.ALL)
-	@JoinColumn(name="id")
+	@JoinColumn(name="PremioCampania_id")
 	private Premio campania;
 	
 	public Adicional() {
