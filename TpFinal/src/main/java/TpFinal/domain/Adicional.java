@@ -43,17 +43,17 @@ public class Adicional implements Serializable {
 	@ManyToOne
 	private Vendedor vendedor;
 	@OneToOne(cascade=CascadeType.ALL, fetch= FetchType.EAGER)
-	@JoinColumn(name="ComisionVenta_id")
+	@JoinColumn(name="comisionVenta_id")
 	//@PrimaryKeyJoinColumn
 	private ComisionVenta comisionVentas;
 	@ManyToMany(cascade=CascadeType.ALL, fetch= FetchType.EAGER)
 	@Fetch(value = FetchMode.SUBSELECT)
 	private List<ComisionProducto> comisionesProducto;
 	@OneToOne//(cascade=CascadeType.ALL)
-	@JoinColumn(name="PremioVendedor_id")
+	@JoinColumn(name="premioVendedor_id")
 	private Premio mejorVendedorMes;
 	@OneToOne//(cascade=CascadeType.ALL)
-	@JoinColumn(name="PremioCampania_id")
+	@JoinColumn(name="premioCampania_id")
 	private Premio campania;
 	
 	public Adicional() {
