@@ -38,6 +38,7 @@ public class AdicionalesGenerarReporte extends Adicionales {
 		request.setAttribute("vendedores", service.getVendedoresActivos());
 		request.setAttribute("productos", service.getProductos());
 		request.setAttribute("adicionales", getAdicionales());
+		
 		request.getRequestDispatcher("/WEB-INF/CalcularAdicionales.jsp").forward(request, response);
 	}
 
