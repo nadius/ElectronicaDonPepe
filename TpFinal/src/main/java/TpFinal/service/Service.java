@@ -12,6 +12,7 @@ import TpFinal.domain.Premio;
 import TpFinal.domain.Producto;
 import TpFinal.domain.Vendedor;
 import TpFinal.domain.Venta;
+import TpFinal.domain.Campania;
 import TpFinal.domain.adicional.monto.ComisionProductoMonto;
 import TpFinal.domain.adicional.monto.ComisionVentaMonto;
 import TpFinal.domain.adicional.monto.PremioMonto;
@@ -195,6 +196,15 @@ public interface Service {
 	public void guardarComisionVenta(ComisionVenta comisionVenta);
 	public void guardarComisionProducto(ComisionProducto comisionProducto);
 	
+//CAMPAÑA
+	public Campania getCampania(Integer id);
+	public Campania getCampania(Producto producto);
+	public ArrayList<Campania> getCampanias();
+	public ArrayList<Campania> getCampaniasActivas();
+	public ArrayList<Campania> getCampaniasNoActivas();
+	public void actualizarCampania(Campania item);
+	public void guardarCampania(Campania item);
+	
 //PREMIO
 	//por id
 	public Premio getPremio(Integer id);
@@ -251,4 +261,7 @@ public interface Service {
 		
 	//Guardar
 	public void guardarPayroll(Payroll payroll);
+
+	boolean existenVentas(Vendedor vendedor, GregorianCalendar desde,
+			GregorianCalendar hasta);
 }

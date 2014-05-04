@@ -53,6 +53,10 @@
     <servlet-name>adicionalModificar</servlet-name>
     <servlet-class>TpFinal.servlets.AdicionalesModificarMontos</servlet-class>
   </servlet>
+  <servlet>
+    <servlet-name>campaniaAdministrar</servlet-name>
+    <servlet-class>TpFinal.servlets.AdicionalesAdministrarCampanias</servlet-class>
+  </servlet>
   <servlet-mapping>
     <servlet-name>index</servlet-name>
     <url-pattern>/index</url-pattern>
@@ -96,5 +100,9 @@
   <servlet-mapping>
     <servlet-name>adicionalModificar</servlet-name>
     <url-pattern>/adicional/modificar</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>campaniaAdministrar</servlet-name>
+    <url-pattern>/adicional/campania</url-pattern>
   </servlet-mapping>
 </web-app>

@@ -1,6 +1,7 @@
 package TpFinal.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -52,36 +53,41 @@ public class Adicional implements Serializable {
 	@OneToOne//(cascade=CascadeType.ALL)
 	@JoinColumn(name="premioVendedor_id")
 	private Premio mejorVendedorMes;
+	@ManyToMany(cascade=CascadeType.ALL, fetch= FetchType.EAGER)
+	@Fetch(value = FetchMode.SUBSELECT)
+	private List<Premio> campanias;
+	@Transient
+	private float totalComisionProducto;
+	@Transient
+	private float totalPremiosCampania;
+	@Column(name="total")
+	private float totalAdicionales;
 	@OneToOne//(cascade=CascadeType.ALL)
 	@JoinColumn(name="premioCampania_id")
 	private Premio campania;
 	
 	public Adicional() {
-		/*this.fechaCreacion=null;
-		this.vendedor=null;
-		this.Ventas=new ComisionVenta();
-		this.Producto = new ComisionProducto();
+		this.vendedor=new Vendedor();
+		this.comisionVentas=new ComisionVenta();
+		this.comisionesProducto = new ArrayList<ComisionProducto>();
 		this.mejorVendedorMes=new Premio();
-		this.campania=new Premio();
-		
-		Ventas.setFechaCreacion(fechaCreacion);
-		Ventas.setVendedor(vendedor);
-		Producto.setFechaCreacion(fechaCreacion);
-		Producto.setVendedor(vendedor);
-		mejorVendedorMes.setFechaCreacion(fechaCreacion);
-		campania.setFechaCreacion(fechaCreacion);*/
-		//this.campania.setCampania(true);//probablemente esto deba ser seteado más tarde.
+		this.campanias=new ArrayList<Premio>();
 	}
 	
-	public Adicional(Date fechaCreacion, Date fechaDesde, Date fechaHasta, Vendedor vendedor, ComisionVenta ventas, List<ComisionProducto> producto, Premio mejorVendedorMes, Premio campania) {
-		//comisionVentas.setFechaCreacion(fechaCreacion);
-		//comisionVentas.setVendedor(vendedor);
-		//Producto.setFechaCreacion(fechaCreacion);
-		//Producto.setVendedor(vendedor);
-		//mejorVendedorMes.setFechaCreacion(fechaCreacion);
-		//campania.setFechaCreacion(fechaCreacion);
-		//this.campania.setCampania(true);
+	public Adicional(Date fechaCreacion, Date fechaDesde, Date fechaHasta)
+	{
+		this.fechaCreacion = fechaCreacion;
+		this.fechaDesde=fechaDesde;
+		this.fechaHasta=fechaHasta;
 		
+		this.vendedor=new Vendedor();
+		this.comisionVentas=new ComisionVenta();
+		this.comisionesProducto = new ArrayList<ComisionProducto>();
+		this.mejorVendedorMes=new Premio();
+		this.campanias=new ArrayList<Premio>();
+	}
+	
+	public Adicional(Date fechaCreacion, Date fechaDesde, Date fechaHasta, Vendedor vendedor, ComisionVenta ventas, List<ComisionProducto> producto, Premio mejorVendedorMes, List<Premio> campanias) {
 		this.fechaCreacion = fechaCreacion;
 		this.fechaDesde=fechaDesde;
 		this.fechaHasta=fechaHasta;
@@ -89,7 +95,7 @@ public class Adicional implements Serializable {
 		this.comisionVentas = ventas;
 		this.comisionesProducto = producto;
 		this.mejorVendedorMes = mejorVendedorMes;
-		this.campania = campania;
+		this.campanias = campanias;
 	}
 
 	public int getId() {
@@ -156,11 +162,35 @@ public class Adicional implements Serializable {
 		this.mejorVendedorMes = mejorVendedorMes;
 	}
 
-	public Premio getCampania() {
-		return campania;
+	public List<Premio> getCampanias() {
+		return campanias;
 	}
 
-	public void setCampania(Premio campania) {
-		this.campania = campania;
+	public void setCampanias(List<Premio> campanias) {
+		this.campanias = campanias;
+	}
+
+	public float getTotalComisionProducto() {
+		return totalComisionProducto;
+	}
+
+	public void setTotalComisionProducto(float totalComisionProducto) {
+		this.totalComisionProducto = totalComisionProducto;
+	}
+
+	public float getTotalPremiosCampania() {
+		return totalPremiosCampania;
+	}
+
+	public void setTotalPremiosCampania(float totalPremiosCampania) {
+		this.totalPremiosCampania = totalPremiosCampania;
+	}
+
+	public float getTotalAdicionales() {
+		return totalAdicionales;
+	}
+
+	public void setTotalAdicionales(float total) {
+		this.totalAdicionales = total;
 	}
 }

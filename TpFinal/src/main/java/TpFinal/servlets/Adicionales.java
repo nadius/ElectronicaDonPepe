@@ -44,7 +44,7 @@ public class Adicionales extends HttpServlet {
 
 	}
 
-	public Adicional calcularAdicional(Vendedor vendedor, GregorianCalendar desde, GregorianCalendar hasta, Producto producto)
+	public Adicional calcularAdicional(Vendedor vendedor, GregorianCalendar desde, GregorianCalendar hasta)
 	{
 		//System.out.println(vendedor.getNombre() + " " + vendedor.getApellido());
 		Adicional adicional;
@@ -261,12 +261,12 @@ public class Adicionales extends HttpServlet {
 		return false;
 	}
 	
-	public GregorianCalendar setFechaGregorian(String fechaDia, String fechaMes, String fechaAnio)
+	public GregorianCalendar getParamFecha(HttpServletRequest request, String tipo)
 	{
 		Integer dia, mes, anio;
-		dia = Integer.parseInt(fechaDia);
-		mes = Integer.parseInt(fechaMes);
-		anio = Integer.parseInt(fechaAnio);
+		dia = Integer.parseInt(request.getParameter(tipo+"Dia"));
+		mes = Integer.parseInt(request.getParameter(tipo+"Mes"));
+		anio = Integer.parseInt(request.getParameter(tipo+"Anio"));
 		
 		return new GregorianCalendar(anio,mes-1,dia,0,0,0);
 	}

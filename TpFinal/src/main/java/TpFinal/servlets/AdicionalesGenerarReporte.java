@@ -20,7 +20,6 @@ public class AdicionalesGenerarReporte extends Adicionales {
        
    public AdicionalesGenerarReporte() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -36,16 +35,9 @@ public class AdicionalesGenerarReporte extends Adicionales {
 			response.sendRedirect(request.getContextPath() + "/error");
 			return;
 		}
-		System.out.println("\nVENDEDORES");
 		request.setAttribute("vendedores", service.getVendedoresActivos());
-		
-		System.out.println("\nPRODUCTOS");
 		request.setAttribute("productos", service.getProductos());
-		
-		System.out.println("\nADICIONALES");
 		request.setAttribute("adicionales", service.getAdicionales());
-		
-		System.out.println();
 		request.getRequestDispatcher("/WEB-INF/CalcularAdicionales.jsp").forward(request, response);
 	}
 
@@ -65,7 +57,76 @@ public class AdicionalesGenerarReporte extends Adicionales {
 		super.init(config);
 	}
 	
-	public ArrayList<Vendedor> recuperarVendedores(Integer[] ids)
+	public void calcular(HttpServletRequest request)
+	{
+		ArrayList<Adicional> adicionales = new ArrayList<Adicional>(); 
+		//FECHAS
+		//Producto productoCampania=service.getProducto(Integer.parseInt(request.getParameter("productoCampania")));
+		GregorianCalendar desde = getParamFecha(request,"desde");
+		GregorianCalendar hasta = getParamFecha(request,"hasta");
+		SimpleDateFormat df=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S");
+		System.out.println("Calculando adicionales desde " + df.format(desde.getTime()) + " hasta " + df.format(hasta.getTime()));
+		
+		//VENDEDORES
+		Integer[] vendedoresElegidos=getParamVendedores(request);
+		setVendedores(setListVendedores(vendedoresElegidos));
+		
+/*		//PRODUCTO
+		String productoString = request.getParameter("productoCampania");
+		System.out.println("Producto campania: " + productoString);
+		Producto productoCampania=null;
+		if (productoString!=null || !productoString.equals("null") || !productoString.equals(""))//si no hay un producto para una campaña seleccionado 
+			productoCampania=service.getProducto(Integer.parseInt(productoString));*/
+		
+		//PREMIOS (los calculo primero porque no están relacionados a los vendedores elegidos
+		Premio premioMejorVendedorMes = new Premio();
+		ArrayList<Campania> campaniasActivas = service.getCampaniasActivas();
+		ArrayList<Premio> premiosCampania = new ArrayList<Premio>();
+		
+		if (service.getPremioMejorVendedorMes(desde)==null)//si no hay un registro para esa fecha se calcula
+			premioMejorVendedorMes=calcularPremioVendedor(desde);
+		else
+			premioMejorVendedorMes=service.getPremioMejorVendedorMes(desde);//si hay un registro para esa fecha lo traigo de la base
+		
+		if (!campaniasActivas.isEmpty())//si existen campanias activas
+		{
+			for (Campania campania : campaniasActivas)
+			{
+				if (service.getPremioCampania(desde, hasta, campania.getProducto())==null)//si no hay un registro para esa fecha
+					premiosCampania.add(calcularPremioCampania(desde, hasta, campania.getProducto()));
+				else
+					premiosCampania.add(service.getPremioCampania(desde, hasta, campania.getProducto()));//lo traigo de la base
+			}
+		}
+				
+		//calculo los adicionales en general
+		Adicional adicional=new Adicional();
+		/*adicional.setFechaCreacion(getFechaHoy());
+		adicional.setFechaDesde(desde.getTime());
+		adicional.setFechaHasta(hasta.getTime());
+		Adicional adicional=new Adicional(getFechaHoy(),desde.getTime(),hasta.getTime());*/
+		
+		for(Vendedor vendedor : vendedores)
+		{
+			if ((service.getAdicional(vendedor.getId(), desde, hasta)==null) && (service.existenVentas(vendedor, desde, hasta)))//si no hay un registro para esas fechas y vendedor
+			{
+				adicional=calcularAdicionalVendedor(getFechaHoy(), desde, hasta, vendedor, premioMejorVendedorMes, premiosCampania);
+				setTotales(adicional);
+				service.guardarAdicional(adicional);
+			}
+			else
+				adicional=service.getAdicional(vendedor.getId(), desde, hasta);//lo traigo de la base
+			
+			if (adicional!=null)//si en efecto hay un adicional calculado
+				adicionales.add(adicional);
+		}
+		
+		//mostrarResultado(adicionales);
+		
+		request.setAttribute("adicionales", adicionales);
+	}
+	
+	public ArrayList<Vendedor> setListVendedores(Integer[] ids)
 	{
 		ArrayList<Vendedor> seleccion=new ArrayList<Vendedor>();
 		for (Integer id : ids)
@@ -73,7 +134,7 @@ public class AdicionalesGenerarReporte extends Adicionales {
 		return seleccion;
 	}
 	
-	public Integer[] recuperarVendedores(HttpServletRequest request){
+	public Integer[] getParamVendedores(HttpServletRequest request){
 		Integer cantVendedores=service.getVendedoresActivos().size();
 		Integer[] vendedoresElegidosInteger;
 		String[] vendedoresElegidosString=new String[cantVendedores];
@@ -109,78 +170,7 @@ public class AdicionalesGenerarReporte extends Adicionales {
 		
 		return vendedoresElegidosInteger;
 	}
-	
-	@SuppressWarnings("null")
-	public void calcular(HttpServletRequest request)
-	{
-		ArrayList<Adicional> adicionales = new ArrayList<Adicional>(); 
-		//FECHAS
-		//Producto productoCampania=service.getProducto(Integer.parseInt(request.getParameter("productoCampania")));
-		GregorianCalendar desde = setFechaGregorian(request.getParameter("desdeDia"), request.getParameter("desdeMes"), request.getParameter("desdeAnio"));
-		GregorianCalendar hasta = setFechaGregorian(request.getParameter("hastaDia"), request.getParameter("hastaMes"), request.getParameter("hastaAnio"));
-		SimpleDateFormat df=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S");
-		System.out.println("Calculando adicionales desde " + df.format(desde.getTime()) + " hasta " + df.format(hasta.getTime()));
-		
-		//VENDEDORES
-		Integer[] vendedoresElegidos=recuperarVendedores(request);
-		setVendedores(recuperarVendedores(vendedoresElegidos));
-		
-		//PRODUCTO
-		String productoString = request.getParameter("productoCampania");
-		System.out.println("Producto campania: " + productoString);
-		Producto productoCampania=null;
-		if (productoString!=null || !productoString.equals("null") || !productoString.equals(""))//si no hay un producto para una campaña seleccionado 
-			productoCampania=service.getProducto(Integer.parseInt(productoString));
-		
-		//calculo los premios
-		Premio mejorVendedorMes = new Premio();
-		Premio campania = new Premio();
-		if (service.getPremioMejorVendedorMes(desde)==null)//si no hay un registro para esa fecha
-		{
-			mejorVendedorMes=calcularPremioVendedor(desde);
-			service.guardarPremio(mejorVendedorMes);
-		}
-		else
-			mejorVendedorMes=service.getPremioMejorVendedorMes(desde);//lo traigo de la base
-		
-		if (productoCampania!=null)
-		{
-			if (service.getPremioCampania(desde, hasta, productoCampania)==null)//si no hay un registro para esa fecha
-			{
-				campania = calcularPremioCampania(desde, hasta, productoCampania);
-				service.guardarPremio(campania);
-			}
-			else
-				campania=service.getPremioCampania(desde, hasta, productoCampania);//lo traigo de la base
-		}
-				
-		//calculo los adicionales en general
-		Adicional adicional=new Adicional();
-		for(Vendedor vendedor : vendedores)
-		{
-			if (service.getAdicional(vendedor.getId(), desde, hasta)==null)//si no hay un registro para esas fechas y vendedor
-			{
-				adicional=calcularAdicional(vendedor, desde, hasta, productoCampania);
-					
-				//por si no guardé los premios en la base
-				if (mejorVendedorMes!=null && vendedor.getId()==mejorVendedorMes.getPremiado().getId())
-					adicional.setMejorVendedorMes(mejorVendedorMes);
-				if (campania!=null && vendedor.getId()==campania.getPremiado().getId())
-					adicional.setCampania(campania);
-				
-				service.guardarAdicional(adicional);//TODO:por alguna extraña razón no se guardan las Comisiones por Venta, aunque están calculadas y existen
-			}
-			else
-				adicional=service.getAdicional(vendedor.getId(), desde, hasta);//lo traigo de la base
-			
-			adicionales.add(adicional);
-		}
-		
-		//mostrarResultado(adicionales);
-		
-		request.setAttribute("adicionales", adicionales);
-	}
-	
+
 	public void mostrarResultado(ArrayList<Adicional> adicionales)
 	{
 		for (Adicional registro : adicionales)
@@ -212,13 +202,98 @@ public class AdicionalesGenerarReporte extends Adicionales {
 				System.out.println("\t\t No se encontraron ventas para el período buscado");
 			
 			System.out.println("\t Mejor vendedor campania: ");
-			if (registro.getCampania()!=null)
+			if (!registro.getCampanias().isEmpty())
 			{
-				System.out.println("\t\t producto: " + registro.getCampania().getProducto().getId() + " - " + registro.getCampania().getProducto().getNombre());
-				System.out.println("\t\t importe: " + registro.getCampania().getImporte() + "$");
+				for (Premio campania : registro.getCampanias())
+				{
+					System.out.println("\t\t Vendedor: " + campania.getPremiado());
+					System.out.println("\t\t\t producto: " + campania.getProducto().getId() + " - " + campania.getProducto().getNombre());
+					System.out.println("\t\t\t importe: " + campania.getImporte() + "$");
+				}
 			}
 			else
 				System.out.println("\t\t No se encontraron ventas para el período buscado");
 		}
+	}
+	
+	public float[] calcularSubtotales(Adicional registro)//FIXIT: función temporalmente acá hasta llegar a esta parte del refractor
+	{
+		float[] subtotales = new float[3];
+		for (float i : subtotales)
+			i = 0;
+		
+		//comision productos
+		if (!registro.getComisionesProducto().isEmpty())
+		{
+			for (ComisionProducto comisionProducto : registro.getComisionesProducto())
+				subtotales[0] +=comisionProducto.getImporte();
+		}
+		
+		//premio por campania
+		if (!registro.getCampanias().isEmpty())
+		{
+			for (Premio campania : registro.getCampanias())
+				subtotales[1] +=campania.getImporte();
+		}
+		
+		//registro
+		subtotales[2]=subtotales[0] + subtotales[1];
+		
+		if (registro.getComisionVentas()!=null)
+			subtotales[2] +=registro.getComisionVentas().getImporte();
+		
+		if(registro.getMejorVendedorMes()!=null)
+			subtotales[2] += registro.getMejorVendedorMes().getImporte();
+		
+		return subtotales;
+	}
+	
+	public Adicional calcularAdicionalVendedor(Date fechaHoy, GregorianCalendar desde, GregorianCalendar hasta, Vendedor vendedor, Premio vendedorMes, ArrayList<Premio> premiosCampania)
+	{
+		ArrayList<ComisionProducto> cProductos=calcularComisionProducto(vendedor, desde, hasta);
+		ComisionVenta cVenta=calcularComisionVenta(vendedor, desde, hasta);
+		ArrayList<Premio> campanias= new ArrayList<Premio>();
+		Premio mejorVendedorMes=null;
+		
+		if (!premiosCampania.isEmpty())
+		{
+			for (Premio campania : premiosCampania)
+			{
+				if (vendedor.getId()==campania.getPremiado().getId())
+					campanias.add(campania);
+			}
+		}
+		
+		if ((vendedorMes!=null) && (vendedorMes.getPremiado().getId() == vendedor.getId()))
+			mejorVendedorMes=vendedorMes;
+		
+		return new Adicional(fechaHoy, desde.getTime(), hasta.getTime(), vendedor, cVenta, cProductos, mejorVendedorMes, campanias);
+	}
+	
+/*	public ArrayList<Premio> calcularPremiosCampaniaVendedor()
+	{
+		int cantidad=0, cuenta=0;
+		ArrayList<Venta>ventas = new ArrayList<Venta>();
+		ArrayList<Premio> Premios = new ArrayList<Premio>();
+		Vendedor premiado= new Vendedor();
+		PremioMonto monto=service.getMontoPremio(true);
+		
+		
+	}*/
+	
+	public void setTotales(Adicional registro)//FIXIT: función temporalmente acá hasta llegar a esta parte del refractor
+	{
+		float[] subtotales = calcularSubtotales(registro);
+		registro.setTotalComisionProducto(subtotales[0]);
+		registro.setTotalPremiosCampania(subtotales[1]);
+		registro.setTotalAdicionales(subtotales[2]);
+	}
+	
+	public ArrayList<Adicional> getAdicionales()//FIXIT: función temporalmente acá hasta llegar a esta parte del refractor
+	{
+		ArrayList<Adicional> todos = service.getAdicionales();
+		for (Adicional registro : todos)
+			setTotales(registro);
+		return todos;
 	}
 }

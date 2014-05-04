@@ -36,6 +36,7 @@ public class AdicionalesModificarMontos extends Adicionales {
 		request.setAttribute("comisionVenta", service.getMontosVenta());
 		request.setAttribute("comisionProducto", service.getMontosProducto());
 		request.setAttribute("premios", service.getMontosPremio());
+		request.setAttribute("productos", service.getProductos());
 		request.getRequestDispatcher("/WEB-INF/ModificarAdicionales.jsp").forward(request, response);
 	}
 

@@ -21,9 +21,9 @@ public class Producto implements Serializable {
 	@Column(nullable=false)
 	private float precioUnitario;
 	
-	public Producto() {/*
-		this.nombre = null;
-		this.precioUnitario = 0;*/
+	public Producto() {
+		this.nombre = "";
+		this.precioUnitario = 0F;
 	}
 	
 	public Producto(String nombre, float precioUnitario) {

@@ -1,5 +1,6 @@
 package TpFinal.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -22,8 +23,8 @@ public class ComisionVenta extends Comision{
 	private List<Venta> elementos;
 
 	public ComisionVenta() {
-		/*super();
-		elementos=new List<Venta>();*/
+		super();
+		elementos=new ArrayList<Venta>();
 	}
 
 	public ComisionVenta(int unidades, float importe, List<Venta> elementos) {

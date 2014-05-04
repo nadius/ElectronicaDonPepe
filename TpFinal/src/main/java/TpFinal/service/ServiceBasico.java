@@ -6,6 +6,7 @@ import java.util.GregorianCalendar;
 
 import TpFinal.dataccess.DataAccess;
 import TpFinal.domain.Adicional;
+import TpFinal.domain.Campania;
 import TpFinal.domain.ComisionProducto;
 import TpFinal.domain.ComisionVenta;
 import TpFinal.domain.Payroll;
@@ -197,6 +198,14 @@ public class ServiceBasico implements Service {
 	public ArrayList<Venta> getVentas() {
 		return dataAccess.getVentas();
 	}
+	
+	@Override
+	public boolean existenVentas(Vendedor vendedor, GregorianCalendar desde, GregorianCalendar hasta)
+	{
+		if (getVentas(vendedor, desde, hasta).isEmpty())
+			return false;
+		return true;
+	}
 
 	@Override
 	public void guardarVenta(Venta venta) {
@@ -364,43 +373,19 @@ public class ServiceBasico implements Service {
 	
 	@Override
 	public ArrayList<Adicional> getAdicionales() {
-		ArrayList<Adicional> todos = dataAccess.getAdicionales();
-		
-		for (Adicional adicional : todos)
-		{
-			if (adicional.getCampania()!=null && adicional.getCampania().getProducto()==null)
-				adicional.setCampania(null);
-			
-			if (adicional.getMejorVendedorMes()!=null && adicional.getMejorVendedorMes().getProducto()!=null)
-				adicional.setMejorVendedorMes(null);
-			
-/*			adicional.setCampania(getPremioCampania(adicional.getFechaDesde(), adicional.getFechaHasta(), adicional.getVendedor()));
-			adicional.setMejorVendedorMes(getPremioMejorVendedorMes(adicional.getFechaDesde(), adicional.getVendedor().getId()));
-			
-			System.out.println("adicional " + adicional.getId());
-			if (adicional.getCampania()!=null)
-			{
-				System.out.print("\t campania: ");
-				if(adicional.getCampania().isCampania()==true)
-					System.out.print("si");
-				else
-					System.out.print("no");
-				System.out.print("\n");
-			}
-			
-			if (adicional.getMejorVendedorMes()!=null)
-			{
-				System.out.print("\t mejor vendedor: ");
-				if(adicional.getMejorVendedorMes().isCampania()==false)
-					System.out.print("si");
-				else
-					System.out.print("no");
-				System.out.print("\n");
-			}*/
-		}
-		return todos;
+		return dataAccess.getAdicionales();
 	}
 
+	public boolean isEmptyAdicional(Adicional adicional)
+	{
+		if ((adicional.getComisionVentas()==null) && 
+			(adicional.getComisionesProducto().isEmpty()) &&
+			(adicional.getMejorVendedorMes()==null) &&
+			(adicional.getComisionesProducto().isEmpty()))
+			return true;
+		return false;
+	}
+	
 	@Override
 	public void guardarAdicional(Adicional adicional) {
 		if (adicional.getComisionVentas()!=null)//si o si tiene que haber comision por ventas para que se justifique guardar un adicional
@@ -763,5 +748,55 @@ public class ServiceBasico implements Service {
 	@Override
 	public void guardarPayroll(Payroll payroll) {
 		dataAccess.guardarPayroll(payroll);
+	}
+
+	@Override
+	public Campania getCampania(Integer id) {
+		return dataAccess.getCampania(id);
+	}
+
+	@Override
+	public ArrayList<Campania> getCampanias() {
+		return dataAccess.getCampania();
+	}
+
+	@Override
+	public ArrayList<Campania> getCampaniasActivas() {
+		ArrayList<Campania> todos = getCampanias();
+		ArrayList<Campania> rta= new ArrayList<Campania>();
+		for (Campania item : todos)
+			if (item.isActivo()==true)
+				rta.add(item);
+		return rta;
+	}
+
+	@Override
+	public ArrayList<Campania> getCampaniasNoActivas() {
+		ArrayList<Campania> todos = getCampanias();
+		ArrayList<Campania> rta= new ArrayList<Campania>();
+		for (Campania item : todos)
+			if (item.isActivo()==false)
+				rta.add(item);
+		return rta;
+	}
+
+	@Override
+	public void actualizarCampania(Campania item) {
+		dataAccess.guardarCampania(item);
+	}
+
+	@Override
+	public void guardarCampania(Campania item) {
+		dataAccess.actualizarCampania(item);
+	}
+
+	@Override
+	public Campania getCampania(Producto producto) {
+		ArrayList<Campania> todos = getCampanias();
+		Campania rta= new Campania();
+		for (Campania item : todos)
+			if (item.getProducto().getId()==producto.getId())
+				return rta;
+		return null;
 	}
 }

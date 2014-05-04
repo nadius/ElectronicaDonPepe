@@ -27,7 +27,7 @@
 	<bean id="dataSourceBean"
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
-		<property name="url" value="jdbc:mysql://localhost:3306/ElectronicaDonPepe_Master" />
+		<property name="url" value="jdbc:mysql://localhost:3306/ElectronicaDonPepe_Branch" />
 		<property name="username" value="root" />
 		<property name="password" value="root" />
 	</bean>
@@ -49,6 +49,7 @@
 				<value>TpFinal.domain.ComisionProducto</value>
 				<value>TpFinal.domain.ComisionVenta</value>
 				<value>TpFinal.domain.Premio</value>
+				<value>TpFinal.domain.Campania</value>
 				<!-- <value>TpFinal.domain.Payroll</value> -->
 				<value>TpFinal.domain.adicional.monto.ComisionProductoMonto</value>
 				<value>TpFinal.domain.adicional.monto.ComisionVentaMonto</value>
@@ -58,7 +59,7 @@
 		<property name="hibernateProperties">
 			<props>
 				<prop key="hibernate.dialect">org.hibernate.dialect.MySQL5InnoDBDialect</prop>
-<!-- 				<prop key="hibernate.hbm2ddl.auto">create</prop> CREACION DE LA BASE -->
+				<!-- <prop key="hibernate.hbm2ddl.auto">create</prop> CREACION DE LA BASE -->
 			</props>
 		</property>
 	</bean>

@@ -26,8 +26,8 @@ public class ComisionProducto extends Comision{
 	private Producto producto;
 
 	public ComisionProducto() {
-		/*super();
-		productos=new List<Producto>();*/
+		super();
+		this.producto=new Producto();
 	}
 
 	public ComisionProducto(int unidades, float importe, Producto producto) {

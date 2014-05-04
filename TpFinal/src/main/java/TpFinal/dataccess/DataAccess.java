@@ -200,4 +200,17 @@ public interface DataAccess {
 	
 	//Guardar
 	public void guardarPayroll(Payroll payroll);
+	
+//CAMPAÑA
+	//Por id
+	public Campania getCampania(Integer id);
+	
+	//Todos
+	public ArrayList<Campania> getCampania();
+	
+	//Actualizar
+	public void actualizarCampania(Campania item);
+	
+	//Guardar
+	public void guardarCampania(Campania item);
 }

@@ -500,4 +500,24 @@ public class DataAccessHibernateTemplate implements DataAccess {
 		this.hibernateTemplate.save(item);
 	}
 
+//Campania
+	@Override
+	public Campania getCampania(Integer id) {
+		return this.hibernateTemplate.get(Campania.class, id);
+	}
+
+	@Override
+	public ArrayList<Campania> getCampania() {
+		return (ArrayList<Campania>) this.hibernateTemplate.loadAll(Campania.class);
+	}
+
+	@Override
+	public void actualizarCampania(Campania item) {
+		this.hibernateTemplate.save(item);
+	}
+
+	@Override
+	public void guardarCampania(Campania item) {
+		this.hibernateTemplate.save(item);
+	}
 }
