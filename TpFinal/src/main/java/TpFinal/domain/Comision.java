@@ -119,4 +119,27 @@ public class Comision implements Serializable {
 	public void setImporte(float importe) {
 		this.importe = importe;
 	}
+	
+	public boolean equals(Comision registro)
+	{
+		if (!this.getFechaCreacion().equals(registro.getFechaCreacion()))
+			return false;
+		
+		if (!this.getFechaDesde().equals(registro.getFechaDesde()))
+			return false;
+		
+		if (!this.getFechaHasta().equals(registro.getFechaHasta()))
+			return false;
+		
+		if (!this.getVendedor().equals(registro.getVendedor()))
+			return false;
+		
+		if (this.getUnidades() != registro.getUnidades())
+			return false;
+		
+		if (this.getImporte() != registro.getImporte())
+			return false;
+		
+		return true;
+	}
 }

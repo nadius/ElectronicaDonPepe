@@ -70,4 +70,15 @@ public class Campania {
 	public void setActivo(boolean activo) {
 		this.activo = activo;
 	}
+	
+	public boolean equals(Campania campania)
+	{
+		if (!this.getFechaCreacion().equals(campania.getFechaCreacion()))
+			return false;
+		
+		if (!this.getProducto().equals(campania.getProducto()))
+			return false;
+		
+		return true;
+	}
 }

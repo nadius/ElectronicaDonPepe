@@ -115,4 +115,30 @@ public class Premio implements Serializable {
 	public void setPremiado(Vendedor premiado) {
 		this.premiado = premiado;
 	}
+	
+	public boolean equals(Premio registro)
+	{
+		if (this.isCampania() != registro.isCampania())
+			return false;
+		
+		if (!this.getFechaCreacion().equals(registro.getFechaCreacion()))
+			return false;
+		
+		if (!this.getFechaDesde().equals(registro.getFechaDesde()))
+			return false;
+		
+		if (!this.getFechaHasta().equals(registro.getFechaHasta()))
+			return false;
+		
+		if (!this.getPremiado().equals(registro.getPremiado()))
+			return false;
+		
+		if (!this.getProducto().equals(registro.getProducto()))
+			return false;
+		
+		if (this.getImporte() != registro.getImporte())
+			return false;
+		
+		return true;
+	}
 }

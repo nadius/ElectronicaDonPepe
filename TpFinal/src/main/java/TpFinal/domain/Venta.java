@@ -85,4 +85,21 @@ public class Venta implements Serializable {
 	public void setVendedor(Vendedor vendedor) {
 		this.vendedor = vendedor;
 	}
+	
+	public boolean equals(Venta registro)
+	{
+		if (!this.getFecha().equals(registro.getFecha()))
+			return false;
+		
+		if (!this.getVendedor().equals(registro.getVendedor()))
+			return false;
+		
+		if (!this.getProductos().containsAll(registro.getProductos()))
+			return false;
+		
+		if (this.getImporte()!= registro.getImporte())
+			return false;
+		
+		return true;
+	}
 }

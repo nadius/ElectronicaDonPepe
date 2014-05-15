@@ -193,4 +193,36 @@ public class Adicional implements Serializable {
 	public void setTotalAdicionales(float total) {
 		this.totalAdicionales = total;
 	}
+	
+	public boolean equals(Adicional registro)
+	{
+		if (!this.getFechaCreacion().equals(registro.getFechaCreacion()))
+			return false;
+		
+		if (!this.getFechaDesde().equals(registro.getFechaDesde()))
+			return false;
+		
+		if (!this.getFechaHasta().equals(registro.getFechaHasta()))
+			return false;
+		
+		if (!this.getVendedor().equals(registro.getVendedor()))
+			return false;
+		
+		if (!this.getComisionVentas().equals(registro.getComisionVentas()))
+			return false;
+		
+		if (!this.getComisionesProducto().containsAll(registro.getComisionesProducto()))
+			return false;
+		
+		if (!this.getMejorVendedorMes().equals(registro.getMejorVendedorMes()))
+			return false;
+		
+		if (!this.getCampanias().equals(registro.getCampanias()))
+			return false;
+		
+		if (this.getTotalAdicionales() != registro.getTotalAdicionales())
+			return false;
+		
+		return true;
+	}
 }

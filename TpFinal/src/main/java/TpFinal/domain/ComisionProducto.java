@@ -47,4 +47,15 @@ public class ComisionProducto extends Comision{
 	public void setProducto(Producto producto) {
 		this.producto = producto;
 	}
+	
+	public boolean equals(ComisionProducto registro)
+	{
+		if (!super.equals(registro))
+			return false;
+		
+		if (!this.getProducto().equals(registro.getProducto()))
+			return false;
+		
+		return true;
+	}
 }

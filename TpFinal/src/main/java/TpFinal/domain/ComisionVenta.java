@@ -39,4 +39,15 @@ public class ComisionVenta extends Comision{
 	public void setVentas(List<Venta> elementos) {
 		this.elementos = elementos;
 	}
+	
+	public boolean equals(ComisionVenta registro)
+	{
+		if (!super.equals(registro))
+			return false;
+		
+		if (!this.getVentas().containsAll(registro.getVentas()))
+			return false;
+		
+		return true;
+	}
 }

@@ -57,4 +57,15 @@ public class Vendedor implements Serializable {
 	public void setActivo(boolean activo) {
 		this.activo = activo;
 	}
+	
+	public boolean equals(Vendedor vendedor)
+	{
+		if (!this.getApellido().equals(vendedor.getApellido()))
+			return false;
+		
+		if (!this.getNombre().equals(vendedor.getNombre()))
+			return false;
+		
+		return true;
+	}
 }

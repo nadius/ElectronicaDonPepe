@@ -50,4 +50,15 @@ public class Producto implements Serializable {
 	public void setPrecioUnitario(float precioUnitario) {
 		this.precioUnitario = precioUnitario;
 	}
+	
+	public boolean equals(Producto registro)
+	{
+		if (!this.getNombre().equals(registro.getNombre()))
+			return false;
+		
+		if (this.getPrecioUnitario() != registro.getPrecioUnitario())
+			return false;
+		
+		return true;
+	}
 }
