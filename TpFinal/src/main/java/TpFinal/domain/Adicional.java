@@ -62,9 +62,6 @@ public class Adicional implements Serializable {
 	private float totalPremiosCampania;
 	@Column(name="total")
 	private float totalAdicionales;
-	@OneToOne//(cascade=CascadeType.ALL)
-	@JoinColumn(name="premioCampania_id")
-	private Premio campania;
 	
 	public Adicional() {
 		this.vendedor=new Vendedor();
