@@ -167,6 +167,10 @@ public interface Service {
 	//por id
 	public ComisionVenta getComisionVenta(Integer id);
 	public ComisionProducto getComisionProducto(Integer id);
+	
+	//por objeto
+	public int getComisionVenta(ComisionVenta registro);
+	public int getComisionProducto(ComisionProducto registro);
 		
 	//por fecha
 	public ArrayList<ComisionVenta> getComisionVenta(Date fecha);

@@ -37,7 +37,7 @@ public class AdicionalesGenerarReporte extends Adicionales {
 		}
 		request.setAttribute("vendedores", service.getVendedoresActivos());
 		request.setAttribute("productos", service.getProductos());
-		request.setAttribute("adicionales", service.getAdicionales());
+		request.setAttribute("adicionales", getAdicionales());
 		request.getRequestDispatcher("/WEB-INF/CalcularAdicionales.jsp").forward(request, response);
 	}
 
@@ -108,7 +108,7 @@ public class AdicionalesGenerarReporte extends Adicionales {
 		
 		for(Vendedor vendedor : vendedores)
 		{
-			if ((service.getAdicional(vendedor.getId(), desde, hasta)==null) && (service.existenVentas(vendedor, desde, hasta)))//si no hay un registro para esas fechas y vendedor
+			/*if ((service.getAdicional(vendedor.getId(), desde, hasta)==null) && (service.existenVentas(vendedor, desde, hasta)))//si no hay un registro para esas fechas y vendedor
 			{
 				adicional=calcularAdicionalVendedor(getFechaHoy(), desde, hasta, vendedor, premioMejorVendedorMes, premiosCampania);
 				setTotales(adicional);
@@ -118,7 +118,16 @@ public class AdicionalesGenerarReporte extends Adicionales {
 				adicional=service.getAdicional(vendedor.getId(), desde, hasta);//lo traigo de la base
 			
 			if (adicional!=null)//si en efecto hay un adicional calculado
-				adicionales.add(adicional);
+				adicionales.add(adicional);*/
+			
+			if (service.existenVentas(vendedor, desde, hasta))
+			{
+				adicional=calcularAdicionalVendedor(getFechaHoy(), desde, hasta, vendedor, premioMejorVendedorMes, premiosCampania);
+				setTotales(adicional);
+				service.guardarAdicional(adicional);
+				if (adicional!=null)//si en efecto hay un adicional calculado
+					adicionales.add(adicional);
+			}
 		}
 		
 		//mostrarResultado(adicionales);
@@ -259,7 +268,7 @@ public class AdicionalesGenerarReporte extends Adicionales {
 		{
 			for (Premio campania : premiosCampania)
 			{
-				if (vendedor.getId()==campania.getPremiado().getId())
+				if ((campania!=null) && (vendedor.getId()==campania.getPremiado().getId()))
 					campanias.add(campania);
 			}
 		}

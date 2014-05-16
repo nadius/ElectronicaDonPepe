@@ -73,6 +73,8 @@ public class Adicionales extends HttpServlet {
 		ArrayList<ComisionProducto> comisiones= new ArrayList<ComisionProducto>();
 		ArrayList<Venta>ventas = service.getVentas(vendedor, desde, hasta);
 		ArrayList<ComisionProductoMonto> montos=service.getMontosProducto();
+		ComisionProducto registro;
+		
 		int unidades=0;
 		
 		if (ventas.isEmpty())
@@ -90,7 +92,12 @@ public class Adicionales extends HttpServlet {
 				{
 					//System.out.print("\t\t venta: " + venta.getId() + " - "+ item.getProducto().getNombre()+ " encontrado en ");
 					unidades=contarProductoVenta(venta, item.getProducto());
-					comisiones.add(new ComisionProducto(fechaHoy, desde.getTime(), hasta.getTime(), vendedor, unidades, item.getMonto()*unidades, item.getProducto()));
+					registro = new ComisionProducto(fechaHoy, desde.getTime(), hasta.getTime(), vendedor, unidades, item.getMonto()*unidades, item.getProducto());
+					
+					if (service.getComisionProducto(registro)!=0)//si ya existe un registro calculado con estos parámetros, así no insertamos registros repetidos //TODO: testear!!
+						registro.setId(service.getComisionProducto(registro));
+					
+					comisiones.add(registro);
 					//System.out.print("\n");
 				}
 			}

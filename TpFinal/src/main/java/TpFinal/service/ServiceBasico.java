@@ -403,6 +403,26 @@ public class ServiceBasico implements Service {
 	public ComisionProducto getComisionProducto(Integer id) {
 		return dataAccess.getComisionProducto(id);
 	}
+	
+	@Override
+	public int getComisionVenta(ComisionVenta registro)
+	{
+		ArrayList<ComisionVenta> todos = dataAccess.getComisionVenta();
+		for (ComisionVenta item : todos)
+			if(item.equals(registro))
+				return item.getId();
+		return 0;
+	}
+	
+	@Override
+	public int getComisionProducto(ComisionProducto registro)
+	{
+		ArrayList<ComisionProducto> todos = dataAccess.getComisionProducto();
+		for (ComisionProducto item : todos)
+			if(item.equals(registro))
+				return item.getId();
+		return 0;
+	}
 
 	@Override
 	public ComisionVenta getComisionVenta(int idVendedor, GregorianCalendar desde, GregorianCalendar hasta)
