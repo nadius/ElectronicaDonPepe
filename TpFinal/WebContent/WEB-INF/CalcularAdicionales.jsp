@@ -480,7 +480,7 @@
 										      				</tr>
 										      			</thead>
 										      			<tbody>
-										      				<c:forEach items="${adicional.campanias}" var="comisionProducto">
+										      				<c:forEach items="${adicional.campanias}" var="registro">
 											        			<tr>
 											        				<td><center>${registro.id}</center></td>
 											        				<td><center><fmt:formatDate type="date" value="${registro.fechaCreacion}"/></center></td>
