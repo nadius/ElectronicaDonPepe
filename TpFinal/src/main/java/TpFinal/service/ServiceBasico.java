@@ -46,7 +46,8 @@ public class ServiceBasico implements Service {
 
 	@Override
 	public void guardarUsuario(Usuario usuario) {
-		dataAccess.guardarUsuario(usuario);
+		if (usuario.getId() == 0)
+			dataAccess.guardarUsuario(usuario);
 	}
 
 	@Override
@@ -87,7 +88,8 @@ public class ServiceBasico implements Service {
 
 	@Override
 	public void guardarRol(RolUsuario rol) {
-		dataAccess.guardarRol(rol);
+		if (rol.getId() == 0)
+			dataAccess.guardarRol(rol);
 	}
 
 //VENDEDOR
@@ -114,7 +116,8 @@ public class ServiceBasico implements Service {
 	
 	@Override
 	public void guardarVendedor(Vendedor vendedor) {
-		dataAccess.guardarVendedor(vendedor);
+		if (vendedor.getId() == 0)
+			dataAccess.guardarVendedor(vendedor);
 	}
 
 	@Override
@@ -135,7 +138,8 @@ public class ServiceBasico implements Service {
 
 	@Override
 	public void guardarProducto(Producto producto) {
-		dataAccess.guardarProducto(producto);
+		if (producto.getId() == 0)
+			dataAccess.guardarProducto(producto);
 	}
 
 //VENTA
@@ -156,19 +160,25 @@ public class ServiceBasico implements Service {
 	}
 	
 	@Override
-	public ArrayList<Venta> getVentas(Vendedor vendedor, GregorianCalendar desde, GregorianCalendar hasta)
+	public ArrayList<Venta> findVentas(int idVendedor, Date desde, Date hasta)
 	{
-		//System.out.println("Buscar desde " + desde.toString() + " hasta " + hasta.toString());
-		ArrayList<Venta> todos=getVentas(vendedor.getId());
+		System.out.println("Buscar desde " + desde.toString() + " hasta " + hasta.toString());
+		ArrayList<Venta> todos=getVentas(idVendedor);
 		ArrayList<Venta> seleccion=new ArrayList<Venta>();
-		GregorianCalendar calendario = new GregorianCalendar();
+		Date itemFecha;
+		//GregorianCalendar calendario = new GregorianCalendar();
 		
 		for (Venta item : todos)
 		{	
 			//System.out.println(item.getId() + ": " + item.getFechaCreacion().toString());
-			calendario.setTime(item.getFecha());
-			if (calendario.after(desde) && calendario.before(hasta))
+			//calendario.setTime(item.getFecha());
+			itemFecha= item.getFecha();
+			System.out.println("\tFecha: " + item.getFecha().toString());
+			if (itemFecha.compareTo(desde)>=0 && itemFecha.compareTo(hasta)<=0)
+			{
+				System.out.println("\t=)");
 				seleccion.add(item);
+			}
 		}
 		
 		//System.out.println("Encontrados " + seleccion.size() + " de " + todos.size() + " registros");
@@ -176,7 +186,7 @@ public class ServiceBasico implements Service {
 	}
 	
 	@Override
-	public ArrayList<Venta> getVentas(GregorianCalendar desde, GregorianCalendar hasta)
+	public ArrayList<Venta> findVentas(GregorianCalendar desde, GregorianCalendar hasta)
 	{
 		ArrayList<Venta> todos=getVentas();
 		ArrayList<Venta> seleccion=new ArrayList<Venta>();
@@ -202,14 +212,15 @@ public class ServiceBasico implements Service {
 	@Override
 	public boolean existenVentas(Vendedor vendedor, GregorianCalendar desde, GregorianCalendar hasta)
 	{
-		if (getVentas(vendedor, desde, hasta).isEmpty())
+		if (findVentas(vendedor.getId(), desde.getTime(), hasta.getTime()).isEmpty())
 			return false;
 		return true;
 	}
 
 	@Override
 	public void guardarVenta(Venta venta) {
-		dataAccess.guardarVenta(venta);
+		if (venta.getId() == 0)
+			dataAccess.guardarVenta(venta);
 	}
 
 //MONTO DE COMISIONES
@@ -235,7 +246,8 @@ public class ServiceBasico implements Service {
 	
 	@Override
 	public void guardarProductoMonto(ComisionProductoMonto item) {
-		dataAccess.guardarProductoMonto(item);
+		if (item.getId() == 0)
+			dataAccess.guardarProductoMonto(item);
 	}
 
 	@Override
@@ -262,7 +274,8 @@ public class ServiceBasico implements Service {
 
 	@Override
 	public void guardarVentaMonto(ComisionVentaMonto item) {
-		dataAccess.guardarVentaMonto(item);
+		if (item.getId() == 0)
+			dataAccess.guardarVentaMonto(item);
 	}
 	
 //MONTO DE PREMIOS
@@ -294,7 +307,8 @@ public class ServiceBasico implements Service {
 		
 	@Override
 	public void guardarPremioMonto(PremioMonto item) {
-		dataAccess.guardarPremioMonto(item);
+		if (item.getId() == 0)
+			dataAccess.guardarPremioMonto(item);
 	}
 
 //ADICIONAL
@@ -302,9 +316,22 @@ public class ServiceBasico implements Service {
 	public Adicional getAdicional(Integer idAdicional) {
 		return dataAccess.getAdicional(idAdicional);
 	}
+	
+	@Override
+	public int getAdicional(Adicional registro)
+	{
+		ArrayList<Adicional> todos = dataAccess.getAdicionales();
+		if (todos.isEmpty())
+			return 0;
+		
+		for (Adicional item : todos)
+			if(item.equals(registro))
+				return item.getId();
+		return 0;
+	}
 
 	@Override
-	public ArrayList<Adicional> getAdicional(Date fecha)
+	public ArrayList<Adicional> findAdicionales(Date fecha)
 	{
 		ArrayList<Adicional> todos = dataAccess.getAdicionales();
 		ArrayList<Adicional> rta= new ArrayList<Adicional>();
@@ -315,7 +342,7 @@ public class ServiceBasico implements Service {
 	}
 	
 	@Override
-	public ArrayList<Adicional> getAdicional(int idVendedor)
+	public ArrayList<Adicional> findAdicionales(int idVendedor)
 	{
 		ArrayList<Adicional> todos = dataAccess.getAdicionales();
 		ArrayList<Adicional> rta= new ArrayList<Adicional>();
@@ -326,9 +353,9 @@ public class ServiceBasico implements Service {
 	}
 	
 	@Override
-	public Adicional getAdicional(int idVendedor, GregorianCalendar desde, GregorianCalendar hasta)
+	public Adicional findAdicional(int idVendedor, GregorianCalendar desde, GregorianCalendar hasta)
 	{
-		ArrayList<Adicional> todos = getAdicional(idVendedor);
+		ArrayList<Adicional> todos = findAdicionales(idVendedor);
 		GregorianCalendar calendarioDesde = new GregorianCalendar();
 		GregorianCalendar calendarioHasta = new GregorianCalendar();
 		
@@ -343,9 +370,9 @@ public class ServiceBasico implements Service {
 	}
 	
 	@Override
-	public Adicional getAdicional(int idVendedor, Date fechaCreacion)
+	public Adicional findAdicional(int idVendedor, Date fechaCreacion)
 	{
-		ArrayList<Adicional> todos = getAdicional(idVendedor);
+		ArrayList<Adicional> todos = findAdicionales(idVendedor);
 		for (Adicional item : todos)
 			if (item.getFechaCreacion()==fechaCreacion)
 				return item;
@@ -353,7 +380,7 @@ public class ServiceBasico implements Service {
 	}
 	
 	@Override
-	public ArrayList<Adicional> getAdicional(GregorianCalendar desde, GregorianCalendar hasta)
+	public ArrayList<Adicional> findAdicionales(GregorianCalendar desde, GregorianCalendar hasta)
 	{
 		ArrayList<Adicional> todos = getAdicionales();
 		ArrayList<Adicional> seleccion = new ArrayList<Adicional>();
@@ -388,7 +415,8 @@ public class ServiceBasico implements Service {
 	
 	@Override
 	public void guardarAdicional(Adicional adicional) {
-		if (adicional.getComisionVentas()!=null)//si o si tiene que haber comision por ventas para que se justifique guardar un adicional
+		//guardarPremio(adicional.getMejorVendedorMes());
+		if (adicional.getComisionVentas()!=null && adicional.getId()==0)//si o si tiene que haber comision por ventas para que se justifique guardar un adicional
 			dataAccess.guardarAdicional(adicional);
 	}
 
@@ -408,6 +436,9 @@ public class ServiceBasico implements Service {
 	public int getComisionVenta(ComisionVenta registro)
 	{
 		ArrayList<ComisionVenta> todos = dataAccess.getComisionVenta();
+		if (todos.isEmpty())
+			return 0;
+		
 		for (ComisionVenta item : todos)
 			if(item.equals(registro))
 				return item.getId();
@@ -418,6 +449,10 @@ public class ServiceBasico implements Service {
 	public int getComisionProducto(ComisionProducto registro)
 	{
 		ArrayList<ComisionProducto> todos = dataAccess.getComisionProducto();
+		
+		if (todos.isEmpty())
+			return 0;
+		
 		for (ComisionProducto item : todos)
 			if(item.equals(registro))
 				return item.getId();
@@ -425,9 +460,9 @@ public class ServiceBasico implements Service {
 	}
 
 	@Override
-	public ComisionVenta getComisionVenta(int idVendedor, GregorianCalendar desde, GregorianCalendar hasta)
+	public ComisionVenta findComisionVenta(int idVendedor, GregorianCalendar desde, GregorianCalendar hasta)
 	{
-		ArrayList<ComisionVenta> todos = getComisionVenta(idVendedor);
+		ArrayList<ComisionVenta> todos = findComisionesVenta(idVendedor);
 		GregorianCalendar calendarioDesde = new GregorianCalendar();
 		GregorianCalendar calendarioHasta = new GregorianCalendar();
 		
@@ -442,9 +477,9 @@ public class ServiceBasico implements Service {
 	}
 
 	@Override
-	public ComisionProducto getComisionProducto(int idVendedor, GregorianCalendar desde, GregorianCalendar hasta, Producto producto)
+	public ComisionProducto findComisionProducto(int idVendedor, GregorianCalendar desde, GregorianCalendar hasta, Producto producto)
 	{
-		ArrayList<ComisionProducto> todos = getComisionProducto(idVendedor);
+		ArrayList<ComisionProducto> todos = findComisionesProducto(idVendedor);
 		GregorianCalendar calendarioDesde = new GregorianCalendar();
 		GregorianCalendar calendarioHasta = new GregorianCalendar();
 		
@@ -459,7 +494,7 @@ public class ServiceBasico implements Service {
 	}
 	
 	@Override
-	public ArrayList<ComisionVenta> getComisionVenta(Date fecha)
+	public ArrayList<ComisionVenta> findComisionesVenta(Date fecha)
 	{
 		ArrayList<ComisionVenta> todos = dataAccess.getComisionVenta();
 		ArrayList<ComisionVenta> rta= new ArrayList<ComisionVenta>();
@@ -470,7 +505,7 @@ public class ServiceBasico implements Service {
 	}
 	
 	@Override
-	public ArrayList<ComisionProducto> getComisionProducto(Date fecha)
+	public ArrayList<ComisionProducto> findComisionesProducto(Date fecha)
 	{
 		ArrayList<ComisionProducto> todos = dataAccess.getComisionProducto();
 		ArrayList<ComisionProducto> rta= new ArrayList<ComisionProducto>();
@@ -481,7 +516,7 @@ public class ServiceBasico implements Service {
 	}
 	
 	@Override
-	public ArrayList<ComisionVenta> getComisionVenta(int idVendedor)
+	public ArrayList<ComisionVenta> findComisionesVenta(int idVendedor)
 	{
 		ArrayList<ComisionVenta> todos = dataAccess.getComisionVenta();
 		ArrayList<ComisionVenta> rta= new ArrayList<ComisionVenta>();
@@ -492,7 +527,7 @@ public class ServiceBasico implements Service {
 	}
 	
 	@Override
-	public ArrayList<ComisionProducto> getComisionProducto(int idVendedor)
+	public ArrayList<ComisionProducto> findComisionesProducto(int idVendedor)
 	{
 		ArrayList<ComisionProducto> todos = dataAccess.getComisionProducto();
 		ArrayList<ComisionProducto> rta= new ArrayList<ComisionProducto>();
@@ -503,9 +538,9 @@ public class ServiceBasico implements Service {
 	}
 	
 	@Override
-	public ComisionVenta getComisionVenta(Date fecha, int idVendedor)
+	public ComisionVenta findComisionesVenta(Date fecha, int idVendedor)
 	{
-		ArrayList<ComisionVenta> todos = getComisionVenta(fecha);
+		ArrayList<ComisionVenta> todos = findComisionesVenta(fecha);
 		for (ComisionVenta item : todos)
 			if (item.getVendedor().getId()==idVendedor)
 				return item;
@@ -513,9 +548,9 @@ public class ServiceBasico implements Service {
 	}
 	
 	@Override
-	public ComisionProducto getComisionProducto(Date fecha, int idVendedor)
+	public ComisionProducto findComisionesProducto(Date fecha, int idVendedor)
 	{
-		ArrayList<ComisionProducto> todos = getComisionProducto(fecha);
+		ArrayList<ComisionProducto> todos = findComisionesProducto(fecha);
 		for (ComisionProducto item : todos)
 			if (item.getVendedor().getId()==idVendedor)
 				return item;
@@ -544,13 +579,13 @@ public class ServiceBasico implements Service {
 
 	@Override
 	public void guardarComisionVenta(ComisionVenta comisionVenta) {
-		if (comisionVenta!=null)
+		if (comisionVenta!=null && comisionVenta.getId()==0)
 			dataAccess.guardarComisionVenta(comisionVenta);
 	}
 
 	@Override
 	public void guardarComisionProducto(ComisionProducto comisionProducto) {
-		if (comisionProducto!=null)
+		if (comisionProducto!=null && comisionProducto.getId()==0)
 			dataAccess.guardarComisionProducto(comisionProducto);
 	}
 
@@ -558,6 +593,20 @@ public class ServiceBasico implements Service {
 	@Override
 	public Premio getPremio(Integer id) {
 		return dataAccess.getPremio(id);
+	}
+	
+	@Override
+	public int getPremio(Premio registro)
+	{
+		ArrayList<Premio> todos=dataAccess.getPremio();
+		
+		if (todos.isEmpty())
+			return 0;
+		
+		for (Premio item : todos)
+			if (item.equals(registro))
+				return item.getId();
+		return 0;
 	}
 
 	@Override
@@ -576,7 +625,7 @@ public class ServiceBasico implements Service {
 	}
 
 	@Override
-	public ArrayList<Premio> getPremioMejorVendedorMes(Date fechaCreacion)
+	public ArrayList<Premio> getPremiosMejorVendedorMes(Date fechaCreacion)
 	{
 		ArrayList<Premio> todos = dataAccess.getPremio();
 		ArrayList<Premio> rta= new ArrayList<Premio>();
@@ -587,7 +636,7 @@ public class ServiceBasico implements Service {
 	}
 	
 	@Override
-	public ArrayList<Premio> getPremioCampania(Date fechaCreacion)
+	public ArrayList<Premio> getPremiosCampania(Date fechaCreacion)
 	{
 		ArrayList<Premio> todos = dataAccess.getPremio();
 		ArrayList<Premio> rta= new ArrayList<Premio>();
@@ -598,9 +647,9 @@ public class ServiceBasico implements Service {
 	}
 
 	@Override
-	public Premio getPremioMejorVendedorMes(Date fechaCreacion, Vendedor vendedor)
+	public Premio findPremioMejorVendedorMes(Date fechaCreacion, Vendedor vendedor)
 	{
-		ArrayList<Premio> todos=getPremioMejorVendedorMes(fechaCreacion);
+		ArrayList<Premio> todos=getPremiosMejorVendedorMes(fechaCreacion);
 		for (Premio item : todos)
 			if (item.getPremiado().getId()==vendedor.getId())
 				return item;
@@ -630,7 +679,7 @@ public class ServiceBasico implements Service {
 	}
 	
 	@Override
-	public Premio getPremioCampania(Date desde, Date hasta, Vendedor vendedor)
+	public Premio findPremioCampania(Date desde, Date hasta, Vendedor vendedor)
 	{
 		ArrayList<Premio> todos=dataAccess.getPremioCampania();
 		for (Premio item : todos)
@@ -640,7 +689,7 @@ public class ServiceBasico implements Service {
 	}
 	
 	@Override
-	public Premio getPremioMejorVendedorMes(Date desde, int idVendedor)
+	public Premio findPremioMejorVendedorMes(Date desde, int idVendedor)
 	{
 		ArrayList<Premio> todos = getPremioMejorVendedorMes(idVendedor);
 		
@@ -653,7 +702,7 @@ public class ServiceBasico implements Service {
 	}
 	
 	@Override
-	public Premio getPremioCampania(int idVendedor, GregorianCalendar desde, GregorianCalendar hasta, Producto producto)
+	public Premio findPremioCampania(int idVendedor, GregorianCalendar desde, GregorianCalendar hasta, Producto producto)
 	{
 		ArrayList<Premio> todos = getPremioCampania(idVendedor);
 		GregorianCalendar calendarioDesde = new GregorianCalendar();
@@ -670,7 +719,7 @@ public class ServiceBasico implements Service {
 	}
 	
 	@Override
-	public Premio getPremioMejorVendedorMes(GregorianCalendar desde)
+	public Premio findPremioMejorVendedorMes(GregorianCalendar desde)
 	{
 		ArrayList<Premio> todos = getPremioMejorVendedorMes();
 		
@@ -686,7 +735,7 @@ public class ServiceBasico implements Service {
 	}
 	
 	@Override
-	public Premio getPremioCampania(GregorianCalendar desde, GregorianCalendar hasta, Producto producto)
+	public Premio findPremioCampania(GregorianCalendar desde, GregorianCalendar hasta, Producto producto)
 	{
 		ArrayList<Premio> todos = getPremioMejorVendedorMes();
 		
@@ -710,7 +759,7 @@ public class ServiceBasico implements Service {
 
 	@Override
 	public void guardarPremio(Premio premio) {
-		if (premio!=null)
+		if (premio!=null && premio.getId()==0)
 			dataAccess.guardarPremio(premio);
 	}
 
@@ -767,7 +816,8 @@ public class ServiceBasico implements Service {
 
 	@Override
 	public void guardarPayroll(Payroll payroll) {
-		dataAccess.guardarPayroll(payroll);
+		if (payroll.getId() == 0)
+			dataAccess.guardarPayroll(payroll);
 	}
 
 	@Override
@@ -801,12 +851,13 @@ public class ServiceBasico implements Service {
 	}
 
 	@Override
-	public void actualizarCampania(Campania item) {
-		dataAccess.guardarCampania(item);
+	public void guardarCampania(Campania item) {
+		if (item.getId() == 0)
+			dataAccess.guardarCampania(item);
 	}
 
 	@Override
-	public void guardarCampania(Campania item) {
+	public void actualizarCampania(Campania item) {
 		dataAccess.actualizarCampania(item);
 	}
 

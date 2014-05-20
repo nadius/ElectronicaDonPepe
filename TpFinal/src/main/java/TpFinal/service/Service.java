@@ -81,10 +81,10 @@ public interface Service {
 	public ArrayList<Venta> getVentas(int idVendedor);
 	
 	//Por fechas y vendedor
-	public ArrayList<Venta> getVentas(Vendedor vendedor, GregorianCalendar desde, GregorianCalendar hasta);
+	public ArrayList<Venta> findVentas(int idVendedor, Date desde, Date hasta);
 	
 	//Por fecha
-	public ArrayList<Venta> getVentas(GregorianCalendar desde, GregorianCalendar hasta);
+	public ArrayList<Venta> findVentas(GregorianCalendar desde, GregorianCalendar hasta);
 	
 	//Todos
 	public ArrayList<Venta> getVentas();
@@ -143,19 +143,19 @@ public interface Service {
 	public Adicional getAdicional(Integer idAdicional);
 	
 	//Por fecha
-	public ArrayList<Adicional> getAdicional(Date fecha);
+	public ArrayList<Adicional> findAdicionales(Date fecha);
 	
 	//Por Vendedor
-	public ArrayList<Adicional> getAdicional(int idVendedor);
+	public ArrayList<Adicional> findAdicionales(int idVendedor);
 	
 	//Por fecha y vendedor
-	public Adicional getAdicional(int idVendedor, Date fecha);
+	public Adicional findAdicional(int idVendedor, Date fechaCreacion);
 	
 	//Por fechas filtradas y vendedor
-	public Adicional getAdicional(int idVendedor, GregorianCalendar desde, GregorianCalendar hasta);
+	public Adicional findAdicional(int idVendedor, GregorianCalendar desde, GregorianCalendar hasta);
 	
 	//Por fechas filtradas
-	public ArrayList<Adicional> getAdicional(GregorianCalendar desde, GregorianCalendar hasta);
+	public ArrayList<Adicional> findAdicionales(GregorianCalendar desde, GregorianCalendar hasta);
 	
 	//todos
 	public ArrayList<Adicional> getAdicionales();
@@ -173,20 +173,20 @@ public interface Service {
 	public int getComisionProducto(ComisionProducto registro);
 		
 	//por fecha
-	public ArrayList<ComisionVenta> getComisionVenta(Date fecha);
-	public ArrayList<ComisionProducto> getComisionProducto(Date fecha);
+	public ArrayList<ComisionVenta> findComisionesVenta(Date fecha);
+	public ArrayList<ComisionProducto> findComisionesProducto(Date fecha);
 	
 	//por vendedor
-	public ArrayList<ComisionVenta> getComisionVenta(int idVendedor);
-	public ArrayList<ComisionProducto> getComisionProducto(int idVendedor);
+	public ArrayList<ComisionVenta> findComisionesVenta(int idVendedor);
+	public ArrayList<ComisionProducto> findComisionesProducto(int idVendedor);
 	
 	//por fecha y vendedor
-	public ComisionVenta getComisionVenta(Date fecha, int idVendedor);
-	public ComisionProducto getComisionProducto(Date fecha, int idVendedor);
+	public ComisionVenta findComisionesVenta(Date fecha, int idVendedor);
+	public ComisionProducto findComisionesProducto(Date fecha, int idVendedor);
 	
 	//por fecha filtrada y vendedor
-	public ComisionVenta getComisionVenta(int idVendedor, GregorianCalendar desde, GregorianCalendar hasta);
-	public ComisionProducto getComisionProducto(int idVendedor, GregorianCalendar desde, GregorianCalendar hasta, Producto producto);
+	public ComisionVenta findComisionVenta(int idVendedor, GregorianCalendar desde, GregorianCalendar hasta);
+	public ComisionProducto findComisionProducto(int idVendedor, GregorianCalendar desde, GregorianCalendar hasta, Producto producto);
 	
 	//todo
 	public ArrayList<ComisionVenta> getComisionVenta();
@@ -212,22 +212,23 @@ public interface Service {
 //PREMIO
 	//por id
 	public Premio getPremio(Integer id);
+	public int getPremio(Premio registro);
 	
 	//por fecha de creacion
-	public ArrayList<Premio> getPremioMejorVendedorMes(Date fechaCreacion);
-	public ArrayList<Premio> getPremioCampania(Date fechaCreacion);
+	public ArrayList<Premio> getPremiosMejorVendedorMes(Date fechaCreacion);
+	public ArrayList<Premio> getPremiosCampania(Date fechaCreacion);
 	
 	//por fecha y vendedor
-	public Premio getPremioMejorVendedorMes(Date fechaCreacion, Vendedor vendedor);
-	public Premio getPremioCampania(Date desde, Date hasta, Vendedor vendedor);
+	public Premio findPremioMejorVendedorMes(Date fechaCreacion, Vendedor vendedor);
+	public Premio findPremioCampania(Date desde, Date hasta, Vendedor vendedor);
 	
 	//Por fechas filtradas y vendedor
-	public Premio getPremioMejorVendedorMes(Date desde, int idVendedor);
-	public Premio getPremioCampania(int idVendedor, GregorianCalendar desde, GregorianCalendar hasta, Producto producto);
+	public Premio findPremioMejorVendedorMes(Date desde, int idVendedor);
+	public Premio findPremioCampania(int idVendedor, GregorianCalendar desde, GregorianCalendar hasta, Producto producto);
 	
 	//Por fechas filtradas
-	public Premio getPremioMejorVendedorMes(GregorianCalendar desde);
-	public Premio getPremioCampania(GregorianCalendar desde, GregorianCalendar hasta, Producto producto);
+	public Premio findPremioMejorVendedorMes(GregorianCalendar desde);
+	public Premio findPremioCampania(GregorianCalendar desde, GregorianCalendar hasta, Producto producto);
 	
 	//Por vendedor
 	public ArrayList<Premio> getPremioCampania(int idVendedor);
@@ -268,4 +269,6 @@ public interface Service {
 
 	boolean existenVentas(Vendedor vendedor, GregorianCalendar desde,
 			GregorianCalendar hasta);
+
+	int getAdicional(Adicional registro);
 }
