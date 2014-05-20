@@ -71,7 +71,7 @@ public class Adicionales extends HttpServlet {
 	{
 		//System.out.println("\tComision Producto: ");
 		ArrayList<ComisionProducto> comisiones= new ArrayList<ComisionProducto>();
-		ArrayList<Venta>ventas = service.getVentas(vendedor, desde, hasta);
+		ArrayList<Venta>ventas = service.findVentas(vendedor.getId(), desde.getTime(), hasta.getTime());
 		ArrayList<ComisionProductoMonto> montos=service.getMontosProducto();
 		ComisionProducto registro;
 		
@@ -110,7 +110,7 @@ public class Adicionales extends HttpServlet {
 	public ComisionVenta calcularComisionVenta(Vendedor vendedor, GregorianCalendar desde, GregorianCalendar hasta)
 	{
 		ComisionVenta comision= new ComisionVenta();
-		ArrayList<Venta>ventas = service.getVentas(vendedor, desde, hasta);
+		ArrayList<Venta>ventas = service.findVentas(vendedor.getId(), desde.getTime(), hasta.getTime());
 		ArrayList<ComisionVentaMonto> montos=service.getMontosVenta();
 		
 		if (ventas.isEmpty())
@@ -140,6 +140,9 @@ public class Adicionales extends HttpServlet {
 			}
 		}
 		
+		if (service.getComisionVenta(comision)!=0)
+			comision.setId(service.getComisionVenta(comision));
+		
 		//System.out.println("\trealizadas " + comision.getUnidades() + " ventas.");
 			
 		return comision;
@@ -147,17 +150,18 @@ public class Adicionales extends HttpServlet {
 	
 	public Premio isPremiadoVendedor(Vendedor vendedor, GregorianCalendar desde)
 	{
-		return service.getPremioMejorVendedorMes(desde.getTime(), vendedor.getId());
+		return service.findPremioMejorVendedorMes(desde.getTime(), vendedor.getId());
 	}
 	
 	public Premio isPremiadoCampania(Vendedor vendedor, GregorianCalendar desde, GregorianCalendar hasta, Producto producto)
 	{
-		return service.getPremioCampania(vendedor.getId(), desde, hasta, producto);
+		return service.findPremioCampania(vendedor.getId(), desde, hasta, producto);
 	}
 	
 	public Premio calcularPremioVendedor(GregorianCalendar desde)
 	{
 		int cantidad=0;
+		Premio premio;
 		ArrayList<Venta>ventas = new ArrayList<Venta>();
 		Vendedor premiado=new Vendedor();
 		PremioMonto monto=service.getMontoPremio(false);
@@ -168,7 +172,7 @@ public class Adicionales extends HttpServlet {
 	
 		for (Vendedor vendedor : vendedores)
 		{
-			ventas=service.getVentas(vendedor, desde, hasta);
+			ventas=service.findVentas(vendedor.getId(), desde.getTime(), hasta.getTime());//FIXIT: no recupera ninguna venta!
 			
 			if (!ventas.isEmpty())
 			{
@@ -185,11 +189,16 @@ public class Adicionales extends HttpServlet {
 		//System.out.print("\n");
 		}
 		
+		premio=new Premio(fechaHoy, desde.getTime(), hasta.getTime(), premiado, false, null, monto.getMonto());
+		
 		if (cantidad==0)
 			return null;
-		//System.out.println("\t" + premiado.getNombre() + " " + premiado.getApellido() + "(" + cantidad + ")");
+		if (service.getPremio(premio)!=0)
+			premio.setId(service.getPremio(premio));
 		
-		return new Premio(fechaHoy, desde.getTime(), hasta.getTime(), premiado, false, null, monto.getMonto());
+		System.out.println("Premio mejor vendedor del mes: (" + df.format(desde.getTime()) + " - " + df.format(hasta.getTime()) + ")\t" + premiado.getNombre() + " " + premiado.getApellido() + "(" + cantidad + ")");
+		
+		return premio;
 	}
 	
 	public Premio calcularPremioCampania(GregorianCalendar desde, GregorianCalendar hasta, Producto producto)
@@ -198,13 +207,14 @@ public class Adicionales extends HttpServlet {
 		ArrayList<Venta>ventas = new ArrayList<Venta>();
 		Vendedor premiado= new Vendedor();
 		PremioMonto monto=service.getMontoPremio(true);
+		Premio premio;
 		
 		//System.out.println("Premio mejor vendedor campania: (" + producto.getNombre() + " " + df.format(desde.getTime()) + " - " + df.format(hasta.getTime()) + ")");
 		
 		for (Vendedor vendedor : vendedores)
 		{
 			//System.out.println("\t " + vendedor.getNombre() + " " + vendedor.getApellido() + ":");
-			ventas=service.getVentas(vendedor, desde, hasta);
+			ventas=service.findVentas(vendedor.getId(), desde.getTime(), hasta.getTime());
 			if (!ventas.isEmpty())
 			{
 				for(Venta venta : ventas)
@@ -229,9 +239,13 @@ public class Adicionales extends HttpServlet {
 		
 		if (cantidad==0)
 			return null;
+		
+		premio = new Premio(fechaHoy, desde.getTime(), hasta.getTime(), premiado, true, producto, monto.getMonto());
+		if (service.getPremio(premio)!=0)
+			premio.setId(service.getPremio(premio));
 		//System.out.println("Premiado: "+ premiado.getNombre() + " " + premiado.getApellido() + "(" + cantidad + ")");
 		
-		return new Premio(fechaHoy, desde.getTime(), hasta.getTime(), premiado, true, producto, monto.getMonto());
+		return premio;
 	}
 	
 	@Override

@@ -83,19 +83,19 @@ public class AdicionalesGenerarReporte extends Adicionales {
 		ArrayList<Campania> campaniasActivas = service.getCampaniasActivas();
 		ArrayList<Premio> premiosCampania = new ArrayList<Premio>();
 		
-		if (service.getPremioMejorVendedorMes(desde)==null)//si no hay un registro para esa fecha se calcula
+		if (service.findPremioMejorVendedorMes(desde)==null)//si no hay un registro para esa fecha se calcula
 			premioMejorVendedorMes=calcularPremioVendedor(desde);
 		else
-			premioMejorVendedorMes=service.getPremioMejorVendedorMes(desde);//si hay un registro para esa fecha lo traigo de la base
+			premioMejorVendedorMes=service.findPremioMejorVendedorMes(desde);//si hay un registro para esa fecha lo traigo de la base
 		
 		if (!campaniasActivas.isEmpty())//si existen campanias activas
 		{
 			for (Campania campania : campaniasActivas)
 			{
-				if (service.getPremioCampania(desde, hasta, campania.getProducto())==null)//si no hay un registro para esa fecha
+				if (service.findPremioCampania(desde, hasta, campania.getProducto())==null)//si no hay un registro para esa fecha
 					premiosCampania.add(calcularPremioCampania(desde, hasta, campania.getProducto()));
 				else
-					premiosCampania.add(service.getPremioCampania(desde, hasta, campania.getProducto()));//lo traigo de la base
+					premiosCampania.add(service.findPremioCampania(desde, hasta, campania.getProducto()));//lo traigo de la base
 			}
 		}
 				
@@ -263,6 +263,7 @@ public class AdicionalesGenerarReporte extends Adicionales {
 		ComisionVenta cVenta=calcularComisionVenta(vendedor, desde, hasta);
 		ArrayList<Premio> campanias= new ArrayList<Premio>();
 		Premio mejorVendedorMes=null;
+		Adicional adicional;
 		
 		if (!premiosCampania.isEmpty())
 		{
@@ -276,7 +277,12 @@ public class AdicionalesGenerarReporte extends Adicionales {
 		if ((vendedorMes!=null) && (vendedorMes.getPremiado().getId() == vendedor.getId()))
 			mejorVendedorMes=vendedorMes;
 		
-		return new Adicional(fechaHoy, desde.getTime(), hasta.getTime(), vendedor, cVenta, cProductos, mejorVendedorMes, campanias);
+		adicional= new Adicional(fechaHoy, desde.getTime(), hasta.getTime(), vendedor, cVenta, cProductos, mejorVendedorMes, campanias);
+		
+		if (service.getAdicional(adicional)!=0)
+			adicional.setId(service.getAdicional(adicional));
+		
+		return adicional;
 	}
 	
 /*	public ArrayList<Premio> calcularPremiosCampaniaVendedor()
