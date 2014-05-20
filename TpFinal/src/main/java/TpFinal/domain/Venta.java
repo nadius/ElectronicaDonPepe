@@ -88,8 +88,8 @@ public class Venta implements Serializable {
 	
 	public boolean equals(Venta registro)
 	{
-		if (!this.getFecha().equals(registro.getFecha()))
-			return false;
+		/*if (!this.getFecha().equals(registro.getFecha()))
+			return false;*/
 		
 		if (!this.getVendedor().equals(registro.getVendedor()))
 			return false;

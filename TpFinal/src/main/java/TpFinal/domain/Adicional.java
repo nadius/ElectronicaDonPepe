@@ -50,7 +50,7 @@ public class Adicional implements Serializable {
 	@ManyToMany(cascade=CascadeType.ALL, fetch= FetchType.EAGER)
 	@Fetch(value = FetchMode.SUBSELECT)
 	private List<ComisionProducto> comisionesProducto;
-	@OneToOne//(cascade=CascadeType.ALL)
+	@OneToOne(cascade=CascadeType.ALL)
 	@JoinColumn(name="premioVendedor_id")
 	private Premio mejorVendedorMes;
 	@ManyToMany(cascade=CascadeType.ALL, fetch= FetchType.EAGER)
@@ -193,13 +193,13 @@ public class Adicional implements Serializable {
 	
 	public boolean equals(Adicional registro)
 	{
-		if (!this.getFechaCreacion().equals(registro.getFechaCreacion()))
+		/*if (this.getFechaCreacion().compareTo(registro.getFechaCreacion())!=0)
+			return false;*/
+		
+		if (this.getFechaDesde().compareTo(registro.getFechaDesde())!=0)
 			return false;
 		
-		if (!this.getFechaDesde().equals(registro.getFechaDesde()))
-			return false;
-		
-		if (!this.getFechaHasta().equals(registro.getFechaHasta()))
+		if (this.getFechaHasta().compareTo(registro.getFechaHasta())!=0)
 			return false;
 		
 		if (!this.getVendedor().equals(registro.getVendedor()))

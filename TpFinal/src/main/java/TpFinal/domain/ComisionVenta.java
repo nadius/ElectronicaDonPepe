@@ -42,7 +42,7 @@ public class ComisionVenta extends Comision{
 	
 	public boolean equals(ComisionVenta registro)
 	{
-		if (!super.equals(registro))
+		if (!this.equals(registro))//FIXIT: funciona?
 			return false;
 		
 		if (!this.getVentas().containsAll(registro.getVentas()))
