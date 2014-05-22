@@ -32,7 +32,7 @@ public class DataAccessHibernateTemplate implements DataAccess {
 	
 	@Override
 	public void guardarUsuario(Usuario usuario) {
-		this.hibernateTemplate.save(usuario);
+		this.hibernateTemplate.merge(usuario);
 	}
 	
 	@Override
@@ -55,7 +55,7 @@ public class DataAccessHibernateTemplate implements DataAccess {
 
 	@Override
 	public void guardarRol(RolUsuario rol) {
-		this.hibernateTemplate.save(rol);
+		this.hibernateTemplate.merge(rol);
 	}
 
 //VENDEDOR
@@ -71,7 +71,7 @@ public class DataAccessHibernateTemplate implements DataAccess {
 	
 	@Override
 	public void guardarVendedor(Vendedor vendedor) {
-		this.hibernateTemplate.save(vendedor);
+		this.hibernateTemplate.merge(vendedor);
 	}
 
 	@Override
@@ -92,7 +92,7 @@ public class DataAccessHibernateTemplate implements DataAccess {
 	
 	@Override
 	public void guardarProducto(Producto producto) {
-		this.hibernateTemplate.save(producto);
+		this.hibernateTemplate.merge(producto);
 	}
 
 //VENTA
@@ -120,7 +120,7 @@ public class DataAccessHibernateTemplate implements DataAccess {
 
 	@Override
 	public void guardarVenta(Venta venta) {
-		this.hibernateTemplate.save(venta);
+		this.hibernateTemplate.merge(venta);
 	}
 
 //ADICIONAL
@@ -173,7 +173,7 @@ public class DataAccessHibernateTemplate implements DataAccess {
 
 	@Override
 	public void guardarAdicional(Adicional adicional) {
-		this.hibernateTemplate.save(adicional);
+		this.hibernateTemplate.merge(adicional);
 	}
 
 //COMISION
@@ -288,13 +288,13 @@ public class DataAccessHibernateTemplate implements DataAccess {
 	@Override
 	public void guardarComisionVenta(ComisionVenta comisionVenta)
 	{
-		this.hibernateTemplate.save(comisionVenta);
+		this.hibernateTemplate.merge(comisionVenta);
 	}
 	
 	@Override
 	public void guardarComisionProducto(ComisionProducto comisionProducto)
 	{
-		this.hibernateTemplate.save(comisionProducto);
+		this.hibernateTemplate.merge(comisionProducto);
 	}
 
 //PREMIO
@@ -371,7 +371,7 @@ public class DataAccessHibernateTemplate implements DataAccess {
 	@Override
 	public void guardarPremio(Premio premio)
 	{
-		this.hibernateTemplate.save(premio);
+		this.hibernateTemplate.merge(premio);
 	}
 
 //PAYROLL
@@ -430,7 +430,7 @@ public class DataAccessHibernateTemplate implements DataAccess {
 	}
 	
 	public void guardarPayroll(Payroll payroll) {
-		this.hibernateTemplate.save(payroll);
+		this.hibernateTemplate.merge(payroll);
 	}
 
 //MONTOS COMISIONES
@@ -453,7 +453,7 @@ public class DataAccessHibernateTemplate implements DataAccess {
 	
 	@Override
 	public void guardarProductoMonto(ComisionProductoMonto item) {
-		this.hibernateTemplate.save(item);
+		this.hibernateTemplate.merge(item);
 	}
 
 //Comision Venta
@@ -475,7 +475,7 @@ public class DataAccessHibernateTemplate implements DataAccess {
 	
 	@Override
 	public void guardarVentaMonto(ComisionVentaMonto item) {
-		this.hibernateTemplate.save(item);
+		this.hibernateTemplate.merge(item);
 	}
 
 //Premio
@@ -497,7 +497,7 @@ public class DataAccessHibernateTemplate implements DataAccess {
 	
 	@Override
 	public void guardarPremioMonto(PremioMonto item) {
-		this.hibernateTemplate.save(item);
+		this.hibernateTemplate.merge(item);
 	}
 
 //Campania
@@ -513,11 +513,11 @@ public class DataAccessHibernateTemplate implements DataAccess {
 
 	@Override
 	public void actualizarCampania(Campania item) {
-		this.hibernateTemplate.save(item);
+		this.hibernateTemplate.merge(item);
 	}
 
 	@Override
 	public void guardarCampania(Campania item) {
-		this.hibernateTemplate.save(item);
+		this.hibernateTemplate.merge(item);
 	}
 }
