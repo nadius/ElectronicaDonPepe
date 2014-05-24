@@ -325,8 +325,13 @@ public class ServiceBasico implements Service {
 			return 0;
 		
 		for (Adicional item : todos)
+		{
 			if(item.equals(registro))
+			{
+				System.out.println("Encontrado registro Adicional id="+item.getId());
 				return item.getId();
+			}
+		}
 		return 0;
 	}
 
@@ -440,8 +445,13 @@ public class ServiceBasico implements Service {
 			return 0;
 		
 		for (ComisionVenta item : todos)
+		{
 			if(item.equals(registro))
+			{
+				System.out.println("Encontrado registro ComisionVenta id="+item.getId());
 				return item.getId();
+			}
+		}
 		return 0;
 	}
 	
@@ -454,8 +464,13 @@ public class ServiceBasico implements Service {
 			return 0;
 		
 		for (ComisionProducto item : todos)
+		{
 			if(item.equals(registro))
+			{
+				System.out.println("Encontrado registro ComisionProducto id="+item.getId());
 				return item.getId();
+			}
+		}
 		return 0;
 	}
 
@@ -604,8 +619,13 @@ public class ServiceBasico implements Service {
 			return 0;
 		
 		for (Premio item : todos)
-			if (item.equals(registro))
+		{
+			if(item.equals(registro))
+			{
+				System.out.println("Encontrado registro Premio id="+item.getId());
 				return item.getId();
+			}
+		}
 		return 0;
 	}
 

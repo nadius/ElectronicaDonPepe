@@ -88,8 +88,8 @@ public class Venta implements Serializable {
 	
 	public boolean equals(Venta registro)
 	{
-		/*if (!this.getFecha().equals(registro.getFecha()))
-			return false;*/
+		if (!this.getFecha().equals(registro.getFecha()))
+			return false;
 		
 		if (!this.getVendedor().equals(registro.getVendedor()))
 			return false;
@@ -101,5 +101,11 @@ public class Venta implements Serializable {
 			return false;
 		
 		return true;
+		/*if (this.getFecha().compareTo(registro.getFecha())==0 && 
+			this.getVendedor().equals(registro.getVendedor()) &&
+			this.getProductos().containsAll(registro.getProductos()) &&
+			this.getImporte() == registro.getImporte())
+			return true;
+		return false;*/
 	}
 }

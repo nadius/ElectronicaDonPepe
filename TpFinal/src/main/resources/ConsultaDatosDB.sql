@@ -126,6 +126,15 @@ INSERT INTO `Venta_Producto` (`Venta_id`, `productos_id`) VALUES
 (13, 12);
 
 --
+-- Volcado de datos para la tabla `Campania`
+--
+
+INSERT INTO `Campania` (`id`, `activo`, `fechaCreacion`, `producto_id`) VALUES
+(1, b'1', '2014-05-18 20:54:31', 7),
+(2, b'1', '2014-05-18 20:54:38', 8),
+(3, b'1', '2014-05-18 20:54:42', 9);
+
+--
 -- Volcado de datos para la tabla `Comision_Producto_Monto`
 --
 INSERT INTO `Comision_Producto_Monto` (`id`, `monto`, `producto_id`) VALUES
