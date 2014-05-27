@@ -89,4 +89,20 @@ public class DataAccessImplPlano implements DataAccessInterface {
 		closeConnection();
 	}
 
+	@SuppressWarnings("rawtypes")
+	@Override
+	public String createQuery(Class entityClass) {
+		return "from " + entityClass.getName() + " item";
+	}
+
+	@SuppressWarnings("rawtypes")
+	@Override
+	public List find(Object query) {
+		String consulta=(String) query;
+		openConnection();
+		List seleccion = session.createQuery(consulta).list();
+		closeConnection();
+		return seleccion;
+	}
+
 }

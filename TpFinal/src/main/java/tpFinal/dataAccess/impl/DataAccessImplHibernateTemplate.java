@@ -5,6 +5,7 @@ import org.hibernate.criterion.DetachedCriteria;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 
 import tpFinal.dataAccess.DataAccessInterface;
+import tpFinal.domain.Adicional;
 
 import java.util.List;
 
@@ -52,10 +53,17 @@ public class DataAccessImplHibernateTemplate implements DataAccessInterface {
 	public void delete(Object registro) {
 		this.hibernateTemplate.delete(registro);
 	}
-	
+
 	@SuppressWarnings("rawtypes")
-	public List find(String query)//TODO: por query o por criteria?
-	{
-		return this.hibernateTemplate.find(query);
+	@Override
+	public DetachedCriteria createQuery(Class entityClass) {
+		return DetachedCriteria.forClass(Adicional.class);
+	}
+
+	@SuppressWarnings("rawtypes")
+	@Override
+	public List find(Object param) {
+		DetachedCriteria criteria = (DetachedCriteria) param;
+		return hibernateTemplate.findByCriteria(criteria);
 	}
 }
