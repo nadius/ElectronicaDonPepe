@@ -1,6 +1,7 @@
 package tpFinal.dataAccess.impl;
 
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.DetachedCriteria;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 
 import tpFinal.dataAccess.DataAccessInterface;
@@ -29,32 +30,32 @@ public class DataAccessImplHibernateTemplate implements DataAccessInterface {
 
 	@Override
 	public void save(Object registro) {
-		// TODO Auto-generated method stub
-
+		this.hibernateTemplate.save(registro);
 	}
 
 	@Override
 	public void merge(Object registro) {
-		// TODO Auto-generated method stub
-
+		this.hibernateTemplate.merge(registro);
 	}
 
 	@Override
 	public void saveOrUpdate(Object registro) {
-		// TODO Auto-generated method stub
-
+		this.hibernateTemplate.saveOrUpdate(registro);
 	}
 
 	@Override
 	public void update(Object registro) {
-		// TODO Auto-generated method stub
-
+		this.hibernateTemplate.update(registro);
 	}
 
 	@Override
 	public void delete(Object registro) {
-		// TODO Auto-generated method stub
-
+		this.hibernateTemplate.delete(registro);
 	}
-
+	
+	@SuppressWarnings("rawtypes")
+	public List find(String query)//TODO: por query o por criteria?
+	{
+		return this.hibernateTemplate.find(query);
+	}
 }
