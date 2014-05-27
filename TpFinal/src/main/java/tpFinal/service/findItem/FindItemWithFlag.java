@@ -1,4 +1,4 @@
-package tpFinal.service;
+package tpFinal.service.findItem;
 
 import java.util.List;
 

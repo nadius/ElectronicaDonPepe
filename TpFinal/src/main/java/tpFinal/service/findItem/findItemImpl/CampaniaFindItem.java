@@ -1,12 +1,12 @@
-package tpFinal.service.findItemImpl;
+package tpFinal.service.findItem.findItemImpl;
 
 import java.util.Date;
 import java.util.ArrayList;
 
 import tpFinal.dao.impl.CampaniaDao;
 import tpFinal.domain.Campania;
-import tpFinal.service.FindItem;
-import tpFinal.service.FindItemWithFlag;
+import tpFinal.service.findItem.FindItem;
+import tpFinal.service.findItem.FindItemWithFlag;
 
 public class CampaniaFindItem implements FindItem<Campania>, FindItemWithFlag<Campania>{
 

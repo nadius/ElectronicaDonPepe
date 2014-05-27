@@ -1,12 +1,12 @@
-package tpFinal.service.findItemImpl;
+package tpFinal.service.findItem.findItemImpl;
 
 import java.util.Date;
 import java.util.ArrayList;
 
 import tpFinal.domain.Adicional;
 import tpFinal.dao.impl.AdicionalDao;
-import tpFinal.service.FindItem;
-import tpFinal.service.FindItemWithAuthor;
+import tpFinal.service.findItem.FindItem;
+import tpFinal.service.findItem.FindItemWithAuthor;
 
 public class AdicionalFindItem implements FindItem<Adicional>, FindItemWithAuthor<Adicional> {
 	private AdicionalDao dao;
