@@ -21,8 +21,25 @@ public class PremioMontoDao implements daoInterface<PremioMonto> {
 	@SuppressWarnings("unchecked")
 	@Override
 	public ArrayList<PremioMonto> getAll() {
-		return (ArrayList<PremioMonto>) dataAccess
-				.getAll(PremioMonto.class);
+		return (ArrayList<PremioMonto>) dataAccess.getAll(PremioMonto.class);
+	}
+	
+	public PremioMonto getMontoPremioCampania()
+	{
+		ArrayList<PremioMonto> todos= getAll();
+		for (PremioMonto item : todos)
+			if(item.isCampania())
+				return item;
+		return null;
+	}
+	
+	public PremioMonto getMontoPremioMes()
+	{
+		ArrayList<PremioMonto> todos= getAll();
+		for (PremioMonto item : todos)
+			if(!item.isCampania())
+				return item;
+		return null;
 	}
 
 	@Override

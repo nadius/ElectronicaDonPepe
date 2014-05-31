@@ -6,7 +6,7 @@ import tpFinal.domain.adicional.monto.ComisionProductoMonto;
 import tpFinal.dao.daoInterface;
 import tpFinal.dataAccess.DataAccessInterface;
 
-public class ComisionProudctoMontoDao implements daoInterface<ComisionProductoMonto> {
+public class ComisionProductoMontoDao implements daoInterface<ComisionProductoMonto> {
 	private DataAccessInterface dataAccess = null;
 
 	public void setDataAccess(DataAccessInterface dataAccess) {

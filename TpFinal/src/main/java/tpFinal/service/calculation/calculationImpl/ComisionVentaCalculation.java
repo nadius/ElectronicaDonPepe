@@ -2,35 +2,19 @@ package tpFinal.service.calculation.calculationImpl;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.List;
 
-import tpFinal.dao.impl.ComisionVentaDao;
 import tpFinal.dao.impl.ComisionVentaMontoDao;
-import tpFinal.dao.impl.VentaDao;
 import tpFinal.domain.ComisionVenta;
 import tpFinal.domain.Vendedor;
-import tpFinal.domain.Venta;
 import tpFinal.domain.adicional.monto.ComisionVentaMonto;
 import tpFinal.service.calculation.CalculationService;
 import tpFinal.service.findItem.findItemImpl.ComisionVentaFindItem;
-import tpFinal.service.findItem.findItemImpl.VentaFindItem;
 
-public class ComisionVentaCalculation implements CalculationService<ComisionVenta> {
-	private VentaFindItem findVentas;
+public class ComisionVentaCalculation extends CalculationService<ComisionVenta> {
 	private ComisionVentaFindItem findItem;
 	private ComisionVentaMontoDao daoMontos;
 	
-	ComisionVenta comision = new ComisionVenta();
 	
-	public ComisionVentaCalculation() {
-		comision=new ComisionVenta();
-	}
-
-	public void setFindVentas(VentaFindItem findVentas) {
-		this.findVentas = findVentas;
-	}
-
 	public void setFindItem(ComisionVentaFindItem findItem) {
 		this.findItem = findItem;
 	}
@@ -39,10 +23,10 @@ public class ComisionVentaCalculation implements CalculationService<ComisionVent
 		this.daoMontos = daoMontos;
 	}
 
-	@Override
-	public ComisionVenta calcular(Vendedor vendedor, Date fechaHoy, GregorianCalendar desde, GregorianCalendar hasta) {
-		ArrayList<Venta>ventas = findVentas.findBySpecificDatesCreatorId(vendedor.getId(), desde.getTime(), hasta.getTime());
+	public ComisionVenta calcular(Vendedor vendedor, Date fechaHoy, Date desde, Date hasta) {
+		//ArrayList<Venta>ventas = findVentas.findBySpecificDatesCreatorId(vendedor.getId(), desde, hasta);
 		ArrayList<ComisionVentaMonto> montos=daoMontos.getAll();
+		ComisionVenta comision;
 		
 		if (ventas.isEmpty())
 		{
@@ -50,9 +34,11 @@ public class ComisionVentaCalculation implements CalculationService<ComisionVent
 			return null;
 		}
 		
+		comision=new ComisionVenta();
+		
 		comision.setFechaCreacion(fechaHoy);
-		comision.setFechaDesde(desde.getTime());
-		comision.setFechaHasta(hasta.getTime());
+		comision.setFechaDesde(desde);
+		comision.setFechaHasta(hasta);
 		comision.setVendedor(vendedor);
 		comision.setVentas(ventas);
 		comision.setUnidades(ventas.size());
@@ -78,7 +64,7 @@ public class ComisionVentaCalculation implements CalculationService<ComisionVent
 	}
 
 	@Override
-	public void showResult() {
-		System.out.println("\trealizadas " + comision.getUnidades() + " ventas.");
+	public void showResult(ComisionVenta registro) {
+		System.out.println("\trealizadas " + registro.getUnidades() + " ventas.");
 	}
 }
