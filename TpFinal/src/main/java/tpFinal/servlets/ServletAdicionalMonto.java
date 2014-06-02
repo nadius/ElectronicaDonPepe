@@ -12,10 +12,10 @@ import tpFinal.domain.adicional.monto.*;
 import tpFinal.security.Usuario;
 
 //@WebServlet("/AdicionalesModificarMontos")
-public class AdicionalesModificarMontos extends Adicionales {
+public class ServletAdicionalMonto extends ServletAdicional {
 	private static final long serialVersionUID = 1L;
        
-    public AdicionalesModificarMontos() {
+    public ServletAdicionalMonto() {
         super();
         // TODO Auto-generated constructor stub
     }

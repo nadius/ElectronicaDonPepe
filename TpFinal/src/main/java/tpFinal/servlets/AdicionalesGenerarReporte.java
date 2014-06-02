@@ -15,7 +15,7 @@ import tpFinal.domain.*;
 import tpFinal.security.Usuario;
 
 //@WebServlet("/AdicionalGenerarReporte")
-public class AdicionalesGenerarReporte extends Adicionales {
+public class AdicionalesGenerarReporte extends ServletAdicional {
 	private static final long serialVersionUID = 1L;
        
    public AdicionalesGenerarReporte() {

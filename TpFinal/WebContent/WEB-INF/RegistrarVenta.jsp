@@ -132,7 +132,7 @@
 												<center>
 													<form action="alta" method="post">
 														<input type="hidden" name="accion" value="agregar">
-														<input type="hidden" name="id" value="${producto.id}">
+														<input type="hidden" name="idProducto" value="${producto.id}">
 														<input type="submit" value="Si">
 													</form>
 												</center>

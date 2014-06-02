@@ -21,7 +21,7 @@ import tpFinal.domain.adicional.monto.*;
 import tpFinal.security.Usuario;
 import tpFinal.service.Service;
 
-public class Adicionales extends HttpServlet {
+public class ServletAdicional extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	//private DataAccess dataAccess;
 	protected Service service;
@@ -32,7 +32,7 @@ public class Adicionales extends HttpServlet {
 	//protected ArrayList<Venta> ventas=null;
 	SimpleDateFormat df=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S");
 	
-	public Adicionales()
+	public ServletAdicional()
 	{
 		
 	}

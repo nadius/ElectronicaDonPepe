@@ -13,17 +13,7 @@
 	<!-- Configuracion de Apache Tiles -->
 <!-- 	<bean id="viewResolver" class="org.springframework.web.servlet.view.tiles3.TilesViewResolver"/> -->
 <!-- 	<bean id="tilesConfigurer" class="org.springframework.web.servlet.view.tiles3.TilesConfigurer"/> -->
-
-	<!-- Capa de acceso a datos "Tradicional" -->
-	<!-- <bean id="dataAccessBean" class="TpFinal.dataccess.impl.DataAccessPlano"
-		scope="singleton">
-	</bean> -->
-
-	<!-- Capa de accesso a datos usando el hibernateTemplate de Spring -->
-	<bean id="dataAccessBean" class="TpFinal.dataccess.DataAccessHibernateTemplate" scope="singleton">
-		<property name="sessionFactory" ref="sessionFactoryBean"></property> 
-	</bean>
-
+	
 	<bean id="dataSourceBean"
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
@@ -39,27 +29,27 @@
 
 		<property name="annotatedClasses">
 			<list>
-				<value>TpFinal.security.Usuario</value>
-				<value>TpFinal.security.RolUsuario</value>
-				<value>TpFinal.domain.Producto</value>
-				<value>TpFinal.domain.Vendedor</value>
-				<value>TpFinal.domain.Venta</value>
-				<value>TpFinal.domain.Adicional</value>
-				<value>TpFinal.domain.Comision</value>
-				<value>TpFinal.domain.ComisionProducto</value>
-				<value>TpFinal.domain.ComisionVenta</value>
-				<value>TpFinal.domain.Premio</value>
-				<value>TpFinal.domain.Campania</value>
-				<!-- <value>TpFinal.domain.Payroll</value> -->
-				<value>TpFinal.domain.adicional.monto.ComisionProductoMonto</value>
-				<value>TpFinal.domain.adicional.monto.ComisionVentaMonto</value>
-				<value>TpFinal.domain.adicional.monto.PremioMonto</value>
+				<value>tpFinal.security.Usuario</value>
+				<value>tpFinal.security.RolUsuario</value>
+				<value>tpFinal.domain.Producto</value>
+				<value>tpFinal.domain.Vendedor</value>
+				<value>tpFinal.domain.Venta</value>
+				<value>tpFinal.domain.Adicional</value>
+				<value>tpFinal.domain.Comision</value>
+				<value>tpFinal.domain.ComisionProducto</value>
+				<value>tpFinal.domain.ComisionVenta</value>
+				<value>tpFinal.domain.Premio</value>
+				<value>tpFinal.domain.Campania</value>
+				<!-- <value>tpFinal.domain.Payroll</value> -->
+				<value>tpFinal.domain.adicional.monto.ComisionProductoMonto</value>
+				<value>tpFinal.domain.adicional.monto.ComisionVentaMonto</value>
+				<value>tpFinal.domain.adicional.monto.PremioMonto</value>
 			</list>
 		</property>
 		<property name="hibernateProperties">
 			<props>
 				<prop key="hibernate.dialect">org.hibernate.dialect.MySQL5InnoDBDialect</prop>
-				<!-- <prop key="hibernate.hbm2ddl.auto">create</prop> CREACION DE LA BASE -->
+				<prop key="hibernate.hbm2ddl.auto">update</prop> <!-- CREACION DE LA BASE -->
 			</props>
 		</property>
 	</bean>
@@ -72,8 +62,152 @@
 
 	<!-- Para que lea los metodos anotados con @Transactional -->
 	<tx:annotation-driven transaction-manager="transactionManager" />
+	
+	<!-- Capa de acceso a datos "Tradicional" -->
+	<!-- <bean id="dataAccessBean" class="tpFinal.dataccess.impl.DataAccessPlano"
+		scope="singleton">
+	</bean> -->
 
-	<bean id="serviceBean" class="TpFinal.service.ServiceBasico">
+	<!-- Capa de accesso a datos usando el hibernateTemplate de Spring -->
+	<bean id="dataAccessBean" class="tpFinal.dataAccess.impl.DataAccessHibernateTemplate" scope="singleton">
+		<property name="sessionFactory" ref="sessionFactoryBean"></property> 
+	</bean>
+		
+	<!-- tpFinal.dao.impl -->
+	<bean id="AdicionalDao" class="tpFinal.dao.impl.AdicionalDao">
 		<property name="dataAccess" ref="dataAccessBean"></property>
 	</bean>
+	<bean id="CampaniaDao" class="tpFinal.dao.impl.CampaniaDao">
+		<property name="dataAccess" ref="dataAccessBean"></property>
+	</bean>
+	<bean id="ComisionProductoDao" class="tpFinal.dao.impl.ComisionProductoDao">
+		<property name="dataAccess" ref="dataAccessBean"></property>
+	</bean>
+	<bean id="ComisionProductoMontoDao" class="tpFinal.dao.impl.ComisionProductoMontoDao">
+		<property name="dataAccess" ref="dataAccessBean"></property>
+	</bean>
+	<bean id="ComisionVentaDao" class="tpFinal.dao.impl.ComisionVentaDao">
+		<property name="dataAccess" ref="dataAccessBean"></property>
+	</bean>
+	<bean id="ComisionVentaMontoDao" class="tpFinal.dao.impl.ComisionVentaMontoDao">
+		<property name="dataAccess" ref="dataAccessBean"></property>
+	</bean>
+	<bean id="PremioDao" class="tpFinal.dao.impl.PremioDao">
+		<property name="dataAccess" ref="dataAccessBean"></property>
+	</bean>
+	<bean id="PremioMontoDao" class="tpFinal.dao.impl.PremioMontoDao">
+		<property name="dataAccess" ref="dataAccessBean"></property>
+	</bean>
+	<bean id="ProductoDao" class="tpFinal.dao.impl.ProductoDao">
+		<property name="dataAccess" ref="dataAccessBean"></property>
+	</bean>
+	<bean id="RolUsuarioDao" class="tpFinal.dao.impl.RolUsuarioDao">
+		<property name="dataAccess" ref="dataAccessBean"></property>
+	</bean>
+	<bean id="UsuarioDao" class="tpFinal.dao.impl.UsuarioDao">
+		<property name="dataAccess" ref="dataAccessBean"></property>
+	</bean>
+	<bean id="VendedorDao" class="tpFinal.dao.impl.VendedorDao">
+		<property name="dataAccess" ref="dataAccessBean"></property>
+	</bean>
+	<bean id="VentaDao" class="tpFinal.dao.impl.VentaDao">
+		<property name="dataAccess" ref="dataAccessBean"></property>
+	</bean>
+	
+	<!-- tpFinal.service.findItem.findItemImpl -->
+	<bean id="AdicionalFindItem" class="tpFinal.service.findItem.findItemImpl.AdicionalFindItem">
+		<property name="dao" ref="AdicionalDao"></property>
+	</bean>
+	<bean id="CampaniaFindItem" class="tpFinal.service.findItem.findItemImpl.CampaniaFindItem">
+		<property name="dao" ref="CampaniaDao"></property>
+	</bean>
+	<bean id="ComisionProductoFindItem" class="tpFinal.service.findItem.findItemImpl.ComisionProductoFindItem">
+		<property name="dao" ref="ComisionProductoDao"></property>
+	</bean>
+	<bean id="ComisionVentaFindItem" class="tpFinal.service.findItem.findItemImpl.ComisionVentaFindItem">
+		<property name="dao" ref="ComisionVentaDao"></property>
+	</bean>
+	<bean id="PremioFindItem" class="tpFinal.service.findItem.findItemImpl.PremioFindItem">
+		<property name="dao" ref="PremioDao"></property>
+	</bean>
+	<bean id="ProductoFindItem" class="tpFinal.service.findItem.findItemImpl.ProductoFindItem">
+		<property name="dao" ref="ProductoDao"></property>
+	</bean>
+	<bean id="UsuarioFindItem" class="tpFinal.service.findItem.findItemImpl.UsuarioFindItem">
+		<property name="dao" ref="UsuarioDao"></property>
+	</bean>
+	<bean id="VendedorFindItem" class="tpFinal.service.findItem.findItemImpl.VendedorFindItem">
+		<property name="dao" ref="VendedorDao"></property>
+	</bean>
+	<bean id="VentaFindItem" class="tpFinal.service.findItem.findItemImpl.VentaFindItem">
+		<property name="dao" ref="VentaDao"></property>
+	</bean>
+	
+	<!-- tpFinal.service.calculation.calculationImpl -->
+	<bean id="Calculation" class="tpFinal.service.calculation.CalculationService">
+		<property name="findVentas" ref="VentaFindItem"></property>
+	</bean>
+	<bean id="AdicionalCalculation" class="tpFinal.service.calculation.calculationImpl.AdicionalCalculation">
+		<property name="dao" ref="AdicionalDao"></property>
+		<property name="findItem" ref="AdicionalFindItem"></property>
+		<property name="calculoPremioMes" ref="PremioMesCalculation"></property>
+		<property name="calculoPremioCampania" ref="PremioCampaniaCalculation"></property>
+		<property name="calculoComisionProducto" ref="ComisionProductoCalculation"></property>
+		<property name="calculoComisionVenta" ref="ComisionVentaCalculation"></property>
+	</bean>
+	<bean id="ComisionProductoCalculation" class="tpFinal.service.calculation.calculationImpl.ComisionProductoCalculation">
+		<property name="daoMontos" ref="ComisionProductoMontoDao"></property>
+		<property name="findItem" ref="ComisionProductoFindItem"></property>
+	</bean>
+	<bean id="ComisionVentaCalculation" class="tpFinal.service.calculation.calculationImpl.ComisionVentaCalculation">
+		<property name="daoMontos" ref="ComisionVentaMontoDao"></property>
+		<property name="findItem" ref="ComisionVentaFindItem"></property>
+	</bean>
+	<bean id="PremioCampaniaCalculation" class="tpFinal.service.calculation.calculationImpl.PremioCampaniaCalculation">
+		<property name="daoMontos" ref="PremioMontoDao"></property>
+		<property name="findItem" ref="PremioCampaniaFindItem"></property>
+		<property name="campaniaFindItem" ref="CampaniaFindItem"></property>
+	</bean>
+	<bean id="PremioMesCalculation" class="tpFinal.service.calculation.calculationImpl.PremioMesCalculation">
+		<property name="daoMontos" ref="PremioMontoDao"></property>
+		<property name="findItem" ref="PremioFindItem"></property>
+	</bean>
+	<bean id="UsuarioCalculation" class="tpFinal.service.UsuarioCalculation">
+		<property name="dao" ref="UsuarioDao"></property>
+		<property name="findItem" ref="UsuarioFindItem"></property>
+		<property name="rolDao" ref="RolUsuarioDao"></property>
+		<property name="vendedorDao" ref="VendedorDao"></property>
+	</bean>
+	<bean id="VendedorCalculation" class="tpFinal.service.VendedorCalculation">
+		<property name="dao" ref="VendedorDao"></property>
+		<property name="findItem" ref="VendedorFindItem"></property>
+		<property name="UsuarioCalculation" ref="usuarioCalculation"></property>
+	</bean>
+	<bean id="VentaCalculation" class="tpFinal.service.VentaCalculation">
+		<property name="dao" ref="VentaDao"></property>
+		<property name="productoDao" ref="ProductoDao"></property>
+	</bean>
+	
+	<!-- tpFinal.servlets -->
+	<bean id="Servlet" class="tpFinal.servlets.Servlet">
+		<property name="usuarioCalculation" ref="UsuarioCalculation"></property>
+	</bean>
+	<bean id="Login" class="tpFinal.servlets.ServletLogin">
+		<property name="findItem" ref="UsuarioFindItem"></property>
+		<property name="calculation" ref="UsuarioCalculation"></property>
+	</bean>
+	<bean id="Logout" class="tpFinal.servlets.ServletLogout"></bean>
+	<bean id="Index" class="tpFinal.servlets.ServletIndex"></bean>
+	<bean id="VentaNueva" class="tpFinal.servlets.ServletVentaNueva">
+		<property name="calculation" ref="VentaCalculation"></property>
+	</bean>
+	<bean id="VentaConsulta" class="tpFinal.servlets.ServletVentaConsulta"></bean>
+	<bean id="VentaDetalle" class="tpFinal.servlets.ServletVentaDetalle"></bean>
+	<bean id="Admin" class="tpFinal.servlets.ServletAdministrador">
+		<property name="usuarioCalculation" ref="UsuarioCalculation"></property>
+		<property name="vendedorCalculation" ref="VendedorCalculation"></property>
+	</bean>
+	<bean id="Adicionales" class="tpFinal.servlets.ServletAdicionales"></bean>
+	<bean id="Montos" class="tpFinal.servlets.ServletAdicionalMonto"></bean>
+	<bean id="Campanias" class="tpFinal.servlets.ServletServletCampania"></bean>
 </beans>

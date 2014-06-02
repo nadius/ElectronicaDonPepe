@@ -14,13 +14,13 @@ import tpFinal.domain.Producto;
 import tpFinal.security.Usuario;
 
 //@WebServlet("/AdicionalesAdministrarCampanias")
-public class AdicionalesAdministrarCampanias extends Adicionales {
+public class ServletCampania extends ServletAdicional {
 	private static final long serialVersionUID = 1L;
 	private ArrayList<Producto> listaProductos=new ArrayList<Producto>();
 	private ArrayList<Campania> listaCampaniasExistentes=new ArrayList<Campania>();
 	private ArrayList<Campania> listaCampaniasNoActivas=new ArrayList<Campania>();
        
-    public AdicionalesAdministrarCampanias() {
+    public ServletCampania() {
         super();
         // TODO Auto-generated constructor stub
     }
