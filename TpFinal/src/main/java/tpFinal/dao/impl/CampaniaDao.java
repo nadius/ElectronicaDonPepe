@@ -7,7 +7,7 @@ import tpFinal.dataAccess.DataAccessInterface;
 import tpFinal.domain.Campania;
 
 public class CampaniaDao implements daoInterface<Campania> {
-	private DataAccessInterface dataAccess = null;
+	private DataAccessInterface dataAccess;
 
 	public void setDataAccess(DataAccessInterface dataAccess) {
 		this.dataAccess = dataAccess;

@@ -8,7 +8,7 @@ import tpFinal.domain.ComisionVenta;
 
 public class ComisionVentaDao implements
 		daoInterface<ComisionVenta> {
-	private DataAccessInterface dataAccess = null;
+	private DataAccessInterface dataAccess;
 
 	public void setDataAccess(DataAccessInterface dataAccess) {
 		this.dataAccess = dataAccess;

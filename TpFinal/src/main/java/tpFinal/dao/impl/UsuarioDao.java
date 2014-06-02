@@ -7,7 +7,7 @@ import tpFinal.dataAccess.DataAccessInterface;
 import tpFinal.security.Usuario;
 
 public class UsuarioDao implements daoInterface<Usuario> {
-	private DataAccessInterface dataAccess = null;
+	private DataAccessInterface dataAccess;
 
 	public void setDataAccess(DataAccessInterface dataAccess) {
 		this.dataAccess = dataAccess;

@@ -7,7 +7,7 @@ import tpFinal.dataAccess.DataAccessInterface;
 import tpFinal.domain.adicional.monto.PremioMonto;
 
 public class PremioMontoDao implements daoInterface<PremioMonto> {
-	private DataAccessInterface dataAccess = null;
+	private DataAccessInterface dataAccess;
 
 	public void setDataAccess(DataAccessInterface dataAccess) {
 		this.dataAccess = dataAccess;

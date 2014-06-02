@@ -7,7 +7,7 @@ import tpFinal.dao.daoInterface;
 import tpFinal.dataAccess.DataAccessInterface;
 
 public class ComisionProductoMontoDao implements daoInterface<ComisionProductoMonto> {
-	private DataAccessInterface dataAccess = null;
+	private DataAccessInterface dataAccess;
 
 	public void setDataAccess(DataAccessInterface dataAccess) {
 		this.dataAccess = dataAccess;

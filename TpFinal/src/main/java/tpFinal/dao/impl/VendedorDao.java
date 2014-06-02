@@ -7,7 +7,7 @@ import tpFinal.dataAccess.DataAccessInterface;
 import tpFinal.domain.Vendedor;
 
 public class VendedorDao implements daoInterface<Vendedor> {
-	private DataAccessInterface dataAccess = null;
+	private DataAccessInterface dataAccess;
 
 	public void setDataAccess(DataAccessInterface dataAccess) {
 		this.dataAccess = dataAccess;

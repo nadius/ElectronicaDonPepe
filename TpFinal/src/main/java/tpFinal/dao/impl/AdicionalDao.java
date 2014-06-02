@@ -9,7 +9,7 @@ import tpFinal.dataAccess.DataAccessInterface;
 import tpFinal.domain.Adicional;
 
 public class AdicionalDao implements daoInterface<Adicional> {
-	private DataAccessInterface dataAccess = null;
+	private DataAccessInterface dataAccess;
 
 	public void setDataAccess(DataAccessInterface dataAccess) {
 		this.dataAccess = dataAccess;
@@ -22,7 +22,7 @@ public class AdicionalDao implements daoInterface<Adicional> {
 	
 	public int findDuplicate(Adicional registro)//solo para busqueda de duplicados
 	{
-		if (registro.getId()!=0)//si el registro tiene un id es porque ya está en la base de datos
+		if (registro.getId()!=0)//si el registro tiene un id es porque ya estï¿½ en la base de datos
 			return 0;
 
 		DetachedCriteria criterio = this.createCriteria(registro);
