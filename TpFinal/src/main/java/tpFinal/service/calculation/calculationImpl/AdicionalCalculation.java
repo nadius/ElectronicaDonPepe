@@ -88,7 +88,6 @@ public class AdicionalCalculation extends CalculationService<Adicional>{
 		return adicionales;
 	}
 	
-	@SuppressWarnings("deprecation")
 	public Adicional calcularUno(Vendedor vendedor, Date fechaHoy, Date desde, Date hasta, Premio vendedorMes, ArrayList<Premio> campanias) {
 		GregorianCalendar gregorianHasta= new GregorianCalendar();
 		gregorianHasta.setTime(desde);
@@ -117,6 +116,7 @@ public class AdicionalCalculation extends CalculationService<Adicional>{
 		registro.setTotalAdicionales(subtotales[2]);
 	}
 	
+	@SuppressWarnings("unused")
 	public float[] calcularSubtotales(Adicional registro)//FIXIT: función temporalmente acá hasta llegar a esta parte del refractor
 	{
 		float[] subtotales = new float[3];
