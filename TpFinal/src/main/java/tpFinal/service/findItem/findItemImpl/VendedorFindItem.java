@@ -36,7 +36,7 @@ public class VendedorFindItem implements FindItemWithFlag<Vendedor>{
 		ArrayList<Vendedor> answer= new ArrayList<Vendedor>();
 		for(Vendedor item : all)
 		{
-			if (item.isActivo())
+			if (item.isActivo()==flagValue)
 				answer.add(item);
 		}
 		return answer;

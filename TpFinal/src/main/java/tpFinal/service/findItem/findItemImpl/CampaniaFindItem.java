@@ -22,7 +22,7 @@ private CampaniaDao dao;
 		ArrayList<Campania> answer= new ArrayList<Campania>();
 		for(Campania item : all)
 		{
-			if (item.isActivo())
+			if (item.isActivo()==flagValue)
 				answer.add(item);
 		}
 		return answer;
