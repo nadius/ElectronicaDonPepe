@@ -150,6 +150,7 @@
 	<bean id="AdicionalCalculation" class="tpFinal.service.calculation.calculationImpl.AdicionalCalculation">
 		<property name="dao" ref="AdicionalDao"></property>
 		<property name="findItem" ref="AdicionalFindItem"></property>
+		<property name="findVentas" ref="VentaFindItem"></property>
 		<property name="calculoPremioMes" ref="PremioMesCalculation"></property>
 		<property name="calculoPremioCampania" ref="PremioCampaniaCalculation"></property>
 		<property name="calculoComisionProducto" ref="ComisionProductoCalculation"></property>

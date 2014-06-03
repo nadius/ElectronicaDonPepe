@@ -1,16 +1,15 @@
 package tpFinal.service.calculation.calculationImpl;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 import tpFinal.dao.impl.ComisionVentaMontoDao;
 import tpFinal.domain.ComisionVenta;
 import tpFinal.domain.Vendedor;
 import tpFinal.domain.adicional.monto.ComisionVentaMonto;
-import tpFinal.service.calculation.CalculationService;
+//import tpFinal.service.calculation.CalculationService;
 import tpFinal.service.findItem.findItemImpl.ComisionVentaFindItem;
 
-public class ComisionVentaCalculation extends CalculationService<ComisionVenta> {
+public class ComisionVentaCalculation extends AdicionalCalculation{
 	private ComisionVentaFindItem findItem;
 	private ComisionVentaMontoDao daoMontos;
 	
@@ -23,7 +22,7 @@ public class ComisionVentaCalculation extends CalculationService<ComisionVenta> 
 		this.daoMontos = daoMontos;
 	}
 
-	public ComisionVenta calcular(Vendedor vendedor, Date fechaHoy, Date desde, Date hasta) {
+	public ComisionVenta calcular(Vendedor vendedor) {
 		//ArrayList<Venta>ventas = findVentas.findBySpecificDatesCreatorId(vendedor.getId(), desde, hasta);
 		ArrayList<ComisionVentaMonto> montos=daoMontos.getAll();
 		ComisionVenta comision;
@@ -37,8 +36,8 @@ public class ComisionVentaCalculation extends CalculationService<ComisionVenta> 
 		comision=new ComisionVenta();
 		
 		comision.setFechaCreacion(fechaHoy);
-		comision.setFechaDesde(desde);
-		comision.setFechaHasta(hasta);
+		comision.setFechaDesde(fechaDesde);
+		comision.setFechaHasta(fechaHasta);
 		comision.setVendedor(vendedor);
 		comision.setVentas(ventas);
 		comision.setUnidades(ventas.size());
@@ -63,8 +62,8 @@ public class ComisionVentaCalculation extends CalculationService<ComisionVenta> 
 		return comision;
 	}
 
-	@Override
-	public void showResult(ComisionVenta registro) {
-		System.out.println("\trealizadas " + registro.getUnidades() + " ventas.");
+	//@Override
+	public String showResult(ComisionVenta registro) {
+		return "\t id = " + registro.getId() + "\t Ventas: " + registro.getUnidades() + "\t Importe: " + registro.getId();
 	}
 }

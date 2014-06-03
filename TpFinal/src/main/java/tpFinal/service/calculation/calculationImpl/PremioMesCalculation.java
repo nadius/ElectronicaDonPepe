@@ -8,10 +8,10 @@ import tpFinal.domain.Premio;
 import tpFinal.domain.Vendedor;
 import tpFinal.domain.Venta;
 import tpFinal.domain.adicional.monto.PremioMonto;
-import tpFinal.service.calculation.CalculationService;
+//import tpFinal.service.calculation.CalculationService;
 import tpFinal.service.findItem.findItemImpl.PremioFindItem;
 
-public class PremioMesCalculation extends CalculationService<Premio>{
+public class PremioMesCalculation extends AdicionalCalculation{
 	private PremioFindItem findItem;
 	protected PremioMontoDao daoMontos;
 		
@@ -23,7 +23,7 @@ public class PremioMesCalculation extends CalculationService<Premio>{
 		this.findItem=findItem;
 	}
 	
-	public Premio calcular(ArrayList<Vendedor> vendedores, Date fechaHoy, Date fechaDesde, Date fechaHasta) {
+	public Premio calcular(Date fechaHasta) {
 		int cantidad=0;
 		Premio registro;
 		ArrayList<Venta>ventas = new ArrayList<Venta>();
@@ -61,9 +61,12 @@ public class PremioMesCalculation extends CalculationService<Premio>{
 				
 		return registro;
 	}
-		@Override
-	public void showResult(Premio registro) {
-		System.out.println("Premio mejor vendedor del mes: (" + registro.getFechaDesde().toString() + " - " + registro.getFechaHasta().toString() + ")\t" + registro.getPremiado().getNombre() + " " + registro.getPremiado().getApellido());
+	//@Override
+	public String showResult(Premio registro) {
+		if (registro!=null)
+			return "\t id = " + registro.getId() + "\t idProducto: " + registro.getProducto().getId() + "\t Importe: " + registro.getImporte();
+		else
+			return "\t No";
 	}
 
 }

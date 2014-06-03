@@ -1,7 +1,6 @@
 package tpFinal.service.calculation.calculationImpl;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 import tpFinal.dao.impl.PremioMontoDao;
 import tpFinal.domain.Campania;
@@ -10,12 +9,12 @@ import tpFinal.domain.Producto;
 import tpFinal.domain.Vendedor;
 import tpFinal.domain.Venta;
 import tpFinal.domain.adicional.monto.PremioMonto;
-import tpFinal.service.calculation.CalculationService;
+//import tpFinal.service.calculation.CalculationService;
 import tpFinal.service.findItem.findItemImpl.CampaniaFindItem;
 import tpFinal.service.findItem.findItemImpl.PremioFindItem;
 
 
-public class PremioCampaniaCalculation extends CalculationService<Premio>{
+public class PremioCampaniaCalculation extends AdicionalCalculation{
 	private PremioMontoDao daoMontos;
 	private PremioFindItem findItem;
 	private CampaniaFindItem campaniaFindItem;
@@ -31,7 +30,7 @@ public class PremioCampaniaCalculation extends CalculationService<Premio>{
 		this.campaniaFindItem=campaniaFindItem;
 	}
 	
-	public Premio calcular(ArrayList<Vendedor> vendedores, Date fechaHoy, Date fechaDesde, Date fechaHasta, Producto producto)
+	public Premio calcular(Producto producto)
 	{
 		int cantidad=0, cuenta=0;
 		//ArrayList<Venta>ventas = new ArrayList<Venta>();
@@ -78,18 +77,29 @@ public class PremioCampaniaCalculation extends CalculationService<Premio>{
 		return registro;
 	}
 	
-	@Override
-	public void showResult(Premio registro) {
-		System.out.println("Premio mejor vendedor del mes: (" + registro.getFechaDesde().toString() + " - " + registro.getFechaHasta().toString() + ")\t" + registro.getPremiado().getNombre() + " " + registro.getPremiado().getApellido());
-	}
-	public ArrayList<Premio> calcularTodos(ArrayList<Vendedor> vendedores, Date fechaHoy, Date fechaDesde, Date fechaHasta) {
+	public ArrayList<Premio> calcularTodos() {
 		ArrayList<Campania> campaniasActivas=campaniaFindItem.getAllByFlag(true);
 		ArrayList<Premio> premiosCampania=new ArrayList<Premio>();
 		if (!campaniasActivas.isEmpty())
 		{
 			for (Campania item : campaniasActivas)
-				premiosCampania.add(calcular(vendedores, fechaHoy, fechaDesde, fechaHasta, item.getProducto()));
+				premiosCampania.add(calcular(item.getProducto()));
 		}
 		return premiosCampania;
+	}
+	
+	//@Override
+	private String showResult(Premio registro) {
+		if (registro!=null)
+			return "\t id = " + registro.getId() + "\t idProducto: " + registro.getProducto().getId() + "\t Importe: " + registro.getImporte();
+		else
+			return "\t No";
+	}
+	
+	public String showResultAll(ArrayList<Premio> registros){
+		String rta="";
+		for (Premio item : registros)
+			rta.concat(showResult(item) + "\n");
+		return rta;
 	}
 }
