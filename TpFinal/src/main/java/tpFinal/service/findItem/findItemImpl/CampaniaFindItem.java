@@ -45,6 +45,15 @@ private CampaniaDao dao;
 		return 0;
 	}
 
+	public Campania findByProducto(Integer idProducto)
+	{
+		ArrayList<Campania> all= dao.getAll();
+		for (Campania item : all)
+			if (item.getProducto().getId() == idProducto)
+				return item;
+		return null;
+	}
+	
 	@Override
 	public ArrayList<Campania> findByCreationDate(Date creationDate) {
 		ArrayList<Campania> all = dao.getAll();

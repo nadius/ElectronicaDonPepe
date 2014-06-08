@@ -1,6 +1,8 @@
 package tpFinal.servlets;
 
 import java.io.IOException;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -113,4 +115,17 @@ public abstract class Servlet extends HttpServlet{//Funciones comunes a todos lo
 	}
 	
 	//public abstract void setDefaultParams();
+	
+/*
+ * 
+ */
+	public Date getFecha(String tipo)
+	{
+		Integer dia, mes, anio;
+		dia = parseString(getParameter(tipo+"Dia"));
+		mes = parseString(getParameter(tipo+"Mes"));
+		anio = parseString(getParameter(tipo+"Anio"));
+		
+		return new GregorianCalendar(anio,mes-1,dia,0,0,0).getTime();
+	}
 }

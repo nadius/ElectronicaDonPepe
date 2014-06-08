@@ -3,7 +3,7 @@ package tpFinal.servlets;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
+import java.util.ArrayList;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -12,36 +12,37 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
-import tpFinal.service.AdicionalService;
-import tpFinal.servlets.Servlet;
+import tpFinal.domain.Venta;
+import tpFinal.service.VentaService;
 
-public class ServletAdicional extends Servlet {
+//@WebServlet("/venta/consulta")
+public class ServletVentaConsulta extends Servlet {
 	private static final long serialVersionUID = 1L;
-	private int rolPagina=1;
-	private AdicionalService service;
+	private int rolPagina=2;
+	private VentaService service;
 	
-	SimpleDateFormat df=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S");
-	
-	public ServletAdicional()
-	{
-		
-	}
-	
+	public ServletVentaConsulta() {
+        super();
+    }
+
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		setRequestResponse(request, response);
+
+		service.resetCarrito();
 		
 		if (!isLogedIn()){
 			redirectLogin();
 		}
 		else if (isAllowed(rolPagina)){
 			setDefaultAttributes();
-			redirectPagina("CalcularAdicionales");
+			redirectPagina("MostrarVenta");
 		}
 		else{
 			redirectPaginaError();
 		}
 	}
 
+	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		setRequestResponse(request, response);
 		
@@ -50,41 +51,20 @@ public class ServletAdicional extends Servlet {
 		
 		SimpleDateFormat df=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S");
 		System.out.println("Calculando adicionales desde " + df.format(fechaDesde) + " hasta " + df.format(fechaHasta));
-		setParamsVendedores();
-		service.calcular(fechaDesde, fechaHasta);
-		setDefaultAttributes();
-		redirectPagina("CalcularAdicionales");
+		
+		ArrayList<Venta> lista = service.findBySpecificDatesCreatorId(usuario.getVendedor().getId(), fechaDesde, fechaHasta);
+		
+		setAttribute("lista", lista);
+		redirectPagina("MostrarVenta");
 	}
 	
 	@Override
 	public void init(ServletConfig config) {
 		ApplicationContext ctx = WebApplicationContextUtils.getRequiredWebApplicationContext(config.getServletContext());
-		this.service = (AdicionalService) ctx.getBean("AdicionalService");
+		this.service = (VentaService) ctx.getBean("VentaService");
 	}
-	
-	public int[] getParamVendedoresIntArray(){
-		int cantVendedores=service.getVendedoresActivos().size(), i;
-		int[] vendedoresElegidosInteger=new int[cantVendedores];
-		
-		for (i=0; i<=cantVendedores; i++)
-			vendedoresElegidosInteger[i]=0;
-		
-		for (i=1; i<=cantVendedores; i++)//recupero todos los parametros
-			vendedoresElegidosInteger[i-1]=parseString(getParameter("vendedor"+i));
-		
-		return vendedoresElegidosInteger;
-	}
-	
-	public void setParamsVendedores(){
-		for (int i : getParamVendedoresIntArray()){
-			if (i!=0){
-				service.addVendedor(i);
-			}
-		}
-	}
-	
+
 	private void setDefaultAttributes() {
-		setAttribute("vendedores", service.getVendedoresActivos());
-		setAttribute("adicionales", service.getAll());
+		setAttribute("lista", service.findByCreatorId(usuario.getVendedor().getId()));
 	}
 }

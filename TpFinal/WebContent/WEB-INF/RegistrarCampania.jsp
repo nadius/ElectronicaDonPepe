@@ -60,7 +60,7 @@
 											<td><center>Fecha creacion</center></td>
 											<td><center>Nombre</center></td>
 											<td><center>Precio unitario</center></td>
-											<td><center>Eliminar?</center></td>
+											<td><center>Estado</center></td>
 										</tr>
 									</thead>
 									<tbody>
@@ -76,13 +76,24 @@
 												<td><center>${item.producto.id} - ${item.producto.nombre}</center></td>
 												<td><center><fmt:formatNumber type="currency" currencyCode="ARS">${item.producto.precioUnitario}</fmt:formatNumber></center></td>
 												<td>
-													<center>
-														<form action="campania" method="post">
-															<input type="hidden" name="accion" value="eliminar">
-															<input type="hidden" name="idCampania" value="${item.id}">
-															<input type="submit" value="Si">
-														</form>
-													</center>
+													<c:if test="${item.activo=='true'}">
+														<center>
+															<form action="campania" method="post">
+																<input type="hidden" name="accion" value="eliminar">
+																<input type="hidden" name="idCampania" value="${item.id}">
+																<input type="submit" value="Desactivar">
+															</form>
+														</center>
+													</c:if>
+													<c:if test="${item.activo!='true'}">
+														<center>
+															<form action="campania" method="post">
+																<input type="hidden" name="accion" value="agregar">
+																<input type="hidden" name="idCampania" value="${item.producto.id}">
+																<input type="submit" value="Activar">
+															</form>
+														</center>
+													</c:if>
 												</td>
 											</tr>
 										</c:forEach>

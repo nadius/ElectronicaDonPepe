@@ -9,18 +9,18 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
-import tpFinal.service.calculation.calculationImpl.VentaCalculation;
+import tpFinal.service.VentaService;
 
 //@WebServlet("/venta/alta")
 public class ServletVentaNueva extends Servlet {
 	private static final long serialVersionUID = 1L;
 	private int rolPagina=2;
-	private VentaCalculation calculation;
+	private VentaService service;
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		setRequestResponse(request, response);
 
-		calculation.resetCarrito();
+		service.resetCarrito();
 		
 		if (!isLogedIn()){
 			redirectLogin();
@@ -40,10 +40,10 @@ public class ServletVentaNueva extends Servlet {
 		String accion = getParameter("accion");
 		
 		if (accion.equals("agregar"))
-			calculation.Agregar(parseString(getParameter("idProducto")));
+			service.Agregar(parseString(getParameter("idProducto")));
 		if (accion.equals("guardar"))
 		{
-			error=calculation.calcular(usuario.getVendedor(), getParameter("id"));
+			error=service.calcular(usuario.getVendedor(), getParameter("id"));
 				
 			if (error.equals(""))//todo salio bien
 				setAttribute("ok", "La venta se guardo correctamente.");
@@ -58,12 +58,12 @@ public class ServletVentaNueva extends Servlet {
 	@Override
 	public void init(ServletConfig config) {
 		ApplicationContext ctx = WebApplicationContextUtils.getRequiredWebApplicationContext(config.getServletContext());
-		this.calculation = (VentaCalculation) ctx.getBean("VentaCalculation");
+		this.service = (VentaService) ctx.getBean("VentaService");
 	}
 	
 	public void setDefaultAttributes(){
-		setAttribute("productos", calculation.getListaTodosProductos());
-		setAttribute("listaComprados", calculation.getListaComprados());
-		setAttribute("total", calculation.getTotal());
+		setAttribute("productos", service.getListaTodosProductos());
+		setAttribute("listaComprados", service.getListaComprados());
+		setAttribute("total", service.getTotal());
 	}
 }

@@ -21,23 +21,22 @@ public class VentaCalculation {
 	public void setDao(VentaDao dao) {
 		this.dao = dao;
 	}
-/*
-	public void setFindItem(VentaFindItem findItem) {
-		this.findItem = findItem;
-	}*/
-	
 	public void setProductoDao(ProductoDao productoDao) {
 		this.productoDao = productoDao;
 	}
 
+/*	public void setFindItem(VentaFindItem findItem) {
+		this.findItem = findItem;
+	}*/
+
+	public ArrayList<Producto> getListaTodosProductos() {
+		return productoDao.getAll();
+	}
+	
 	public ArrayList<Producto> getListaComprados() {
 		return listaComprados;
 	}
 	
-	public ArrayList<Producto> getListaTodosProductos() {
-		return productoDao.getAll();
-	}
-
 	public float getTotal() {
 		return total;
 	}
@@ -94,7 +93,7 @@ public class VentaCalculation {
 		return mensaje;
 	}
 	
-	public float calcularImporte()
+	private float calcularImporte()
 	{
 		float importe=0;
 		for (Producto item : listaComprados)
@@ -102,7 +101,7 @@ public class VentaCalculation {
 		return importe;
 	}
 	
-	public String verificarDatos(Venta venta)
+	private String verificarDatos(Venta venta)
 	{
 		String mensaje="";
 		//if (venta.getId())

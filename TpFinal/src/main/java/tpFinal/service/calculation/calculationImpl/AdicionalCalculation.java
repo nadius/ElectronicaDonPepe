@@ -50,7 +50,10 @@ public class AdicionalCalculation{
 		this.findVentas = findVentas;
 	}
 	
-	
+	public ArrayList<Vendedor> getVendedoresActivos() {
+		return (ArrayList<Vendedor>) vendedorFindItem.getAllByFlag(true);
+	}
+
 	public void setCalculoPremioMes(PremioMesCalculation calculoPremioMes){
 		this.calculoPremioMes=calculoPremioMes;
 	}
@@ -75,20 +78,14 @@ public class AdicionalCalculation{
 		return vendedores;
 	}
 	
-	public ArrayList<Vendedor> getVendedoresActivos() {
-		return (ArrayList<Vendedor>) vendedorFindItem.getAllByFlag(true);
+	public void setVendedores(ArrayList<Vendedor> vendedores) {
+		this.vendedores = vendedores;
 	}
 	
-	public ArrayList<Adicional> getAdicionales(){
-		ArrayList<Adicional> todos = dao.getAll();
-		for (Adicional registro : todos)
-			setTotales(registro);
-		return todos;
-	}
 
-	public ArrayList<Adicional> calcularTodos(ArrayList<Vendedor> vendedores, Date fechaDesde, Date fechaHasta){
+	public ArrayList<Adicional> calcularTodos(Date fechaDesde, Date fechaHasta){
 		ArrayList<Adicional> adicionales = new ArrayList<Adicional>();
-		this.vendedores=vendedores;
+		
 		this.fechaHoy=new Date();
 		this.fechaDesde=fechaDesde;
 		this.fechaHasta=fechaHasta;
@@ -135,7 +132,7 @@ public class AdicionalCalculation{
 		return adicionales;
 	}
 	
-	public Adicional calcularUno(Vendedor vendedor, Date fechaHoy, Date desde, Date hasta, Premio vendedorMes, ArrayList<Premio> campanias) {
+	private Adicional calcularUno(Vendedor vendedor, Date fechaHoy, Date desde, Date hasta, Premio vendedorMes, ArrayList<Premio> campanias) {
 		ArrayList<ComisionProducto> cProductos=calculoComisionProducto.calcularTodos(vendedor);
 		ComisionVenta cVenta=calculoComisionVenta.calcular(vendedor);
 		Adicional registro;
@@ -160,7 +157,7 @@ public class AdicionalCalculation{
 	}
 	
 	@SuppressWarnings("unused")
-	public float[] calcularSubtotales(Adicional registro)
+	private float[] calcularSubtotales(Adicional registro)
 	{
 		float[] subtotales = new float[3];
 		for (float i : subtotales)
@@ -192,7 +189,7 @@ public class AdicionalCalculation{
 		return subtotales;
 	}
 	
-	public int contarProductoVenta(Venta venta, Producto producto)
+	protected int contarProductoVenta(Venta venta, Producto producto)
 	{
 		int i=0;
 		ArrayList<Producto> productosVenta=(ArrayList<Producto>) venta.getProductos();
