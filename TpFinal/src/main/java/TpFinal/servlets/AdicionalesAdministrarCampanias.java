@@ -4,8 +4,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -22,7 +20,6 @@ public class AdicionalesAdministrarCampanias extends Adicionales {
        
     public AdicionalesAdministrarCampanias() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -39,11 +36,11 @@ public class AdicionalesAdministrarCampanias extends Adicionales {
 			return;
 		}
 		
-		setListaCampaniasExistentes(service.getCampaniasActivas());
-		setListaProductos(getProductosNoCampania());
-		setListaCampaniasNoActivas(service.getCampaniasNoActivas());
+		listaCampaniasExistentes = service.getCampaniasActivas();
+		listaProductos = getProductosNoCampania();
+		listaCampaniasNoActivas = service.getCampaniasNoActivas();
 		
-		request.setAttribute("campaniasExistentes", listaCampaniasExistentes);
+		request.setAttribute("campanias", service.getCampanias());
 		request.setAttribute("productos", listaProductos);
 		request.getRequestDispatcher("/WEB-INF/RegistrarCampania.jsp").forward(request, response);
 	}
@@ -57,12 +54,12 @@ public class AdicionalesAdministrarCampanias extends Adicionales {
 		if (accion.equals("eliminar"))
 			eliminarCampania(request.getParameter("idCampania"));
 		
-		setListaCampaniasExistentes(service.getCampaniasActivas());
-		setListaProductos(getProductosNoCampania());
-		setListaCampaniasNoActivas(service.getCampaniasNoActivas());
+		listaCampaniasExistentes = service.getCampaniasActivas();
+		listaProductos = getProductosNoCampania();
+		listaCampaniasNoActivas = service.getCampaniasNoActivas();
 		
-		request.setAttribute("campaniasExistentes", listaCampaniasExistentes);
-		request.setAttribute("productos", listaProductos);
+		request.setAttribute("campanias", service.getCampanias());
+		request.setAttribute("productos", getProductosNoCampania());
 		request.getRequestDispatcher("/WEB-INF/RegistrarCampania.jsp").forward(request, response);
 	}
 	
@@ -109,7 +106,7 @@ public class AdicionalesAdministrarCampanias extends Adicionales {
 		ArrayList<Producto> todosProductos = service.getProductos();
 		ArrayList<Producto> seleccion = service.getProductos();
 		
-		if (getListaCampaniasExistentes()==null || getListaCampaniasExistentes().isEmpty())
+		if (listaCampaniasExistentes==null || listaCampaniasExistentes.isEmpty())
 			return todosProductos;
 		
 		for (Producto producto : todosProductos)
@@ -149,31 +146,5 @@ public class AdicionalesAdministrarCampanias extends Adicionales {
 			if (item.getProducto().getId() == idProducto)
 				return true;
 		return false;
-	}
-
-	public ArrayList<Producto> getListaProductos() {
-		return listaProductos;
-	}
-
-	public void setListaProductos(ArrayList<Producto> listaProductos) {
-		this.listaProductos = listaProductos;
-	}
-
-	public ArrayList<Campania> getListaCampaniasExistentes() {
-		return listaCampaniasExistentes;
-	}
-
-	public void setListaCampaniasExistentes(
-			ArrayList<Campania> listaCampaniasExistentes) {
-		this.listaCampaniasExistentes = listaCampaniasExistentes;
-	}
-
-	public ArrayList<Campania> getListaCampaniasNoActivas() {
-		return listaCampaniasNoActivas;
-	}
-
-	public void setListaCampaniasNoActivas(
-			ArrayList<Campania> listaCampaniasNoActivas) {
-		this.listaCampaniasNoActivas = listaCampaniasNoActivas;
 	}
 }

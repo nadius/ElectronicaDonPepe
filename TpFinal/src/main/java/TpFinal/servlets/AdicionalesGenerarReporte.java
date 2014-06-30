@@ -61,9 +61,8 @@ public class AdicionalesGenerarReporte extends Adicionales {
 	{
 		ArrayList<Adicional> adicionales = new ArrayList<Adicional>(); 
 		//FECHAS
-		//Producto productoCampania=service.getProducto(Integer.parseInt(request.getParameter("productoCampania")));
-		GregorianCalendar desde = getParamFecha(request,"desde");
-		GregorianCalendar hasta = getParamFecha(request,"hasta");
+		GregorianCalendar desde = getParamFechaSoloMesAnio(request);
+		GregorianCalendar hasta = getParamFechaUnMesMas(desde);
 		SimpleDateFormat df=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S");
 		System.out.println("Calculando adicionales desde " + df.format(desde.getTime()) + " hasta " + df.format(hasta.getTime()));
 		
@@ -71,56 +70,32 @@ public class AdicionalesGenerarReporte extends Adicionales {
 		Integer[] vendedoresElegidos=getParamVendedores(request);
 		setVendedores(setListVendedores(vendedoresElegidos));
 		
-/*		//PRODUCTO
-		String productoString = request.getParameter("productoCampania");
-		System.out.println("Producto campania: " + productoString);
-		Producto productoCampania=null;
-		if (productoString!=null || !productoString.equals("null") || !productoString.equals(""))//si no hay un producto para una campaña seleccionado 
-			productoCampania=service.getProducto(Integer.parseInt(productoString));*/
+		if (service.findVentas(desde, getFechaIntervaloHasta(desde)).isEmpty()){//si no hay ventas no se hace nada más
+			request.setAttribute("error", "No existen ventas para el período solicitado");
+			return;
+		}
 		
 		//PREMIOS (los calculo primero porque no están relacionados a los vendedores elegidos
 		Premio premioMejorVendedorMes = new Premio();
 		ArrayList<Campania> campaniasActivas = service.getCampaniasActivas();
 		ArrayList<Premio> premiosCampania = new ArrayList<Premio>();
-		
-		if (service.findPremioMejorVendedorMes(desde)==null)//si no hay un registro para esa fecha se calcula
-			premioMejorVendedorMes=calcularPremioVendedor(desde);
-		else
-			premioMejorVendedorMes=service.findPremioMejorVendedorMes(desde);//si hay un registro para esa fecha lo traigo de la base
+
+		premioMejorVendedorMes=calcularPremioVendedor(desde);//Nueva version que incluye la funcion int getPremio(Premio)
 		
 		if (!campaniasActivas.isEmpty())//si existen campanias activas
 		{
 			for (Campania campania : campaniasActivas)
 			{
-				if (service.findPremioCampania(desde, hasta, campania.getProducto())==null)//si no hay un registro para esa fecha
-					premiosCampania.add(calcularPremioCampania(desde, hasta, campania.getProducto()));
-				else
-					premiosCampania.add(service.findPremioCampania(desde, hasta, campania.getProducto()));//lo traigo de la base
+				premiosCampania.add(calcularPremioCampania(desde, hasta, campania.getProducto()));//Nueva version que incluye la funcion int getPremio(Premio)
 			}
 		}
 				
-		//calculo los adicionales en general
+		//ADICIONALES (Los que dependen del vendedor)
 		Adicional adicional=new Adicional();
-		/*adicional.setFechaCreacion(getFechaHoy());
-		adicional.setFechaDesde(desde.getTime());
-		adicional.setFechaHasta(hasta.getTime());
-		Adicional adicional=new Adicional(getFechaHoy(),desde.getTime(),hasta.getTime());*/
 		
 		for(Vendedor vendedor : vendedores)
-		{
-			/*if ((service.getAdicional(vendedor.getId(), desde, hasta)==null) && (service.existenVentas(vendedor, desde, hasta)))//si no hay un registro para esas fechas y vendedor
-			{
-				adicional=calcularAdicionalVendedor(getFechaHoy(), desde, hasta, vendedor, premioMejorVendedorMes, premiosCampania);
-				setTotales(adicional);
-				service.guardarAdicional(adicional);
-			}
-			else
-				adicional=service.getAdicional(vendedor.getId(), desde, hasta);//lo traigo de la base
-			
-			if (adicional!=null)//si en efecto hay un adicional calculado
-				adicionales.add(adicional);*/
-			
-			if (service.existenVentas(vendedor, desde, hasta))
+		{			
+			if (service.existenVentas(vendedor, desde, getFechaIntervaloHasta(desde)))
 			{
 				adicional=calcularAdicionalVendedor(getFechaHoy(), desde, hasta, vendedor, premioMejorVendedorMes, premiosCampania);
 				setTotales(adicional);
@@ -134,7 +109,7 @@ public class AdicionalesGenerarReporte extends Adicionales {
 		
 		request.setAttribute("adicionales", adicionales);
 	}
-	
+
 	public ArrayList<Vendedor> setListVendedores(Integer[] ids)
 	{
 		ArrayList<Vendedor> seleccion=new ArrayList<Vendedor>();

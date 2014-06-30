@@ -45,6 +45,7 @@ public class VentaNueva extends HttpServlet {
 				listaTodos=dataAccess.getProductos();
 				request.setAttribute("productos", listaTodos);
 				request.setAttribute("total", total);//para que se muestre que el subtotal está en cero
+				request.setAttribute("id", dataAccess.getVentas().size()+1);//guarda un valor sugerido para el id
 				request.getRequestDispatcher("/WEB-INF/RegistrarVenta.jsp").forward(request, response);
 			}
 			else
@@ -66,14 +67,8 @@ public class VentaNueva extends HttpServlet {
 		if (accion.equals("agregar"))
 			Agregar(request.getParameter("id"));
 		if (accion.equals("guardar"))
-		{//TODO: hacer una test que recalcule el importe total de las ventas, por las dudas.
-			/*if (id.equals(""))
-				error=Guardar(vendedor);
-			else
-				error=Guardar(vendedor, id);*/
-			
-			//if (!id.equals(""))//el campo id no debe ser vacio porque es obligatorio
-				error=Guardar(vendedor, id);
+		{
+			error=Guardar(vendedor, id);
 				
 			if (error.equals(""))//todo salio bien
 				request.setAttribute("ok", "La venta se guardo correctamente.");
@@ -84,7 +79,7 @@ public class VentaNueva extends HttpServlet {
 		request.setAttribute("productos", listaTodos);
 		request.setAttribute("listaComprados", listaComprados);
 		request.setAttribute("total", total);
-		
+		request.setAttribute("id", dataAccess.getVentas().size()+1);//guarda un valor sugerido para el id
 		request.getRequestDispatcher("/WEB-INF/RegistrarVenta.jsp").forward(request, response);
 	}	
 	
@@ -134,7 +129,6 @@ public class VentaNueva extends HttpServlet {
 		if (id.equals(""))
 			return "Por favor ingrese un id";
 		
-		Venta nuevaVenta=new Venta();
 		Venta busquedaVenta=dataAccess.getVenta(Integer.parseInt(id));
 		
 		if(busquedaVenta!=null)//si existe una venta con ese id
@@ -143,10 +137,8 @@ public class VentaNueva extends HttpServlet {
 					+ busquedaVenta.getVendedor().getNombre() + busquedaVenta.getVendedor().getApellido()
 					+ ". Por favor elija un nuevo id o deje el campo en blanco";
 		
-		nuevaVenta.setFecha(new Date());
-		nuevaVenta.setProductos(listaComprados);
-		nuevaVenta.setImporte(total);
-		nuevaVenta.setVendedor(vendedor);
+		Venta nuevaVenta=new Venta(new Date(),listaComprados,total,vendedor);
+		nuevaVenta.setId(Integer.parseInt(id));
 		
 		String mensaje=verificarDatos(nuevaVenta);//si todo salio bien
 		if (mensaje.equals(""))
@@ -169,18 +161,15 @@ public class VentaNueva extends HttpServlet {
 	
 	public String verificarDatos(Venta venta)
 	{
-		String mensaje="";
-		//if (venta.getId())
-		//Venta verificacion=dataAccess.getVenta(id);
 		if (venta.getFecha()==null)
-			mensaje.concat(" fecha vacia");
-		if (venta.getProductos()==null)
-			mensaje.concat(" lista de productos vacia");
+			return "Fecha vacia";
+		if (venta.getProductos()==null || venta.getProductos().isEmpty())
+			return "Lista de productos vacia";
 		if (venta.getImporte()==0)
-			mensaje.concat(" importe vacio");
+			return "Importe vacio";
 		if(venta.getVendedor()==null)
-			mensaje.concat(" vendedor vacio");
-		return mensaje;
+			return "Vendedor vacio";
+		return "";
 	}
 	
 	public boolean verificarRol(Usuario cuenta)

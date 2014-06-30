@@ -196,7 +196,7 @@ public class ServiceBasico implements Service {
 		{	
 			//System.out.println(item.getId() + ": " + item.getFechaCreacion().toString());
 			calendario.setTime(item.getFecha());
-			if (calendario.after(desde) && calendario.before(hasta))
+			if (calendario.compareTo(desde)>=0 && calendario.compareTo(hasta)<=0)
 				seleccion.add(item);
 		}
 		
@@ -884,10 +884,16 @@ public class ServiceBasico implements Service {
 	@Override
 	public Campania getCampania(Producto producto) {
 		ArrayList<Campania> todos = getCampanias();
-		Campania rta= new Campania();
 		for (Campania item : todos)
 			if (item.getProducto().getId()==producto.getId())
-				return rta;
+				return item;
 		return null;
+	}
+	
+	public boolean fechaDentroIntervalo(GregorianCalendar desde, GregorianCalendar hasta, GregorianCalendar fecha){
+		if (fecha.get(GregorianCalendar.MONTH)>=desde.get(GregorianCalendar.MONTH) && fecha.get(GregorianCalendar.YEAR)>=desde.get(GregorianCalendar.YEAR)
+				&& fecha.get(GregorianCalendar.MONTH)<=hasta.get(GregorianCalendar.MONTH) && fecha.get(GregorianCalendar.YEAR)<=hasta.get(GregorianCalendar.YEAR))
+			return true;
+		return false;
 	}
 }

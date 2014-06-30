@@ -81,8 +81,9 @@ INSERT INTO `Venta` (`id`, `fecha`, `importe`, `vendedor_id`) VALUES
 (10, '2013-10-31 23:09:54', 32.5, 2),
 (11, '2013-11-24 15:45:14', 13, 3),
 (12, '2013-11-24 16:18:25', 23, 3),
-(13, '2013-11-24 16:50:44', 26.2, 1);
-
+(13, '2013-11-24 16:50:44', 26.2, 1),
+(14, '2014-06-29 18:36:48', 22.99, 1),
+(15, '2014-06-29 18:39:39', 109.01, 1);
 
 --
 -- Volcado de datos para la tabla `Venta_Producto`
@@ -123,7 +124,10 @@ INSERT INTO `Venta_Producto` (`Venta_id`, `productos_id`) VALUES
 (12, 1),
 (12, 9),
 (13, 7),
-(13, 12);
+(13, 12),
+(14, 1),
+(14, 11),
+(15, 14);
 
 --
 -- Volcado de datos para la tabla `Campania`

@@ -23,7 +23,7 @@ public class Venta implements Serializable {
 	@Transient
 	private static final long serialVersionUID = 1L;
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)	
+	//@GeneratedValue(strategy = GenerationType.AUTO)	
 	private int id;
 	@Column(nullable=false)
 	private Date fecha=null;

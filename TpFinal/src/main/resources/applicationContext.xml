@@ -27,7 +27,7 @@
 	<bean id="dataSourceBean"
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
-		<property name="url" value="jdbc:mysql://localhost:3306/ElectronicaDonPepe_Branch" />
+		<property name="url" value="jdbc:mysql://localhost:3306/ElectronicaDonPepe_Master" />
 		<property name="username" value="root" />
 		<property name="password" value="root" />
 	</bean>
@@ -59,7 +59,7 @@
 		<property name="hibernateProperties">
 			<props>
 				<prop key="hibernate.dialect">org.hibernate.dialect.MySQL5InnoDBDialect</prop>
-				<!-- <prop key="hibernate.hbm2ddl.auto">create</prop> CREACION DE LA BASE -->
+				<prop key="hibernate.hbm2ddl.auto">update</prop> <!-- CREACION DE LA BASE -->
 			</props>
 		</property>
 	</bean>

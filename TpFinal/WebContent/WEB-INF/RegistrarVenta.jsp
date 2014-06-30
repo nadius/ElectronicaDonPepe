@@ -50,7 +50,7 @@
 					<div class="col-md-2">
 						<form action="alta" method="post">
 							<label id="id">Numero de factura:</label>
-							<input type="text" alt="integer" id="id" name="id" class="form-control" placeholder="id"> <br>
+							<input type="text" alt="integer" id="id" name="id" class="form-control" value="${id}"> <br>
 							<input type="hidden" name="accion" value="guardar">
 							<button class="btn btn-group btn-primary btn-block" type="submit">Cerrar venta</button>
 						</form>

@@ -71,7 +71,7 @@ public class Adicionales extends HttpServlet {
 	{
 		//System.out.println("\tComision Producto: ");
 		ArrayList<ComisionProducto> comisiones= new ArrayList<ComisionProducto>();
-		ArrayList<Venta>ventas = service.findVentas(vendedor.getId(), desde.getTime(), hasta.getTime());
+		ArrayList<Venta>ventas = service.findVentas(vendedor.getId(), desde.getTime(), getFechaIntervaloHasta(desde).getTime());
 		ArrayList<ComisionProductoMonto> montos=service.getMontosProducto();
 		ComisionProducto registro;
 		
@@ -110,7 +110,7 @@ public class Adicionales extends HttpServlet {
 	public ComisionVenta calcularComisionVenta(Vendedor vendedor, GregorianCalendar desde, GregorianCalendar hasta)
 	{
 		ComisionVenta comision= new ComisionVenta();
-		ArrayList<Venta>ventas = service.findVentas(vendedor.getId(), desde.getTime(), hasta.getTime());
+		ArrayList<Venta>ventas = service.findVentas(vendedor.getId(), desde.getTime(), getFechaIntervaloHasta(desde).getTime());
 		ArrayList<ComisionVentaMonto> montos=service.getMontosVenta();
 		
 		if (ventas.isEmpty())
@@ -165,8 +165,7 @@ public class Adicionales extends HttpServlet {
 		ArrayList<Venta>ventas = new ArrayList<Venta>();
 		Vendedor premiado=new Vendedor();
 		PremioMonto monto=service.getMontoPremio(false);
-		GregorianCalendar hasta=(GregorianCalendar) desde.clone();
-		hasta.add(2, 1);
+		GregorianCalendar hasta=getFechaIntervaloHasta(desde);
 		
 		//System.out.println("Premio mejor vendedor del mes: (" + df.format(desde.getTime()) + " - " + df.format(hasta.getTime()) + ")");
 	
@@ -214,7 +213,7 @@ public class Adicionales extends HttpServlet {
 		for (Vendedor vendedor : vendedores)
 		{
 			//System.out.println("\t " + vendedor.getNombre() + " " + vendedor.getApellido() + ":");
-			ventas=service.findVentas(vendedor.getId(), desde.getTime(), hasta.getTime());
+			ventas=service.findVentas(vendedor.getId(), desde.getTime(), getFechaIntervaloHasta(desde).getTime());
 			if (!ventas.isEmpty())
 			{
 				for(Venta venta : ventas)
@@ -290,6 +289,34 @@ public class Adicionales extends HttpServlet {
 		anio = Integer.parseInt(request.getParameter(tipo+"Anio"));
 		
 		return new GregorianCalendar(anio,mes-1,dia,0,0,0);
+	}
+	
+	public GregorianCalendar getParamFechaSoloMesAnio(HttpServletRequest request)
+	{
+		Integer mes, anio;
+		mes = Integer.parseInt(request.getParameter("desdeMes"));
+		anio = Integer.parseInt(request.getParameter("desdeAnio"));
+		
+		return new GregorianCalendar(anio,mes-1,1,0,0,0);
+	}
+
+	protected GregorianCalendar getParamFechaUnMesMas(GregorianCalendar desde) {
+		GregorianCalendar calendar = (GregorianCalendar) desde.clone();
+		calendar.set(GregorianCalendar.DAY_OF_MONTH, calendar.getActualMaximum(GregorianCalendar.DAY_OF_MONTH)); 
+		return calendar;
+	}
+	
+	protected GregorianCalendar getFechaIntervaloHasta(GregorianCalendar desde) {
+		GregorianCalendar calendar = (GregorianCalendar) desde.clone();
+		calendar.add(GregorianCalendar.MONTH, 1);
+		return calendar;
+	}
+	
+	protected GregorianCalendar getFechaIntervaloDesde(GregorianCalendar desde) {
+		GregorianCalendar calendar = (GregorianCalendar) desde.clone();
+		calendar.add(GregorianCalendar.MONTH, -1);
+		calendar.set(GregorianCalendar.DAY_OF_MONTH, calendar.getActualMaximum(GregorianCalendar.DAY_OF_MONTH));
+		return calendar;
 	}
 
 	public void actualizarRegistroPremio(float[] valores) {
