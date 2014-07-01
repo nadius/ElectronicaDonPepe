@@ -12,13 +12,14 @@ public class ComisionVentaMontoCalculation {
 	private ComisionVentaDao registroComisionDao;
 	private ArrayList<ComisionVenta> registrosComision;
 	
-	public void setMontoVentaDao(ComisionVentaMontoDao montoVentaDao) {
-		this.montoDao = montoVentaDao;
-	}
-	public void setComisionVentaDao(ComisionVentaDao comisionVentaDao) {
-		this.registroComisionDao = comisionVentaDao;
+	public void setMontoDao(ComisionVentaMontoDao montoDao) {
+		this.montoDao = montoDao;
 	}
 	
+	public void setRegistroComisionDao(ComisionVentaDao registroComisionDao) {
+		this.registroComisionDao = registroComisionDao;
+	}
+
 	public void actualizar(float[] valores) {
 		ComisionVentaMonto registro;
 		ArrayList<ComisionVentaMonto> registrosMonto=montoDao.getAll();

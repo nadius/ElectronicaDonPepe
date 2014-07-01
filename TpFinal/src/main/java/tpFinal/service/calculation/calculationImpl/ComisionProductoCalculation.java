@@ -1,19 +1,28 @@
 package tpFinal.service.calculation.calculationImpl;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import tpFinal.dao.impl.ComisionProductoMontoDao;
 import tpFinal.domain.ComisionProducto;
 import tpFinal.domain.Vendedor;
 import tpFinal.domain.Venta;
 import tpFinal.domain.adicional.monto.ComisionProductoMonto;
+import tpFinal.service.calculation.CalculationUtils;
 //import tpFinal.service.calculation.CalculationService;
 import tpFinal.service.findItem.findItemImpl.ComisionProductoFindItem;
+import tpFinal.service.findItem.findItemImpl.VentaFindItem;
 
-public class ComisionProductoCalculation extends AdicionalCalculation{
+public class ComisionProductoCalculation extends CalculationUtils{
 	private ComisionProductoFindItem findItem;
 	private ComisionProductoMontoDao daoMontos;
 	
+	//Parametros del calculo
+	private Date fechaHoy;
+	private Date fechaDesde;
+	private Date fechaHasta;
+	private VentaFindItem findVentas;
+		
 	public void setFindItem(ComisionProductoFindItem findItem) {
 		this.findItem = findItem;
 	}
@@ -22,17 +31,27 @@ public class ComisionProductoCalculation extends AdicionalCalculation{
 		this.daoMontos = daoMontos;
 	}
 
+	public void setFindVentas(VentaFindItem findVentas) {
+		this.findVentas=findVentas;
+	}
+	
+	public void setParams(Date fechaDesde, Date fechaHasta, Date fechaHoy) {
+		this.fechaDesde=fechaDesde;
+		this.fechaHasta=fechaHasta;
+		this.fechaHoy=fechaHoy;
+	}
+
 	public ArrayList<ComisionProducto> calcularTodos(Vendedor vendedor) {
-		//ArrayList<Venta>ventas = findVentas.findBySpecificDatesCreatorId(vendedor.getId(), desde, hasta);
+		ArrayList<Venta>ventas = findVentas.findBySpecificDatesCreatorId(vendedor.getId(), fechaDesde, fechaHasta);
 		ArrayList<ComisionProductoMonto> montos=daoMontos.getAll();
 		ArrayList<ComisionProducto> comisiones= new ArrayList<ComisionProducto>();
 		ComisionProducto registro;
 		
 		int unidades=0;
 		
-		if (ventas.isEmpty())
+		if (ventas==null || ventas.isEmpty())
 		{
-			//System.out.println("\t\t No se encontraron ventas para el período buscado");
+			System.out.println("\t\t No se encontraron ventas para el período buscado");
 			return null;
 		}
 		

@@ -1,6 +1,7 @@
 package tpFinal.service.calculation.calculationImpl;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import tpFinal.dao.impl.PremioMontoDao;
 import tpFinal.domain.Campania;
@@ -9,16 +10,26 @@ import tpFinal.domain.Producto;
 import tpFinal.domain.Vendedor;
 import tpFinal.domain.Venta;
 import tpFinal.domain.adicional.monto.PremioMonto;
+import tpFinal.service.calculation.CalculationUtils;
 //import tpFinal.service.calculation.CalculationService;
 import tpFinal.service.findItem.findItemImpl.CampaniaFindItem;
 import tpFinal.service.findItem.findItemImpl.PremioFindItem;
+import tpFinal.service.findItem.findItemImpl.VentaFindItem;
 
 
-public class PremioCampaniaCalculation extends AdicionalCalculation{
+public class PremioCampaniaCalculation extends CalculationUtils{
 	private PremioMontoDao daoMontos;
 	private PremioFindItem findItem;
 	private CampaniaFindItem campaniaFindItem;
+	private VentaFindItem findVentas;
 	
+	//Parametros del calculo
+	private ArrayList<Venta> ventas;
+	private ArrayList<Vendedor> vendedores;
+	private Date fechaHoy;
+	private Date fechaDesde;
+	private Date fechaHasta;
+		
 	public void setDaoMontos(PremioMontoDao daoMontos){
 		this.daoMontos=daoMontos;
 	}
@@ -29,7 +40,17 @@ public class PremioCampaniaCalculation extends AdicionalCalculation{
 	public void setCampaniaFindItem(CampaniaFindItem campaniaFindItem){
 		this.campaniaFindItem=campaniaFindItem;
 	}
-	
+	public void setFindVentas(VentaFindItem findVentas) {
+		this.findVentas=findVentas;
+	}
+		
+	public void setParams(ArrayList<Vendedor> vendedores, Date fechaDesde, Date fechaHasta, Date fechaHoy){
+		this.vendedores=vendedores;
+		this.fechaDesde=fechaDesde;
+		this.fechaHasta=fechaHasta;
+		this.fechaHoy=fechaHoy;
+	}
+	 
 	public Premio calcular(Producto producto)
 	{
 		int cantidad=0, cuenta=0;
@@ -44,7 +65,7 @@ public class PremioCampaniaCalculation extends AdicionalCalculation{
 		{
 			//System.out.println("\t " + vendedor.getNombre() + " " + vendedor.getApellido() + ":");
 			ventas=findVentas.findBySpecificDatesCreatorId(vendedor.getId(), fechaDesde, fechaHasta);
-			if (!ventas.isEmpty())
+			if (ventas!=null && !ventas.isEmpty())//si se encontraron ventas para este vendedor
 			{
 				for(Venta venta : ventas)
 				{
@@ -66,7 +87,7 @@ public class PremioCampaniaCalculation extends AdicionalCalculation{
 			////System.out.print("\n");
 		}
 		
-		if (cantidad==0)
+		if (cantidad==0)//si el producto no está en ninguno de las ventas encontradas
 			return null;
 		
 		registro = new Premio(fechaHoy, fechaDesde, fechaHasta, premiado, true, producto, monto.getMonto());
@@ -80,7 +101,8 @@ public class PremioCampaniaCalculation extends AdicionalCalculation{
 	public ArrayList<Premio> calcularTodos() {
 		ArrayList<Campania> campaniasActivas=campaniaFindItem.getAllByFlag(true);
 		ArrayList<Premio> premiosCampania=new ArrayList<Premio>();
-		if (!campaniasActivas.isEmpty())
+				
+		if (campaniasActivas!=null && !campaniasActivas.isEmpty())
 		{
 			for (Campania item : campaniasActivas)
 				premiosCampania.add(calcular(item.getProducto()));

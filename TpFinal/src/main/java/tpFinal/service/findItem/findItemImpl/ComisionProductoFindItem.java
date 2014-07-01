@@ -11,7 +11,7 @@ import tpFinal.service.findItem.FindItemWithAuthor;
 public class ComisionProductoFindItem implements FindItem<ComisionProducto>, FindItemWithAuthor<ComisionProducto>{
 	private ComisionProductoDao dao;
 	
-	public void setComisionProductoDao(ComisionProductoDao dao) {
+	public void setDao(ComisionProductoDao dao) {
 		this.dao = dao;
 	}
 

@@ -9,62 +9,66 @@
 			org.springframework.web.context.ContextLoaderListener
 		</listener-class>
   </listener>
+    <servlet>
+    <servlet-name>utils</servlet-name>
+    <servlet-class>tpFinal.servlets.ServletUtils</servlet-class>
+  </servlet>
   <servlet>
     <servlet-name>index</servlet-name>
-    <servlet-class>TpFinal.servlets.index</servlet-class>
+    <servlet-class>tpFinal.servlets.ServletIndex</servlet-class>
   </servlet>
-  <servlet>
+  <!-- <servlet>
     <servlet-name>ventaIndex</servlet-name>
-    <servlet-class>TpFinal.servlets.ventas</servlet-class>
-  </servlet>
+    <servlet-class>tpFinal.servlets.ventas</servlet-class>
+  </servlet> -->
   <servlet>
     <servlet-name>ventaNueva</servlet-name>
-    <servlet-class>TpFinal.servlets.VentaNueva</servlet-class>
+    <servlet-class>tpFinal.servlets.ServletVentaNueva</servlet-class>
   </servlet>
   <servlet>
     <servlet-name>ventaConsulta</servlet-name>
-    <servlet-class>TpFinal.servlets.VentaConsulta</servlet-class>
+    <servlet-class>tpFinal.servlets.ServletVentaConsulta</servlet-class>
   </servlet>
   <servlet>
     <servlet-name>ventaDetalle</servlet-name>
-    <servlet-class>TpFinal.servlets.VentaDetalle</servlet-class>
+    <servlet-class>tpFinal.servlets.ServletVentaDetalle</servlet-class>
   </servlet>
   <servlet>
     <servlet-name>login</servlet-name>
-    <servlet-class>TpFinal.servlets.Login</servlet-class>
+    <servlet-class>tpFinal.servlets.ServletLogin</servlet-class>
   </servlet>
   <servlet>
     <servlet-name>logout</servlet-name>
-    <servlet-class>TpFinal.servlets.Logout</servlet-class>
+    <servlet-class>tpFinal.servlets.ServletLogout</servlet-class>
   </servlet>
   <servlet>
     <servlet-name>error</servlet-name>
-    <servlet-class>TpFinal.servlets.ManejarError</servlet-class>
+    <servlet-class>tpFinal.servlets.ManejarError</servlet-class>
   </servlet>
   <servlet>
     <servlet-name>admin</servlet-name>
-    <servlet-class>TpFinal.servlets.Administrador</servlet-class>
+    <servlet-class>tpFinal.servlets.ServletAdministrador</servlet-class>
   </servlet>
   <servlet>
     <servlet-name>adicionalReporte</servlet-name>
-    <servlet-class>TpFinal.servlets.AdicionalesGenerarReporte</servlet-class>
+    <servlet-class>tpFinal.servlets.ServletAdicional</servlet-class>
   </servlet>
   <servlet>
     <servlet-name>adicionalModificar</servlet-name>
-    <servlet-class>TpFinal.servlets.AdicionalesModificarMontos</servlet-class>
+    <servlet-class>tpFinal.servlets.ServletAdicionalMonto</servlet-class>
   </servlet>
   <servlet>
     <servlet-name>campaniaAdministrar</servlet-name>
-    <servlet-class>TpFinal.servlets.AdicionalesAdministrarCampanias</servlet-class>
+    <servlet-class>tpFinal.servlets.ServletCampania</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>index</servlet-name>
     <url-pattern>/index</url-pattern>
   </servlet-mapping>
-  <servlet-mapping>
+ <!-- <servlet-mapping>
     <servlet-name>ventaIndex</servlet-name>
     <url-pattern>/venta</url-pattern>
-  </servlet-mapping>
+  </servlet-mapping> --> 
   <servlet-mapping>
     <servlet-name>ventaNueva</servlet-name>
     <url-pattern>/venta/alta</url-pattern>

@@ -15,7 +15,7 @@ import tpFinal.service.calculation.calculationImpl.UsuarioCalculation;
 import tpFinal.service.findItem.findItemImpl.UsuarioFindItem;
 
 //@WebServlet("/login")
-public class ServletLogin extends Servlet{
+public class ServletLogin extends ServletUtils{
 	private static final long serialVersionUID = 1L;
 	
 	private UsuarioFindItem findItem;
@@ -37,6 +37,7 @@ public class ServletLogin extends Servlet{
 		setRequestResponse(request, response);
 		
 		setOrigen();
+		//System.out.println("Context: " + request.getContextPath());
 		redirectPagina("Login");
 	}
 
@@ -44,12 +45,12 @@ public class ServletLogin extends Servlet{
 		setRequestResponse(request, response);
 
 		String usuario = getParameter("usuario").trim();
-		String password = getParameter("password");
+		String password = getParameter("password").trim();
 		Usuario cuenta= findItem.findByUsername(usuario);
 		
 		if (calculation.login(usuario, password))
 		{
-			setAttribute("usuario", cuenta);
+			setSessionAttribute("usuario", cuenta);
 			if (cuenta.getRol().getId()==2)//si el usuario es vendedor
 				System.out.println("Logueado como " + cuenta.getVendedor().getNombre() + " " + cuenta.getVendedor().getApellido());
 			redirectPagina("Index");
@@ -57,7 +58,7 @@ public class ServletLogin extends Servlet{
 		else
 		{
 			setAttribute("mensaje", "Credenciales incorrectas o usuario no existente.");
-			redirectLogin();
+			redirectPagina("Login");
 		}
 	}
 	
@@ -66,5 +67,6 @@ public class ServletLogin extends Servlet{
 		ApplicationContext ctx = WebApplicationContextUtils.getRequiredWebApplicationContext(config.getServletContext());
 		this.findItem = (UsuarioFindItem) ctx.getBean("UsuarioFindItem");
 		this.calculation = (UsuarioCalculation) ctx.getBean("UsuarioCalculation");
+		super.init(config);
 	}
 }

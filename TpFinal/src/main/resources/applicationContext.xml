@@ -69,7 +69,7 @@
 	</bean> -->
 
 	<!-- Capa de accesso a datos usando el hibernateTemplate de Spring -->
-	<bean id="dataAccessBean" class="tpFinal.dataAccess.impl.DataAccessHibernateTemplate" scope="singleton">
+	<bean id="dataAccessBean" class="tpFinal.dataAccess.impl.DataAccessImplHibernateTemplate" scope="singleton">
 		<property name="sessionFactory" ref="sessionFactoryBean"></property> 
 	</bean>
 		
@@ -144,51 +144,40 @@
 	</bean>
 	
 	<!-- tpFinal.service.calculation.calculationImpl -->
-	<bean id="Calculation" class="tpFinal.service.calculation.CalculationService">
+	<!-- <bean id="CalculationUtils" class="tpFinal.service.calculation.CalculationUtils" scope="singleton">
 		<property name="findVentas" ref="VentaFindItem"></property>
-	</bean>
+	</bean> -->
 	<bean id="CampaniaCalculation" class="tpFinal.service.calculation.calculationImpl.CampaniaCalculation">
 		<property name="dao" ref="CampaniaDao"></property>
 		<property name="findItem" ref="CampaniaFindItem"></property>
 		<property name="productoDao" ref="ProductoDao"></property>
 	</bean>
-	<bean id="AdicionalCalculation" class="tpFinal.service.calculation.calculationImpl.AdicionalCalculation">
-		<property name="dao" ref="AdicionalDao"></property>
-		<property name="findItem" ref="AdicionalFindItem"></property>
-		<property name="vendedorFindItem" ref="VendedorFindItem"></property>
-		<property name="findVentas" ref="VentaFindItem"></property>
-		<property name="calculoPremioMes" ref="PremioMesCalculation"></property>
-		<property name="calculoPremioCampania" ref="PremioCampaniaCalculation"></property>
-		<property name="calculoComisionProducto" ref="ComisionProductoCalculation"></property>
-		<property name="calculoComisionVenta" ref="ComisionVentaCalculation"></property>
-	</bean>
 	<bean id="ComisionProductoCalculation" class="tpFinal.service.calculation.calculationImpl.ComisionProductoCalculation">
 		<property name="daoMontos" ref="ComisionProductoMontoDao"></property>
 		<property name="findItem" ref="ComisionProductoFindItem"></property>
+		<property name="findVentas" ref="VentaFindItem"></property>
 	</bean>
 	<bean id="ComisionVentaCalculation" class="tpFinal.service.calculation.calculationImpl.ComisionVentaCalculation">
 		<property name="daoMontos" ref="ComisionVentaMontoDao"></property>
 		<property name="findItem" ref="ComisionVentaFindItem"></property>
+		<property name="findVentas" ref="VentaFindItem"></property>
 	</bean>
 	<bean id="PremioCampaniaCalculation" class="tpFinal.service.calculation.calculationImpl.PremioCampaniaCalculation">
 		<property name="daoMontos" ref="PremioMontoDao"></property>
-		<property name="findItem" ref="PremioCampaniaFindItem"></property>
+		<property name="findItem" ref="PremioFindItem"></property>
 		<property name="campaniaFindItem" ref="CampaniaFindItem"></property>
+		<property name="findVentas" ref="VentaFindItem"></property>
 	</bean>
 	<bean id="PremioMesCalculation" class="tpFinal.service.calculation.calculationImpl.PremioMesCalculation">
 		<property name="daoMontos" ref="PremioMontoDao"></property>
 		<property name="findItem" ref="PremioFindItem"></property>
+		<property name="findVentas" ref="VentaFindItem"></property>
 	</bean>
 	<bean id="UsuarioCalculation" class="tpFinal.service.calculation.calculationImpl.UsuarioCalculation">
 		<property name="dao" ref="UsuarioDao"></property>
 		<property name="findItem" ref="UsuarioFindItem"></property>
 		<property name="rolDao" ref="RolUsuarioDao"></property>
 		<property name="vendedorDao" ref="VendedorDao"></property>
-	</bean>
-	<bean id="VendedorCalculation" class="tpFinal.service.calculation.calculationImpl.VendedorCalculation">
-		<property name="dao" ref="VendedorDao"></property>
-		<property name="findItem" ref="VendedorFindItem"></property>
-		<property name="UsuarioCalculation" ref="usuarioCalculation"></property>
 	</bean>
 	<bean id="VentaCalculation" class="tpFinal.service.calculation.calculationImpl.VentaCalculation">
 		<property name="dao" ref="VentaDao"></property>
@@ -204,12 +193,27 @@
 	</bean>
 	<bean id="PremioMontoCalculation" class="tpFinal.service.calculation.calculationImpl.PremioMontoCalculation">
 		<property name="montoDao" ref="PremioMontoDao"></property>
-		<property name="registrPremioDao" ref="PremioDao"></property>
+		<property name="registroPremioDao" ref="PremioDao"></property>
 	</bean>
 	<bean id="AdicionalMontoCalculation" class="tpFinal.service.calculation.calculationImpl.AdicionalMontoCalculation">
 		<property name="comisionProducto" ref="ComisionProductoMontoCalculation"></property>
 		<property name="comisionVenta" ref="ComisionVentaMontoCalculation"></property>
 		<property name="premio" ref="PremioMontoCalculation"></property>
+	</bean>
+	<bean id="VendedorCalculation" class="tpFinal.service.calculation.calculationImpl.VendedorCalculation">
+		<property name="dao" ref="VendedorDao"></property>
+		<property name="findItem" ref="VendedorFindItem"></property>
+		<property name="usuarioCalculation" ref="UsuarioCalculation"></property>
+	</bean>
+	<bean id="AdicionalCalculation" class="tpFinal.service.calculation.calculationImpl.AdicionalCalculation">
+		<property name="dao" ref="AdicionalDao"></property>
+		<property name="findItem" ref="AdicionalFindItem"></property>
+		<property name="vendedorFindItem" ref="VendedorFindItem"></property>
+ 		<property name="findVentas" ref="VentaFindItem"></property>
+		<property name="calculoPremioMes" ref="PremioMesCalculation"></property>
+		<property name="calculoPremioCampania" ref="PremioCampaniaCalculation"></property>
+		<property name="calculoComisionProducto" ref="ComisionProductoCalculation"></property>
+		<property name="calculoComisionVenta" ref="ComisionVentaCalculation"></property>
 	</bean>
 	
 	<!-- tpFinal.service -->
@@ -223,24 +227,14 @@
 		<property name="montoProductoDao" ref="ComisionProductoMontoDao"></property>
 		<property name="montoPremioDao" ref="PremioMontoDao"></property>
 	</bean>
-	<bean id="VentaService" name="tpFinal.service.VentaService">
+	<bean id="VentaService" class="tpFinal.service.VentaService">
 		<property name="findItem" ref="VentaFindItem"></property>
 		<property name="dao" ref="VentaDao"></property>
 		<property name="calculation" ref="VentaCalculation"></property>
-	</bean>
-	
-	<!-- tpFinal.service -->
-	<bean id="VentaService" class="tpFinal.servlets.VentaService">
-		<property name="findItem" ref="VentaFindItem"></property>
-		<property name="dao" ref="VentaDao"></property>
-		<property name="calculation" ref="VentaCalculation"></property>
-	</bean>
-	<bean id="AdicionalService" class="tpFinal.servlets.AdicionalService">
-		<property name=""></property>
 	</bean>
 	
 	<!-- tpFinal.service.servlets -->
-	<bean id="Servlet" class="tpFinal.servlets.Servlet">
+	<!-- <bean id="ServletUtils" class="tpFinal.servlets.ServletUtils">
 		<property name="usuarioCalculation" ref="UsuarioCalculation"></property>
 	</bean>
 	<bean id="Login" class="tpFinal.servlets.ServletLogin">
@@ -255,7 +249,9 @@
 	<bean id="VentaConsulta" class="tpFinal.servlets.ServletVentaConsulta">
 		<property name="service" ref="VentaService"></property>
 	</bean>
-	<bean id="VentaDetalle" class="tpFinal.servlets.ServletVentaDetalle"></bean>
+	<bean id="VentaDetalle" class="tpFinal.servlets.ServletVentaDetalle">
+		<property name="service" ref="VentaService"></property>
+	</bean>
 	<bean id="Admin" class="tpFinal.servlets.ServletAdministrador">
 		<property name="usuarioCalculation" ref="UsuarioCalculation"></property>
 		<property name="vendedorCalculation" ref="VendedorCalculation"></property>
@@ -268,5 +264,5 @@
 	</bean>
 	<bean id="Campanias" class="tpFinal.servlets.ServletCampania">
 		<property name="calculation" ref="CampaniaCalculation"></property>
-	</bean>
+	</bean> -->
 </beans>

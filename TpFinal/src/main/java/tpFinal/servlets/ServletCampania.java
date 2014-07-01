@@ -13,7 +13,7 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
 import tpFinal.service.calculation.calculationImpl.CampaniaCalculation;
 
 //@WebServlet("/AdicionalesAdministrarCampanias")
-public class ServletCampania extends Servlet{
+public class ServletCampania extends ServletUtils{
 	private static final long serialVersionUID = 1L;
 	private int rolPagina=1;
 	private CampaniaCalculation calculation;
@@ -56,8 +56,13 @@ public class ServletCampania extends Servlet{
 	public void init(ServletConfig config) {
 		ApplicationContext ctx = WebApplicationContextUtils.getRequiredWebApplicationContext(config.getServletContext());
 		this.calculation = (CampaniaCalculation) ctx.getBean("CampaniaCalculation");
+		super.init(config);
 	}
 	
+	public void setCalculation(CampaniaCalculation calculation) {
+		this.calculation = calculation;
+	}
+
 	private void setDefaultAttributes() {
 		setAttribute("campaniasExistentes", calculation.getAll());
 		setAttribute("productos", calculation.getProductosNoCampania());

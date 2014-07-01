@@ -8,6 +8,7 @@ import tpFinal.domain.Adicional;
 import tpFinal.domain.Vendedor;
 import tpFinal.service.calculation.calculationImpl.AdicionalCalculation;
 import tpFinal.service.findItem.findItemImpl.AdicionalFindItem;
+import tpFinal.service.findItem.findItemImpl.VentaFindItem;
 
 public class AdicionalService {
 	private AdicionalFindItem findItem;
@@ -87,5 +88,9 @@ public class AdicionalService {
 				return vendedor;
 		}
 		return null;
+	}
+	
+	public void resetParams(){
+		calculation.resetParams();
 	}
 }

@@ -40,7 +40,7 @@
 		</nav>
 		<div class="container">
 			<div class="page-header">
-				<h3>Logueado como ${usuario.vendedor.nombre} ${usuario.vendedor.apellido}</h4><br>
+				<!-- <h3>Logueado como ${usuario.vendedor.nombre} ${usuario.vendedor.apellido}</h4><br> -->
 				<h4>Fechas a filtrar</h3>
 				<div>
 					<form action="consulta" method="post">
@@ -60,9 +60,14 @@
 							<div class="col-md-2"><input name="hastaAnio" type="text" alt="anio" class="form-control" placeholder="año"></div>
 							</div>
 						</div>
-						<input type="submit" value="Aceptar">
+						<br>
+						<input class="btn btn-primary" type="submit" value="Aceptar">
 					</form>
 				</div>
+				<br>
+				<c:if test="${not empty error}">
+	   				<div class="alert alert-danger">${error}</div>
+	   			</c:if>
 				<br>
 				<div class="row">
 						<table class="table">
@@ -90,7 +95,7 @@
 											    <div class="modal-content">
 											      <div class="modal-header">
 											        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-											        <h4 class="modal-title" id="myModalLabel">Venta id ${item.id} del <fmt:formatDate type="date" value="${item.fecha}"/></h4>
+											        <h4 class="modal-title" id="myModalLabel">Realizada el <fmt:formatDate type="date" value="${item.fecha}"/></h4>
 											      </div>
 											      <div class="modal-body">
 											       <table class="table">
@@ -121,7 +126,7 @@
 									</c:forEach>
 								</c:if>
 								<c:if test="${empty lista}">
-									<tr><td rowspan="4">No existen resultados</td></tr>
+									<tr><td colspan="5"><center>No existen resultados</center></td></tr>
 								</c:if>
 							</tbody>
 						</table>

@@ -89,7 +89,7 @@
 														<center>
 															<form action="campania" method="post">
 																<input type="hidden" name="accion" value="agregar">
-																<input type="hidden" name="idCampania" value="${item.producto.id}">
+																<input type="hidden" name="idProducto" value="${item.producto.id}">
 																<input type="submit" value="Activar">
 															</form>
 														</center>

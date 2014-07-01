@@ -10,25 +10,28 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
+import tpFinal.servlets.ServletUtils;
 import tpFinal.service.VentaService;
 
-//@WebServlet("/venta/alta")
-public class ServletVentaNueva extends ServletUtils {
+//@WebServlet("/venta/consulta/detalle")
+public class ServletVentaDetalle extends ServletUtils {
 	private static final long serialVersionUID = 1L;
 	private int rolPagina=2;
 	private VentaService service;
-	
+    
+    public ServletVentaDetalle() {
+    }
+
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		setRequestResponse(request, response);
-
-		service.resetCarrito();
+		int idVenta=parseString(getParameter("venta"));
 		
 		if (!isLogedIn()){
 			redirectLogin();
 		}
 		else if (isAllowed(rolPagina)){
-			setDefaultAttributes();
-			redirectPagina("RegistrarVenta");
+			setAttribute("venta", service.get(idVenta));
+			redirectPagina("DetalleVenta");
 		}
 		else{
 			redirectPaginaError();
@@ -36,30 +39,7 @@ public class ServletVentaNueva extends ServletUtils {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		setRequestResponse(request, response);
-		String error="";		
-		String accion = getParameter("accion");
-		
-		if (accion.equals("agregar"))
-			service.Agregar(parseString(getParameter("idProducto")));
-		if (accion.equals("guardar"))
-		{
-			try {
-				error=service.calcular(usuario.getVendedor(), parseString(getParameter("id")));
-			} catch (NullPointerException | NumberFormatException e) {//por si no se puede recuperar el id o parsear a int
-				e.printStackTrace();
-				error="Revisar " + e.getMessage();
-			} finally {	
-				if (error.equals(""))//todo salio bien
-					setAttribute("ok", "La venta se guardo correctamente.");
-				else
-					setAttribute("error", error );
-			}
-		}
-		
-		setDefaultAttributes();		
-		redirectPagina("RegistrarVenta");
-	}	
+	}
 	
 	@Override
 	public void init(ServletConfig config) {
@@ -67,15 +47,8 @@ public class ServletVentaNueva extends ServletUtils {
 		this.service = (VentaService) ctx.getBean("VentaService");
 		super.init(config);
 	}
-	
+
 	public void setService(VentaService service) {
 		this.service = service;
-	}
-
-	public void setDefaultAttributes(){
-		setAttribute("id", service.getAll().size()+1);//sugiere un posible id del registro
-		setAttribute("productos", service.getListaTodosProductos());
-		setAttribute("listaComprados", service.getListaComprados());
-		setAttribute("total", service.getTotal());
 	}
 }

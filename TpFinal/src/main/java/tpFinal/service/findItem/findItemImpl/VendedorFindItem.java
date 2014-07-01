@@ -10,7 +10,7 @@ import tpFinal.service.findItem.FindItemWithFlag;
 public class VendedorFindItem implements FindItemWithFlag<Vendedor>{
 	private VendedorDao dao;
 	
-	public void setVendedorDao(VendedorDao dao){
+	public void setDao(VendedorDao dao){
 		this.dao = dao;
 	}
 

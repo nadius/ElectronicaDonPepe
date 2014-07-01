@@ -50,8 +50,8 @@
 						</tr>
 					</thead>
 					<tbody>
-						<c:if test="${not empty lista}">
-							<c:forEach items="${lista}" var="item">
+						<c:if test="${not empty venta.productos}">
+							<c:forEach items="${venta.productos}" var="item">
 								<tr>
 									<td><center>${item.id}</center></td>
 									<td><center>${item.nombre}</center></td>

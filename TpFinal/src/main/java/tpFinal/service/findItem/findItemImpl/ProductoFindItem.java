@@ -8,7 +8,7 @@ import tpFinal.domain.Producto;
 public class ProductoFindItem{
 	private ProductoDao dao;
 	
-	public void setProductoDao(ProductoDao dao) {
+	public void setDao(ProductoDao dao) {
 		this.dao = dao;
 	}
 

@@ -12,7 +12,7 @@ public class CampaniaFindItem implements FindItem<Campania>, FindItemWithFlag<Ca
 
 private CampaniaDao dao;
 	
-	public void setCampaniaDao(CampaniaDao dao) {
+	public void setDao(CampaniaDao dao) {
 		this.dao = dao;
 	}
 

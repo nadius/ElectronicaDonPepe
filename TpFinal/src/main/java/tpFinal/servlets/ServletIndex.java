@@ -7,8 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 //@WebServlet("/index")
-public class ServletIndex extends Servlet
-{
+public class ServletIndex extends ServletUtils{
 	private static final long serialVersionUID = 1L;
 
 	public ServletIndex() {

@@ -50,7 +50,9 @@
 					<div class="col-md-2">
 						<form action="alta" method="post">
 							<label id="id">Numero de factura:</label>
-							<input type="text" alt="integer" id="id" name="id" class="form-control" placeholder="id"> <br>
+							<c:if test="${not empty id}">
+								<input type="text" alt="integer" id="id" name="id" class="form-control" value="${id}"> <br>
+				   			</c:if>
 							<input type="hidden" name="accion" value="guardar">
 							<button class="btn btn-group btn-primary btn-block" type="submit">Cerrar venta</button>
 						</form>
@@ -111,7 +113,7 @@
 				        </a>
 				      </h4>
 				    </div>
-				    <div id="premios" class="panel-collapse collapse">
+				    <div id="premios" class="panel-collapse collapse in">
 				      <div class="panel-body">
 							<table class="table">
 								<thead>

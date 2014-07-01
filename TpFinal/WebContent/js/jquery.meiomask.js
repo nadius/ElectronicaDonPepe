@@ -174,7 +174,7 @@
                 	mask: '39'
                 },
                 'mes': {
-                	mask: '12'
+                	mask: '19'
                 },
                 'anio': {
                 	mask: '9999'

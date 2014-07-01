@@ -524,9 +524,10 @@
 				
 			</div>
 		</div>
-<%-- 		<c:if test="${not empty error}"> --%>
-<%--    				<div class="alert alert-danger">${error}</div> --%>
-<%--    		</c:if> --%>
+		<c:if test="${not empty error}">
+   				<!-- <div class="alert alert-danger">${error}</div> -->
+   				<script type="text/javascript">window.alert('${error}');</script>
+   		</c:if>
 		<script src="${origen}/js/jquery.min.js"></script>
 		<!-- <script src="js/bootstrap.min.js"></script> -->
 		<script src="${origen}/js/bootstrap.js"></script>

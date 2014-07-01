@@ -69,7 +69,7 @@ public class VentaService {
 	public String calcular(Vendedor vendedor) {
 		return calculation.calcular(vendedor);
 	}
-	public String calcular(Vendedor vendedor, String id) {
+	public String calcular(Vendedor vendedor, int id) {
 		return calculation.calcular(vendedor, id);
 	}
 }

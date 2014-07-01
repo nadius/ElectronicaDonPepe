@@ -3,6 +3,8 @@ package tpFinal.service.calculation.calculationImpl;
 import java.util.ArrayList;
 import java.util.Date;
 
+import org.springframework.dao.DataAccessException;
+
 import tpFinal.dao.impl.ProductoDao;
 import tpFinal.dao.impl.VentaDao;
 import tpFinal.domain.Producto;
@@ -52,7 +54,7 @@ public class VentaCalculation {
 	}
 	
 	public String calcular(Vendedor vendedor)//si el id de la venta es opcional
-	{
+	{			
 		Venta registro=new Venta(listaComprados, total, vendedor);
 		registro.setFecha(new Date());
 				
@@ -66,27 +68,30 @@ public class VentaCalculation {
 		return mensaje;
 	}
 	
-	public String calcular(Vendedor vendedor, String id)//si el id de la venta es obligatorio
+	public String calcular(Vendedor vendedor, int id)//si el id de la venta es obligatorio
 	{
 		Venta registro;
-		if (id.equals(""))
+		if (id==0)
 			return "Por favor ingrese un id";
 				
-		registro=dao.get(Integer.parseInt(id));
+		registro=dao.get(id);
 		
 		if(registro!=null)//si existe una venta con ese id
 			return "El id " + registro.getId() + " corresponde a la venta realizada el " 
 					+ registro.getFecha().toString() + " por "
 					+ registro.getVendedor().getNombre() + registro.getVendedor().getApellido()
-					+ ". Por favor elija un nuevo id o deje el campo en blanco";
+					+ ". Por favor elija un nuevo id válido.";
 		
-		registro=new Venta(listaComprados, total, vendedor);
-		registro.setFecha(new Date());
+		registro=new Venta(id, new Date(),listaComprados, total, vendedor);
 	
 		String mensaje=verificarDatos(registro);//si todo salio bien
 		if (mensaje.equals(""))
 		{
-			dao.save(registro);
+			try {
+				dao.save(registro);
+			} catch (DataAccessException e) {
+				return "No se pudo grabar el registro. Por favor revise los parametros e intente nuevamente.";
+			}
 			resetCarrito();
 		}
 		
@@ -103,18 +108,15 @@ public class VentaCalculation {
 	
 	private String verificarDatos(Venta venta)
 	{
-		String mensaje="";
 		//if (venta.getId())
 		//Venta verificacion=dataAccess.getVenta(id);
 		if (venta.getFecha()==null)
-			mensaje.concat(" fecha vacia");
-		if (venta.getProductos()==null)
-			mensaje.concat(" lista de productos vacia");
-		if (venta.getImporte()==0)
-			mensaje.concat(" importe vacio");
+			venta.setFecha(new Date());
+		if (venta.getProductos()==null || venta.getProductos().isEmpty() || total==0)
+			return "Atención: revisar lista de productos";
 		if(venta.getVendedor()==null)
-			mensaje.concat(" vendedor vacio");
-		return mensaje;
+			return "Atención: revisar vendedor";
+		return "";
 	}
 	
 	public void resetCarrito()

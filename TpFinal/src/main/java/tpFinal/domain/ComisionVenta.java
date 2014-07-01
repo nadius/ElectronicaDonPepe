@@ -42,33 +42,17 @@ public class ComisionVenta extends Comision{
 	
 	public boolean equals(ComisionVenta registro)
 	{
-		ArrayList<Venta> thisVentas=new ArrayList<Venta>(getVentas());
-		ArrayList<Venta> registroVentas=new ArrayList<Venta>(registro.getVentas());
-		
-		if (!super.equals(registro))
+		if (!super.equals(registro))//FIXIT: funciona?
 			return false;
 		
-		if (thisVentas.size() != registroVentas.size())//si no tienen la misma cantidad de ventas
-			return false;
-
-		if (!isMismasVentas(thisVentas, registroVentas))//verifico id a id que las ventas de los dos registros sean las mismas.
-			return false;
+		/*if (!this.getVentas().containsAll(registro.getVentas()))
+			return false;*/
 		
-		return true;
-	}
-	
-	private boolean isMismasVentas(ArrayList<Venta> thisVentas, ArrayList<Venta> registroVentas){
-		int cuenta=0;
-		for (int i=0; i<thisVentas.size(); i++){//uso un for tradicional para evitar que busque un null en elementos
-			for (int j=0; j<thisVentas.size(); j++){
-				if (thisVentas.get(i).getId() == registroVentas.get(j).getId())//comparo los ids de las ventas
-					cuenta++;
-			}
+		for (Venta item : registro.getVentas()){
+			if (!elementos.contains(item))
+				return false;
 		}
 		
-		if(cuenta == thisVentas.size())
-			return true;
-
-		return false;
+		return true;
 	}
 }

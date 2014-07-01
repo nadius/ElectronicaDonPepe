@@ -11,7 +11,7 @@ import tpFinal.service.findItem.FindItemWithAuthor;
 public class VentaFindItem implements FindItem<Venta>, FindItemWithAuthor<Venta> {
 	private VentaDao dao;
 	
-	public void setVentaDao(VentaDao dao) {
+	public void setDao(VentaDao dao) {
 		this.dao = dao;
 	}
 

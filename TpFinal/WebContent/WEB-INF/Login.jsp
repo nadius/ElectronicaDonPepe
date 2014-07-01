@@ -18,11 +18,12 @@
 					       <input name="password" id="password" type="password" class="form-control"><br>
 					       <button class="btn btn-lg btn-primary btn-block" type="submit">Iniciar sesión</button>
 			     	</form>
+			     	<br>
+				     <c:if test="${not empty mensaje}">
+			   			<div class="alert alert-danger">${mensaje}</div>
+			   		</c:if>
 			     </div>
 		     </div>
    		</div> <!-- /container -->
-   		<c:if test="${not empty mensaje}">
-   			<div class="alert alert-danger">${mensaje}</div>
-   		</c:if>
-	</body>
+   	</body>
 </html>

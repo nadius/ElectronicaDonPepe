@@ -11,7 +11,7 @@ import tpFinal.service.findItem.FindItemWithAuthor;
 public class AdicionalFindItem implements FindItem<Adicional>, FindItemWithAuthor<Adicional> {
 	private AdicionalDao dao;
 	
-	public void setAdicionalDao(AdicionalDao dao) {
+	public void setDao(AdicionalDao dao) {
 		this.dao = dao;
 	}
 

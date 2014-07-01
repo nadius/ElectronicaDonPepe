@@ -16,7 +16,7 @@ import tpFinal.service.calculation.calculationImpl.VendedorCalculation;
  * Servlet implementation class Administrador
  */
 //@WebServlet("/Administrador")
-public class ServletAdministrador extends Servlet {
+public class ServletAdministrador extends ServletUtils {
 	private static final long serialVersionUID = 1L;
 	private UsuarioCalculation usuarioCalculation;
 	private VendedorCalculation vendedorCalculation;
@@ -95,6 +95,7 @@ public class ServletAdministrador extends Servlet {
 		ApplicationContext ctx = WebApplicationContextUtils.getRequiredWebApplicationContext(config.getServletContext());
 		this.usuarioCalculation = (UsuarioCalculation) ctx.getBean("UsuarioCalculation");
 		this.vendedorCalculation = (VendedorCalculation) ctx.getBean("VendedorCalculation");
+		super.init(config);
 	}
 	
 	private void setDefaultAttributes() {

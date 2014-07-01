@@ -13,14 +13,13 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
 import tpFinal.service.AdicionalMontoService;
 
 //@WebServlet("/AdicionalesModificarMontos")
-public class ServletAdicionalMonto extends Servlet {
+public class ServletAdicionalMonto extends ServletUtils {
 	private static final long serialVersionUID = 1L;
 	private int rolPagina=1;
 	private AdicionalMontoService service;
        
     public ServletAdicionalMonto() {
-        super();
-        // TODO Auto-generated constructor stub
+      //nada para hacer
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -62,8 +61,13 @@ public class ServletAdicionalMonto extends Servlet {
 	public void init(ServletConfig config) {
 		ApplicationContext ctx = WebApplicationContextUtils.getRequiredWebApplicationContext(config.getServletContext());
 		this.service = (AdicionalMontoService) ctx.getBean("AdicionalMontoService");
+		super.init(config);
 	}
 	
+	public void setService(AdicionalMontoService service) {
+		this.service = service;
+	}
+
 	public float[] recuperarValores (String nombreCampo)
 	{
 		float[] valores;

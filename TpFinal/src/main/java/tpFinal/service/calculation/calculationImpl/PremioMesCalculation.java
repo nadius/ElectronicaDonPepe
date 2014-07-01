@@ -8,12 +8,20 @@ import tpFinal.domain.Premio;
 import tpFinal.domain.Vendedor;
 import tpFinal.domain.Venta;
 import tpFinal.domain.adicional.monto.PremioMonto;
+import tpFinal.service.calculation.CalculationUtils;
 //import tpFinal.service.calculation.CalculationService;
 import tpFinal.service.findItem.findItemImpl.PremioFindItem;
+import tpFinal.service.findItem.findItemImpl.VentaFindItem;
 
-public class PremioMesCalculation extends AdicionalCalculation{
+public class PremioMesCalculation extends CalculationUtils{
 	private PremioFindItem findItem;
 	protected PremioMontoDao daoMontos;
+	
+	//parametros necesarios para el calculo
+	private ArrayList<Vendedor> vendedores;
+	private Date fechaDesde;
+	private Date fechaHoy;
+	private VentaFindItem findVentas;
 		
 	public void setDaoMontos(PremioMontoDao daoMontos) {
 		this.daoMontos = daoMontos;
@@ -21,6 +29,16 @@ public class PremioMesCalculation extends AdicionalCalculation{
 	
 	public void setFindItem(PremioFindItem findItem){
 		this.findItem=findItem;
+	}
+	
+	public void setFindVentas(VentaFindItem findVentas) {
+		this.findVentas=findVentas;
+	}
+	
+	public void setParams(ArrayList<Vendedor> vendedores, Date desde, Date hoy){
+		this.vendedores=vendedores;
+		this.fechaDesde=desde;
+		this.fechaHoy=hoy;
 	}
 	
 	public Premio calcular(Date fechaHasta) {
@@ -36,7 +54,7 @@ public class PremioMesCalculation extends AdicionalCalculation{
 		{
 			ventas=findVentas.findBySpecificDatesCreatorId(vendedor.getId(), fechaDesde, fechaHasta);//FIXIT: no recupera ninguna venta!
 			
-			if (!ventas.isEmpty())
+			if (ventas!=null && !ventas.isEmpty())
 			{
 				if (ventas.size()>cantidad)
 				{
@@ -69,4 +87,4 @@ public class PremioMesCalculation extends AdicionalCalculation{
 			return "\t No";
 	}
 
-}
+	}

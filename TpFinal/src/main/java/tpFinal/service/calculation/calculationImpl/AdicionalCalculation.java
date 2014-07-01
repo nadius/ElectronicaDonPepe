@@ -12,12 +12,13 @@ import tpFinal.domain.Premio;
 import tpFinal.domain.Producto;
 import tpFinal.domain.Vendedor;
 import tpFinal.domain.Venta;
+import tpFinal.service.calculation.CalculationUtils;
 //import tpFinal.service.calculation.CalculationService;
 import tpFinal.service.findItem.findItemImpl.AdicionalFindItem;
 import tpFinal.service.findItem.findItemImpl.VendedorFindItem;
 import tpFinal.service.findItem.findItemImpl.VentaFindItem;
 
-public class AdicionalCalculation{
+public class AdicionalCalculation extends CalculationUtils{
 	private AdicionalDao dao;
 	private AdicionalFindItem findItem;
 	private VendedorFindItem vendedorFindItem;
@@ -28,13 +29,14 @@ public class AdicionalCalculation{
 	private ComisionProductoCalculation calculoComisionProducto;
 	private ComisionVentaCalculation calculoComisionVenta;
 	
-	protected ArrayList<Venta> ventas;
-	protected ArrayList<Vendedor> vendedores;
-	protected Date fechaHoy;
-	protected Date fechaDesde;
-	protected Date fechaHasta;
+	//Parametros del calculo
+	private ArrayList<Venta> ventas;
+	private ArrayList<Vendedor> vendedores;
+	private Date fechaHoy;
+	private Date fechaDesde;
+	private Date fechaHasta;
 	
-	public void setAdicionalDao(AdicionalDao dao){
+	public void setDao(AdicionalDao dao){
 		this.dao=dao;
 	}
 	
@@ -47,7 +49,7 @@ public class AdicionalCalculation{
 	}
 
 	public void setFindVentas(VentaFindItem findVentas) {
-		this.findVentas = findVentas;
+		this.findVentas=findVentas;
 	}
 	
 	public ArrayList<Vendedor> getVendedoresActivos() {
@@ -82,16 +84,28 @@ public class AdicionalCalculation{
 		this.vendedores = vendedores;
 	}
 	
+	public void resetParams(){
+		vendedores = new ArrayList<Vendedor>();
+		ventas = new ArrayList<Venta>();
+		this.fechaHoy=new Date();
+	}
+
+	public void setParams(){
+		calculoPremioMes.setParams(vendedores, fechaDesde, fechaHoy);
+		calculoPremioCampania.setParams(vendedores, fechaDesde, fechaHasta, fechaHoy);
+		calculoComisionProducto.setParams(fechaDesde, fechaHasta, fechaHoy);
+		calculoComisionVenta.setParams(fechaDesde, fechaHasta, fechaHoy);
+	}
 
 	public ArrayList<Adicional> calcularTodos(Date fechaDesde, Date fechaHasta){
 		ArrayList<Adicional> adicionales = new ArrayList<Adicional>();
 		
-		this.fechaHoy=new Date();
 		this.fechaDesde=fechaDesde;
 		this.fechaHasta=fechaHasta;
+		setParams();//seteo los parametros necesarios para hacer el calculo
 		
 		GregorianCalendar gregorianHasta= new GregorianCalendar();
-		gregorianHasta.setTime(fechaHasta);
+		gregorianHasta.setTime(fechaDesde);
 		gregorianHasta.add(2, 1);
 		
 		//PREMIOS (los calculo primero porque no están relacionados a los vendedores elegidos
@@ -117,7 +131,7 @@ public class AdicionalCalculation{
 			
 			setVentas(findVentas.findBySpecificDatesCreatorId(vendedor.getId(), fechaDesde, fechaHasta));
 			
-			if (!ventas.isEmpty())
+			if (ventas!=null && !ventas.isEmpty())
 			{
 				adicional=calcularUno(vendedor, fechaHoy, fechaDesde, fechaHasta, premioMejorVendedorMes, premiosCampania);
 				setTotales(adicional);
@@ -189,7 +203,7 @@ public class AdicionalCalculation{
 		return subtotales;
 	}
 	
-	protected int contarProductoVenta(Venta venta, Producto producto)
+/*	protected int contarProductoVenta(Venta venta, Producto producto)
 	{
 		int i=0;
 		ArrayList<Producto> productosVenta=(ArrayList<Producto>) venta.getProductos();
@@ -199,7 +213,7 @@ public class AdicionalCalculation{
 		
 		//System.out.print(i + " veces");
 		return i;
-	}
+	}*/
 	
 	//@Override
 	public String showResult(Adicional object) {

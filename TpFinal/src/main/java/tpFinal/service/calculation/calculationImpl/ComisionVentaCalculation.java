@@ -1,19 +1,27 @@
 package tpFinal.service.calculation.calculationImpl;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import tpFinal.dao.impl.ComisionVentaMontoDao;
 import tpFinal.domain.ComisionVenta;
 import tpFinal.domain.Vendedor;
+import tpFinal.domain.Venta;
 import tpFinal.domain.adicional.monto.ComisionVentaMonto;
+import tpFinal.service.calculation.CalculationUtils;
 //import tpFinal.service.calculation.CalculationService;
 import tpFinal.service.findItem.findItemImpl.ComisionVentaFindItem;
+import tpFinal.service.findItem.findItemImpl.VentaFindItem;
 
-public class ComisionVentaCalculation extends AdicionalCalculation{
+public class ComisionVentaCalculation extends CalculationUtils{
 	private ComisionVentaFindItem findItem;
 	private ComisionVentaMontoDao daoMontos;
+	private VentaFindItem findVentas;
 	
-	
+	private Date fechaHoy;
+	private Date fechaDesde;
+	private Date fechaHasta;
+			
 	public void setFindItem(ComisionVentaFindItem findItem) {
 		this.findItem = findItem;
 	}
@@ -22,12 +30,22 @@ public class ComisionVentaCalculation extends AdicionalCalculation{
 		this.daoMontos = daoMontos;
 	}
 
+	public void setFindVentas(VentaFindItem findVentas) {
+		this.findVentas=findVentas;
+	}
+	
+	public void setParams(Date fechaDesde, Date fechaHasta, Date fechaHoy) {
+		this.fechaDesde=fechaDesde;
+		this.fechaHasta=fechaHasta;
+		this.fechaHoy=fechaHoy;
+	}
+
 	public ComisionVenta calcular(Vendedor vendedor) {
-		//ArrayList<Venta>ventas = findVentas.findBySpecificDatesCreatorId(vendedor.getId(), desde, hasta);
+		ArrayList<Venta>ventas = findVentas.findBySpecificDatesCreatorId(vendedor.getId(), fechaDesde, fechaHasta);
 		ArrayList<ComisionVentaMonto> montos=daoMontos.getAll();
 		ComisionVenta comision;
 		
-		if (ventas.isEmpty())
+		if (ventas==null || ventas.isEmpty())
 		{
 			System.out.println("No se encontraron ventas para el periodo buscado");
 			return null;

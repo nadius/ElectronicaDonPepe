@@ -17,12 +17,21 @@ public class DataAccessImplHibernateTemplate implements DataAccessInterface {
 		this.hibernateTemplate = new HibernateTemplate(sessionFactory);
 	}
 
+	/** 
+	 ** @param entityClass la clase de la entidad correspondiente
+	 ** @param id el id del objeto buscado
+	 ** @return un Object con el registro buscado (no olvidar de castear!)
+	 **/
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
 	public Object get(Class entityClass, int id) {
 		return this.hibernateTemplate.get(entityClass, id);
 	}
 
+	/** (non-Javadoc)
+	 ** @param entityClass la clase de la entidad correspondiente
+	 ** @return un List con todos los registros de esta entidad
+	 **/
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
 	public List getAll(Class entityClass) {

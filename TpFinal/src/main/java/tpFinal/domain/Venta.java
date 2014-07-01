@@ -23,14 +23,14 @@ public class Venta implements Serializable {
 	@Transient
 	private static final long serialVersionUID = 1L;
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)	
+	//@GeneratedValue(strategy = GenerationType.AUTO)	
 	private int id;
 	@Column(nullable=false)
 	private Date fecha=null;
 	@ManyToMany(cascade=CascadeType.ALL, fetch= FetchType.EAGER)
 	@Fetch(value = FetchMode.SUBSELECT)
 	private List<Producto> productos=null;
-	@Column(nullable=true)
+	@Column(nullable=false)
 	private float importe=0;
 	@OneToOne//(cascade=CascadeType.ALL, fetch= FetchType.LAZY)
 	private Vendedor vendedor=null;
@@ -49,6 +49,14 @@ public class Venta implements Serializable {
 	}
 	
 	public Venta(Date fecha, List<Producto> productos, float importe, Vendedor vendedor) {
+		this.fecha = fecha;
+		this.productos = productos;
+		this.importe = importe;
+		this.vendedor = vendedor;
+	}
+
+	public Venta(int id, Date fecha, List<Producto> productos, float importe, Vendedor vendedor) {
+		this.id = id;
 		this.fecha = fecha;
 		this.productos = productos;
 		this.importe = importe;

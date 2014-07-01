@@ -11,7 +11,7 @@ import tpFinal.service.findItem.FindItemWithAuthor;
 public class PremioFindItem implements FindItem<Premio>, FindItemWithAuthor<Premio>{
 	private PremioDao dao;
 	
-	public void setPremioDao(PremioDao dao) {
+	public void setDao(PremioDao dao) {
 		this.dao = dao;
 	}
 
