@@ -222,6 +222,53 @@ public class ServletUtils extends HttpServlet{//Funciones comunes a todos los se
 	}
 	
 /**
+ * Recupera una fecha ingresada.
+ * Esta funcion se utiliza cuando una fecha está formada por dos inputs (mes y año), no por un DatePicker.
+ * Esta version funciona de la misma forma que getFecha, excepto que solo reemplaza el mes y año, mientras que el dia es siempre es uno.
+ * Usado en el cálculo de adicionales.
+ * @param tipo el nombre del parametro. Eg: para un input llamado "desdeDia", el tipo es "desde".
+ * @return un Date con la fecha lista para utilizar en otras funciones.
+ * @see tpFinal.servlets.ServletUtils.getFecha
+ **/
+	public Date getFechaSoloMesAnio(String tipo)
+	{
+		Integer mes, anio;
+		mes = Integer.parseInt(request.getParameter(tipo+"Mes"));
+		anio = Integer.parseInt(request.getParameter(tipo+"Anio"));
+		
+		return new GregorianCalendar(anio,mes-1,1,0,0,0).getTime();
+	}
+	
+/**
+ * Recupera una fecha ingresada.
+ * Esta version funciona de la misma forma que getFechaSoloMesAnio, excepto que devuelve un GregorianCalendar
+ * @param tipo el nombre del parametro. Eg: para un input llamado "desdeDia", el tipo es "desde".
+ * @return un Date con la fecha lista para utilizar en otras funciones.
+ * @see tpFinal.servlets.ServletUtils.getFechaSoloMesAnio
+ **/
+	private GregorianCalendar getFechaSoloMesAnioGregorianCalendar(String tipo)
+	{
+		Integer mes, anio;
+		mes = Integer.parseInt(request.getParameter(tipo+"Mes"));
+		anio = Integer.parseInt(request.getParameter(tipo+"Anio"));
+		
+		return new GregorianCalendar(anio,mes-1,1,0,0,0);
+	}
+
+/**
+ * Calcula una fecha nueva cuyo dia sea el máximo del mes de la fecha inicial.
+ * Ej: Dada una fecha 2013.01.01, la función devuelve 2013.01.31
+ * Esta función es utilizada en el cálculo de adicionales.
+ * @param tipo el nombre del parametro a buscar, que se usará en el cálculo
+ * @return un Date con la fecha
+ **/
+	public Date getFechaUnMesMas(String tipo) {
+		GregorianCalendar calendar = getFechaSoloMesAnioGregorianCalendar(tipo);
+		calendar.set(GregorianCalendar.DAY_OF_MONTH, calendar.getActualMaximum(GregorianCalendar.DAY_OF_MONTH)); 
+		return calendar.getTime();
+	}
+	
+/**
  * Finaliza la sesión, invalidándola
  **/
 	public void invalidarSesion(){

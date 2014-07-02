@@ -103,14 +103,10 @@ public class AdicionalCalculation extends CalculationUtils{
 		this.fechaDesde=fechaDesde;
 		this.fechaHasta=fechaHasta;
 		setParams();//seteo los parametros necesarios para hacer el calculo
-		
-		GregorianCalendar gregorianHasta= new GregorianCalendar();
-		gregorianHasta.setTime(fechaDesde);
-		gregorianHasta.add(2, 1);
-		
+				
 		//PREMIOS (los calculo primero porque no están relacionados a los vendedores elegidos
 		ArrayList<Premio> premiosCampania=calculoPremioCampania.calcularTodos();
-		Premio premioMejorVendedorMes=calculoPremioMes.calcular(gregorianHasta.getTime());
+		Premio premioMejorVendedorMes=calculoPremioMes.calcular(fechaHasta);
 				
 		//calculo los adicionales en general
 		Adicional adicional=new Adicional();
@@ -129,13 +125,13 @@ public class AdicionalCalculation extends CalculationUtils{
 			if (adicional!=null)//si en efecto hay un adicional calculado
 				adicionales.add(adicional);*/
 			
-			setVentas(findVentas.findBySpecificDatesCreatorId(vendedor.getId(), fechaDesde, fechaHasta));
+			ventas=findVentas.findBySpecificDatesCreatorId(vendedor.getId(), fechaDesde, getFechaIntervaloHasta(fechaDesde));
 			
 			if (ventas!=null && !ventas.isEmpty())
 			{
 				adicional=calcularUno(vendedor, fechaHoy, fechaDesde, fechaHasta, premioMejorVendedorMes, premiosCampania);
 				setTotales(adicional);
-				dao.save(adicional);
+				dao.merge(adicional);
 				if (adicional!=null)//si en efecto hay un adicional calculado
 					adicionales.add(adicional);
 			}

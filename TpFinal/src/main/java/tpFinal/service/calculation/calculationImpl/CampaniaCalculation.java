@@ -38,7 +38,7 @@ public class CampaniaCalculation {
 		}
 		else{
 			registro = new Campania(producto);
-			dao.save(registro);
+			dao.merge(registro);
 		}
 	}
 	

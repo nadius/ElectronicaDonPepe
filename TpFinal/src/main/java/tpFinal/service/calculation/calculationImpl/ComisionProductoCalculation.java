@@ -42,7 +42,7 @@ public class ComisionProductoCalculation extends CalculationUtils{
 	}
 
 	public ArrayList<ComisionProducto> calcularTodos(Vendedor vendedor) {
-		ArrayList<Venta>ventas = findVentas.findBySpecificDatesCreatorId(vendedor.getId(), fechaDesde, fechaHasta);
+		ArrayList<Venta>ventas = findVentas.findBySpecificDatesCreatorId(vendedor.getId(), fechaDesde, getFechaIntervaloHasta(fechaDesde));
 		ArrayList<ComisionProductoMonto> montos=daoMontos.getAll();
 		ArrayList<ComisionProducto> comisiones= new ArrayList<ComisionProducto>();
 		ComisionProducto registro;

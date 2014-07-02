@@ -46,8 +46,8 @@ public class ServletAdicional extends ServletUtils {
 		Date fechaDesde=null;
 		Date fechaHasta=null;
 		try {
-			fechaDesde = getFecha("desde");
-			fechaHasta = getFecha("hasta");
+			fechaDesde = getFechaSoloMesAnio("desde");
+			fechaHasta = getFechaUnMesMas("desde");
 			setParamsVendedores();
 			//service.calcular(fechaDesde, fechaHasta);
 		} catch (NullPointerException | IllegalArgumentException e) {

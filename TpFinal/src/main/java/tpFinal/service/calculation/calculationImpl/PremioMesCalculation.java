@@ -52,7 +52,7 @@ public class PremioMesCalculation extends CalculationUtils{
 	
 		for (Vendedor vendedor : vendedores)
 		{
-			ventas=findVentas.findBySpecificDatesCreatorId(vendedor.getId(), fechaDesde, fechaHasta);//FIXIT: no recupera ninguna venta!
+			ventas=findVentas.findBySpecificDatesCreatorId(vendedor.getId(), fechaDesde, getFechaIntervaloHasta(fechaDesde));//FIXIT: no recupera ninguna venta!
 			
 			if (ventas!=null && !ventas.isEmpty())
 			{
