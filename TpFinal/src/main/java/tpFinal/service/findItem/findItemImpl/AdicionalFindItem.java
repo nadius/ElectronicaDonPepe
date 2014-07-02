@@ -60,7 +60,7 @@ public class AdicionalFindItem implements FindItem<Adicional>, FindItemWithAutho
 		
 		for (Adicional item : all)
 		{
-			if(item.getFechaDesde().compareTo(to)==0 && item.getFechaHasta().compareTo(to)==0)
+			if(item.getFechaDesde().compareTo(from)>=0 && item.getFechaHasta().compareTo(to)<=0)
 			{
 				answer.add(item);
 			}

@@ -37,8 +37,8 @@ public class PremioFindItem implements FindItem<Premio>, FindItemWithAuthor<Prem
 		ArrayList<Premio> all = dao.getAll();
 		ArrayList<Premio> answer = new ArrayList<Premio>();
 		
-		if (all.isEmpty())
-			return null;
+		if (all == null || all.isEmpty())
+			return answer;
 		
 		for (Premio item : all)
 		{
@@ -55,12 +55,12 @@ public class PremioFindItem implements FindItem<Premio>, FindItemWithAuthor<Prem
 		ArrayList<Premio> all = dao.getAll();
 		ArrayList<Premio> answer = new ArrayList<Premio>();
 		
-		if (all.isEmpty())
-			return null;
+		if (all == null || all.isEmpty())
+			return answer;
 		
 		for (Premio item : all)
 		{
-			if(item.getFechaDesde().compareTo(to)==0 && item.getFechaHasta().compareTo(to)==0)
+			if(item.getFechaDesde().compareTo(from)>=0 && item.getFechaHasta().compareTo(to)<=0)
 			{
 				answer.add(item);
 			}
@@ -73,8 +73,8 @@ public class PremioFindItem implements FindItem<Premio>, FindItemWithAuthor<Prem
 		ArrayList<Premio> all = dao.getAll();
 		ArrayList<Premio> answer = new ArrayList<Premio>();
 		
-		if (all.isEmpty())
-			return null;
+		if (all == null || all.isEmpty())
+			return answer;
 		
 		for (Premio item : all)
 		{
@@ -91,8 +91,8 @@ public class PremioFindItem implements FindItem<Premio>, FindItemWithAuthor<Prem
 		ArrayList<Premio> all = findByCreationDate(creationDate);
 		ArrayList<Premio> answer = new ArrayList<Premio>();
 		
-		if (all.isEmpty())
-			return null;
+		if (all == null || all.isEmpty())
+			return answer;
 		
 		for (Premio item : all)
 		{
@@ -109,8 +109,8 @@ public class PremioFindItem implements FindItem<Premio>, FindItemWithAuthor<Prem
 		ArrayList<Premio> all = findBySpecificDates(from, to);
 		ArrayList<Premio> answer = new ArrayList<Premio>();
 		
-		if (all.isEmpty())
-			return null;
+		if (all == null || all.isEmpty())
+			return answer;
 		
 		for (Premio item : all)
 		{

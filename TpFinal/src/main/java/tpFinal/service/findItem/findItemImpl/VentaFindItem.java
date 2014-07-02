@@ -37,8 +37,8 @@ public class VentaFindItem implements FindItem<Venta>, FindItemWithAuthor<Venta>
 		ArrayList<Venta> all = dao.getAll();
 		ArrayList<Venta> answer = new ArrayList<Venta>();
 		
-		if (all.isEmpty())
-			return null;
+		if (all == null || all.isEmpty())
+			return answer;
 		
 		for (Venta item : all)
 		{
@@ -55,12 +55,12 @@ public class VentaFindItem implements FindItem<Venta>, FindItemWithAuthor<Venta>
 		ArrayList<Venta> all = dao.getAll();
 		ArrayList<Venta> answer = new ArrayList<Venta>();
 		
-		if (all.isEmpty())
-			return null;
+		if (all == null || all.isEmpty())
+			return answer;
 		
 		for (Venta item : all)
 		{
-			if(item.getFecha().compareTo(to)==0 && item.getFecha().compareTo(to)==0)
+			if(item.getFecha().compareTo(from)>=0 && item.getFecha().compareTo(to)<=0)
 			{
 				answer.add(item);
 			}
@@ -73,8 +73,8 @@ public class VentaFindItem implements FindItem<Venta>, FindItemWithAuthor<Venta>
 		ArrayList<Venta> all = dao.getAll();
 		ArrayList<Venta> answer = new ArrayList<Venta>();
 		
-		if (all.isEmpty())
-			return null;
+		if (all == null || all.isEmpty())
+			return answer;
 		
 		for (Venta item : all)
 		{
@@ -91,8 +91,8 @@ public class VentaFindItem implements FindItem<Venta>, FindItemWithAuthor<Venta>
 		ArrayList<Venta> all = findByCreationDate(creationDate);
 		ArrayList<Venta> answer = new ArrayList<Venta>();
 		
-		if (all.isEmpty())
-			return null;
+		if (all == null || all.isEmpty())
+			return answer;
 		
 		for (Venta item : all)
 		{
@@ -109,8 +109,8 @@ public class VentaFindItem implements FindItem<Venta>, FindItemWithAuthor<Venta>
 		ArrayList<Venta> all = findBySpecificDates(from, to);
 		ArrayList<Venta> answer = new ArrayList<Venta>();
 		
-		if (all.isEmpty())
-			return null;
+		if (all == null || all.isEmpty())
+			return answer;
 		
 		for (Venta item : all)
 		{

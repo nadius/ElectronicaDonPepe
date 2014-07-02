@@ -37,8 +37,8 @@ public class ComisionVentaFindItem implements FindItem<ComisionVenta>, FindItemW
 		ArrayList<ComisionVenta> all = dao.getAll();
 		ArrayList<ComisionVenta> answer = new ArrayList<ComisionVenta>();
 		
-		if (all.isEmpty())
-			return null;
+		if (all == null || all.isEmpty())
+			return answer;
 		
 		for (ComisionVenta item : all)
 		{
@@ -55,12 +55,12 @@ public class ComisionVentaFindItem implements FindItem<ComisionVenta>, FindItemW
 		ArrayList<ComisionVenta> all = dao.getAll();
 		ArrayList<ComisionVenta> answer = new ArrayList<ComisionVenta>();
 		
-		if (all.isEmpty())
-			return null;
+		if (all == null || all.isEmpty())
+			return answer;
 		
 		for (ComisionVenta item : all)
 		{
-			if(item.getFechaDesde().compareTo(to)==0 && item.getFechaHasta().compareTo(to)==0)
+			if(item.getFechaDesde().compareTo(from)>=0 && item.getFechaHasta().compareTo(to)<=0)
 			{
 				answer.add(item);
 			}
@@ -73,8 +73,8 @@ public class ComisionVentaFindItem implements FindItem<ComisionVenta>, FindItemW
 		ArrayList<ComisionVenta> all = dao.getAll();
 		ArrayList<ComisionVenta> answer = new ArrayList<ComisionVenta>();
 		
-		if (all.isEmpty())
-			return null;
+		if (all == null || all.isEmpty())
+			return answer;
 		
 		for (ComisionVenta item : all)
 		{
@@ -91,8 +91,8 @@ public class ComisionVentaFindItem implements FindItem<ComisionVenta>, FindItemW
 		ArrayList<ComisionVenta> all = findByCreationDate(creationDate);
 		ArrayList<ComisionVenta> answer = new ArrayList<ComisionVenta>();
 		
-		if (all.isEmpty())
-			return null;
+		if (all == null || all.isEmpty())
+			return answer;
 		
 		for (ComisionVenta item : all)
 		{
@@ -109,8 +109,8 @@ public class ComisionVentaFindItem implements FindItem<ComisionVenta>, FindItemW
 		ArrayList<ComisionVenta> all = findBySpecificDates(from, to);
 		ArrayList<ComisionVenta> answer = new ArrayList<ComisionVenta>();
 		
-		if (all.isEmpty())
-			return null;
+		if (all == null || all.isEmpty())
+			return answer;
 		
 		for (ComisionVenta item : all)
 		{

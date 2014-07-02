@@ -59,8 +59,8 @@ private CampaniaDao dao;
 		ArrayList<Campania> all = dao.getAll();
 		ArrayList<Campania> answer = new ArrayList<Campania>();
 		
-		if (all.isEmpty())
-			return null;
+		if (all == null || all.isEmpty())
+			return answer;
 		
 		for (Campania item : all)
 		{
@@ -77,12 +77,12 @@ private CampaniaDao dao;
 		ArrayList<Campania> all = dao.getAll();
 		ArrayList<Campania> answer = new ArrayList<Campania>();
 		
-		if (all.isEmpty())
-			return null;
+		if (all == null || all.isEmpty())
+			return answer;
 		
 		for (Campania item : all)
 		{
-			if(item.getFechaCreacion().compareTo(from)==0 && item.getFechaCreacion().compareTo(to)==0)
+			if(item.getFechaCreacion().compareTo(from)>=0 && item.getFechaCreacion().compareTo(to)<=0)
 			{
 				answer.add(item);
 			}

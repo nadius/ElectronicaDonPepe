@@ -37,8 +37,8 @@ public class ComisionProductoFindItem implements FindItem<ComisionProducto>, Fin
 		ArrayList<ComisionProducto> all = dao.getAll();
 		ArrayList<ComisionProducto> answer = new ArrayList<ComisionProducto>();
 		
-		if (all.isEmpty())
-			return null;
+		if (all == null || all.isEmpty())
+			return answer;
 		
 		for (ComisionProducto item : all)
 		{
@@ -55,12 +55,12 @@ public class ComisionProductoFindItem implements FindItem<ComisionProducto>, Fin
 		ArrayList<ComisionProducto> all = dao.getAll();
 		ArrayList<ComisionProducto> answer = new ArrayList<ComisionProducto>();
 		
-		if (all.isEmpty())
-			return null;
+		if (all == null || all.isEmpty())
+			return answer;
 		
 		for (ComisionProducto item : all)
 		{
-			if(item.getFechaDesde().compareTo(to)==0 && item.getFechaHasta().compareTo(to)==0)
+			if(item.getFechaDesde().compareTo(from)>=0 && item.getFechaHasta().compareTo(to)<=0)
 			{
 				answer.add(item);
 			}
@@ -73,8 +73,8 @@ public class ComisionProductoFindItem implements FindItem<ComisionProducto>, Fin
 		ArrayList<ComisionProducto> all = dao.getAll();
 		ArrayList<ComisionProducto> answer = new ArrayList<ComisionProducto>();
 		
-		if (all.isEmpty())
-			return null;
+		if (all == null || all.isEmpty())
+			return answer;
 		
 		for (ComisionProducto item : all)
 		{
@@ -91,8 +91,8 @@ public class ComisionProductoFindItem implements FindItem<ComisionProducto>, Fin
 		ArrayList<ComisionProducto> all = findByCreationDate(creationDate);
 		ArrayList<ComisionProducto> answer = new ArrayList<ComisionProducto>();
 		
-		if (all.isEmpty())
-			return null;
+		if (all == null || all.isEmpty())
+			return answer;
 		
 		for (ComisionProducto item : all)
 		{
@@ -109,8 +109,8 @@ public class ComisionProductoFindItem implements FindItem<ComisionProducto>, Fin
 		ArrayList<ComisionProducto> all = findBySpecificDates(from, to);
 		ArrayList<ComisionProducto> answer = new ArrayList<ComisionProducto>();
 		
-		if (all.isEmpty())
-			return null;
+		if (all == null || all.isEmpty())
+			return answer;
 		
 		for (ComisionProducto item : all)
 		{
