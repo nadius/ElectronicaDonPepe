@@ -59,24 +59,30 @@
 											<td><center>Id</center></td>
 											<td><center>Fecha creacion</center></td>
 											<td><center>Nombre</center></td>
-											<td><center>Precio unitario</center></td>
+											<!-- <td><center>Precio unitario</center></td> -->
 											<td><center>Estado</center></td>
 										</tr>
 									</thead>
 									<tbody>
-										<c:if test="${empty campaniasExistentes}">
+										<c:if test="${empty campanias}">
 											<tr>
 												<td colspan="5"><center>Lista vacia</center></td>
 											</tr>
 										</c:if>
-										<c:forEach items="${campaniasExistentes}" var="item" varStatus="i">
+										<c:forEach items="${campanias}" var="item" varStatus="i">
 											<tr>
 												<td><center>${item.id}</center></td>
 												<td><center><fmt:formatDate type="date" value="${item.fechaCreacion}"/> </center></td>
 												<td><center>${item.producto.id} - ${item.producto.nombre}</center></td>
-												<td><center><fmt:formatNumber type="currency" currencyCode="ARS">${item.producto.precioUnitario}</fmt:formatNumber></center></td>
-												<td>
-													<c:if test="${item.activo=='true'}">
+												<!-- <td><center><fmt:formatNumber type="currency" currencyCode="ARS">${item.producto.precioUnitario}</fmt:formatNumber></center></td> -->
+												<td><center>
+													<c:if test="${item.activo == true}">Activo</c:if>
+													<c:if test="${item.activo == false}">No activo</c:if>
+													</center>
+													</td>
+												
+												<c:if test="${item.activo == true}">
+													<td>
 														<center>
 															<form action="campania" method="post">
 																<input type="hidden" name="accion" value="eliminar">
@@ -84,8 +90,10 @@
 																<input type="submit" value="Desactivar">
 															</form>
 														</center>
-													</c:if>
-													<c:if test="${item.activo!='true'}">
+													</td>
+												</c:if>
+												<c:if test="${item.activo == false}">
+													<td>
 														<center>
 															<form action="campania" method="post">
 																<input type="hidden" name="accion" value="agregar">
@@ -93,8 +101,8 @@
 																<input type="submit" value="Activar">
 															</form>
 														</center>
-													</c:if>
-												</td>
+													</td>
+												</c:if>
 											</tr>
 										</c:forEach>
 									</tbody>

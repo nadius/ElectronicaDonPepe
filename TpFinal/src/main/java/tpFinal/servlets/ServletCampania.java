@@ -64,7 +64,7 @@ public class ServletCampania extends ServletUtils{
 	}
 
 	private void setDefaultAttributes() {
-		setAttribute("campaniasExistentes", calculation.getAll());
+		setAttribute("campanias", calculation.getAll());
 		setAttribute("productos", calculation.getProductosNoCampania());
 	}
 }
