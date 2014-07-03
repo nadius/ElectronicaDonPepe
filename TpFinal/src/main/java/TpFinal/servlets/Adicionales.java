@@ -318,10 +318,52 @@ public class Adicionales extends HttpServlet {
 		calendar.set(GregorianCalendar.DAY_OF_MONTH, calendar.getActualMaximum(GregorianCalendar.DAY_OF_MONTH));
 		return calendar;
 	}
+	
+	public void setTotales(Adicional registro)//FIXIT: función temporalmente acá hasta llegar a esta parte del refractor
+	{
+		float[] subtotales = calcularSubtotales(registro);
+		registro.setTotalComisionProducto(subtotales[0]);
+		registro.setTotalPremiosCampania(subtotales[1]);
+		registro.setTotalAdicionales(subtotales[2]);
+	}
+	
+	public float[] calcularSubtotales(Adicional registro)//FIXIT: función temporalmente acá hasta llegar a esta parte del refractor
+	{
+		float[] subtotales = new float[3];
+		for (float i : subtotales)
+			i = 0;
+		
+		//comision productos
+		if (!registro.getComisionesProducto().isEmpty())
+		{
+			for (ComisionProducto comisionProducto : registro.getComisionesProducto())
+				subtotales[0] +=comisionProducto.getImporte();
+		}
+		
+		//premio por campania
+		if (!registro.getCampanias().isEmpty())
+		{
+			for (Premio campania : registro.getCampanias())
+				subtotales[1] +=campania.getImporte();
+		}
+		
+		//registro
+		subtotales[2]=subtotales[0] + subtotales[1];
+		
+		if (registro.getComisionVentas()!=null)
+			subtotales[2] +=registro.getComisionVentas().getImporte();
+		
+		if(registro.getMejorVendedorMes()!=null)
+			subtotales[2] += registro.getMejorVendedorMes().getImporte();
+		
+		return subtotales;
+	}
 
-	public void actualizarRegistroPremio(float[] valores) {
+
+	public int actualizarRegistroPremio(float[] valores) {
 		PremioMonto registro=new PremioMonto();
 		ArrayList<Premio> premios=service.getPremio();
+		int cantidadActualizados=0;
 /*		//Verificar
 		System.out.print("Premios \t Actualizar: ");
 		for (float item : valores)
@@ -338,17 +380,20 @@ public class Adicionales extends HttpServlet {
 				{
 					premio.setImporte(valores[i]);
 					service.actualizarPremio(premio);
+					cantidadActualizados++;
 				}
 			}
 			
 			registro.setMonto(valores[i]);
 			service.actualizarPremioMonto(registro); 
 		}
+		return cantidadActualizados;
 	}
 
-	public void actualizarRegistroComisionProducto(float[] valores) {
+	public int actualizarRegistroComisionProducto(float[] valores) {
 		ComisionProductoMonto registro=new ComisionProductoMonto();
-		ArrayList<ComisionProducto> comisiones=service.getComisionProducto();
+		ArrayList<Adicional> registros=service.getAdicionales();
+		int cantidadActualizados=0;
 
 /*		//Verificar
 		System.out.print("Comision Producto \t Actualizar: ");
@@ -359,24 +404,32 @@ public class Adicionales extends HttpServlet {
 		for (int i=0; i<valores.length; i++)
 		{
 			registro=service.getMontoProducto(i+1);
-						
-			for (ComisionProducto comision : comisiones)//actualizo todos los importes de los premios
+			
+			for (Adicional item : registros)//actualizo todos los importes de los premios
 			{
-				if((comision.getImporte()/comision.getUnidades())==registro.getMonto())
-				{
-					comision.setImporte(valores[i]*comision.getUnidades());
-					service.actualizarComisionProducto(comision);
+				for (ComisionProducto comision : item.getComisionesProducto()){
+					if((comision.getImporte()/comision.getUnidades())==registro.getMonto())
+					{
+						comision.setImporte(valores[i]*comision.getUnidades());
+						service.actualizarComisionProducto(comision);
+						cantidadActualizados++;
+					}
 				}
+				setTotales(item);
+				service.guardarAdicional(item);
 			}
+			
 			
 			registro.setMonto(valores[i]);
 			service.actualizarProductoMonto(registro); 
 		}
+		return cantidadActualizados;
 	}
 
-	public void actualizarRegistroComisionVenta(float[] valores) {
+	public int actualizarRegistroComisionVenta(float[] valores) {
 		ComisionVentaMonto registro=new ComisionVentaMonto();
 		ArrayList<ComisionVenta> comisiones=service.getComisionVenta();
+		int cantidadActualizados=0;
 
 /*		//Verificar
 		System.out.print("Comision Producto \t Actualizar: ");
@@ -394,12 +447,14 @@ public class Adicionales extends HttpServlet {
 				{
 					comision.setImporte(valores[i]);
 					service.actualizarComisionVenta(comision);
+					cantidadActualizados++;
 				}
 			}
 			
 			registro.setMonto(valores[i]);
 			service.actualizarVentaMonto(registro); 
 		}
+		return cantidadActualizados;
 	}
 
 	public Usuario getUsuario() {

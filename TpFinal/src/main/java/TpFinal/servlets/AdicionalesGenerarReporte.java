@@ -200,38 +200,7 @@ public class AdicionalesGenerarReporte extends Adicionales {
 		}
 	}
 	
-	public float[] calcularSubtotales(Adicional registro)//FIXIT: función temporalmente acá hasta llegar a esta parte del refractor
-	{
-		float[] subtotales = new float[3];
-		for (float i : subtotales)
-			i = 0;
 		
-		//comision productos
-		if (!registro.getComisionesProducto().isEmpty())
-		{
-			for (ComisionProducto comisionProducto : registro.getComisionesProducto())
-				subtotales[0] +=comisionProducto.getImporte();
-		}
-		
-		//premio por campania
-		if (!registro.getCampanias().isEmpty())
-		{
-			for (Premio campania : registro.getCampanias())
-				subtotales[1] +=campania.getImporte();
-		}
-		
-		//registro
-		subtotales[2]=subtotales[0] + subtotales[1];
-		
-		if (registro.getComisionVentas()!=null)
-			subtotales[2] +=registro.getComisionVentas().getImporte();
-		
-		if(registro.getMejorVendedorMes()!=null)
-			subtotales[2] += registro.getMejorVendedorMes().getImporte();
-		
-		return subtotales;
-	}
-	
 	public Adicional calcularAdicionalVendedor(Date fechaHoy, GregorianCalendar desde, GregorianCalendar hasta, Vendedor vendedor, Premio vendedorMes, ArrayList<Premio> premiosCampania)
 	{
 		ArrayList<ComisionProducto> cProductos=calcularComisionProducto(vendedor, desde, hasta);
@@ -270,14 +239,6 @@ public class AdicionalesGenerarReporte extends Adicionales {
 		
 		
 	}*/
-	
-	public void setTotales(Adicional registro)//FIXIT: función temporalmente acá hasta llegar a esta parte del refractor
-	{
-		float[] subtotales = calcularSubtotales(registro);
-		registro.setTotalComisionProducto(subtotales[0]);
-		registro.setTotalPremiosCampania(subtotales[1]);
-		registro.setTotalAdicionales(subtotales[2]);
-	}
 	
 	public ArrayList<Adicional> getAdicionales()//FIXIT: función temporalmente acá hasta llegar a esta parte del refractor
 	{

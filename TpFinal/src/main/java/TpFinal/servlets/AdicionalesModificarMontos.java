@@ -45,18 +45,21 @@ public class AdicionalesModificarMontos extends Adicionales {
 		String cProducto=request.getParameter("cProducto");
 		String Premio = request.getParameter("Premio");
 		
+		int cantModificados=0;
+		
 		if (cVenta!=null && cVenta.equals("true"))
-			actualizarRegistroComisionVenta(recuperarValores(request, "cVenta"));
+			cantModificados = actualizarRegistroComisionVenta(recuperarValores(request, "cVenta"));
 			
 		if (cProducto!=null && cProducto.equals("true"))
-			actualizarRegistroComisionProducto(recuperarValores(request, "cProducto"));
+			cantModificados = actualizarRegistroComisionProducto(recuperarValores(request, "cProducto"));
 			
 		if (Premio!=null && Premio.equals("true"))
-			actualizarRegistroPremio(recuperarValores(request, "Premio"));
+			cantModificados = actualizarRegistroPremio(recuperarValores(request, "Premio"));
 			
 		request.setAttribute("comisionVenta", service.getMontosVenta());
 		request.setAttribute("comisionProducto", service.getMontosProducto());
 		request.setAttribute("premios", service.getMontosPremio());
+		request.setAttribute("actualizados", cantModificados);
 		request.getRequestDispatcher("/WEB-INF/ModificarAdicionales.jsp").forward(request, response);
 	}
 	

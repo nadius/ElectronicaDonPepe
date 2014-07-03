@@ -40,24 +40,7 @@
 		<div class="container">
 			<div class="page-header">
 				<h2>Adicionales existentes</h2>
-				
-				<%-- <form action="modificar" method="post">
-					<table class="table">
-						<thead>
-							<tr>
-								<td><center>Nombre</center></td>
-								<td><center>Tipo</center></td>
-								<td><center>Detalle</center></td>
-								<td><center>Valor</center></td>
-							</tr>
-						</thead>
-						<tbody>
-						</tbody>
-					</table>
-				</form> --%>
-			
-				<div class="panel-group" id="accordion">
-				  
+				<div class="panel-group" id="accordion">				  
 				  <div class="panel panel-default">
 				    <div class="panel-heading">
 				      <h4 class="panel-title">
@@ -85,7 +68,7 @@
 												<td><center>${item.id}</center></td>
 												<td><center>${item.min}</center></td>
 												<td><center>${item.max}</center></td>
-												<td><center><input type="text" name="cVenta${item.id}Valor" class="form-group" value="${item.monto}"></center></td>
+												<td><center><input type="text" name="cVenta${item.id}Valor" class="form-control" value="${item.monto}"></center></td>
 											</tr>
 										</c:forEach>
 									</tbody>
@@ -121,7 +104,7 @@
 											<tr>
 												<td><center>${item.id}</center></td>
 												<td><center>${item.producto.id} - ${item.producto.nombre}</center></td>
-												<td><center><input type="text" name="cProducto${item.id}Valor" class="form-group" value="${item.monto}"></center></td>
+												<td><center><input type="text" name="cProducto${item.id}Valor" class="form-control" value="${item.monto}"></center></td>
 											</tr>
 										</c:forEach>
 									</tbody>
@@ -202,7 +185,7 @@
 												<c:if test="${item.campania == 'false'}">
 													<td><center>Mejor vendedor mes</center></td>
 												</c:if>
-												<td><center><input type="text" name="Premio${item.id}Valor" class="form-group" value="${item.monto}"></center></td>
+												<td><center><input type="text" name="Premio${item.id}Valor" class="form-control" value="${item.monto}"></center></td>
 											</tr>
 										</c:forEach>
 									</tbody>
@@ -223,5 +206,8 @@
 		<script src="${origen}/js/bootstrap.js"></script>
 		<script type="text/javascript" src="${origen}/js/jquery.meiomask.js" charset="utf-8" ></script>
 		<script type="text/javascript" src="${origen}/js/MeioMaskStart.js"></script>
+		<c:if test="${not empty actualizados}">
+   				<script>window.alert('${actualizados}' + " registros actualizados");</script>
+   		</c:if>
 	</body>
 </html>
