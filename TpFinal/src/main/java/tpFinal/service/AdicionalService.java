@@ -93,4 +93,11 @@ public class AdicionalService {
 	public void resetParams(){
 		calculation.resetParams();
 	}
+	
+	public void setTotalAll(){
+		for(Adicional adicional : dao.getAll()){
+			calculation.setTotales(adicional);
+			dao.update(adicional);
+		}
+	}
 }
