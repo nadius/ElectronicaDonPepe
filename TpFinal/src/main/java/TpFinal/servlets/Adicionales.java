@@ -457,6 +457,141 @@ public class Adicionales extends HttpServlet {
 		return cantidadActualizados;
 	}
 
+	protected int actualizarRegistroPremio(int id, float valor) {
+		PremioMonto registro=service.getMontoPremio(id);
+		int cantidadActualizados=0;
+		
+		//Actualizo los registros premio
+		if (registro.isCampania()){//si el registro es de las campañas
+			for (Premio premio : service.getPremioCampania())//actualizo todos los importes de los premios por campaña
+			{
+				if(premio.getImporte()==registro.getMonto())
+				{
+					premio.setImporte(valor);
+					service.actualizarPremio(premio);
+					cantidadActualizados++;
+				}
+			}
+		}
+		else{//el registro corresponde a los premios por mejor vendedor del mes
+			for (Premio premio : service.getPremioMejorVendedorMes())//actualizo todos los importes de los premios correspondientes
+			{
+				if(premio.getImporte()==registro.getMonto())
+				{
+					premio.setImporte(valor);
+					service.actualizarPremio(premio);
+					cantidadActualizados++;
+				}
+			}
+		}
+		
+		//actualizo el total de los adicionales
+		for (Adicional item : service.getAdicionales()){
+			setTotales(item);
+			service.actualizarAdicional(item);
+		}
+		
+		//actualizo el registro PremioMonto
+		registro.setMonto(valor);
+		service.actualizarPremioMonto(registro); 
+		return cantidadActualizados;
+	}
+
+	protected int actualizarRegistroComisionProducto(int id, float valor) {
+		ComisionProductoMonto registro=service.getMontoProducto(id);
+		float importe=0;
+		int cantidadActualizados=0;
+		
+		//Actualizo los registros ComisionProducto
+		for (ComisionProducto comision : service.getComisionProducto()){
+			importe = comision.getImporte()/comision.getUnidades(); 
+			if(importe == registro.getMonto())//si el importe coincide con el mismo del registro a modificar
+			{
+				comision.setImporte(valor*comision.getUnidades());
+				service.actualizarComisionProducto(comision);
+				cantidadActualizados++;
+			}
+		}
+
+		//actualizo el total de los adicionales
+		for (Adicional item : service.getAdicionales()){
+			setTotales(item);
+			service.actualizarAdicional(item);
+		}
+		
+		//actualizo el registro ComisionProductoMonto
+		registro.setMonto(valor);
+		service.actualizarProductoMonto(registro); 
+		return cantidadActualizados;
+	}
+
+	protected int actualizarRegistroComisionVenta(int id, float valor) {
+		ComisionVentaMonto registro=service.getMontoVenta(id);
+		int cantidadActualizados=0;
+		
+		//actualizo todos los importes de los registros
+		for (ComisionVenta item : service.getComisionVenta())
+		{
+			if(item.getImporte() == registro.getMonto())//si el importe coincide con el mismo del registro a modificar
+			{
+				item.setImporte(valor);
+				service.actualizarComisionVenta(item);
+				cantidadActualizados++;
+			}
+		}
+		
+		//actualizo el total de los adicionales
+		for (Adicional item : service.getAdicionales()){
+			setTotales(item);
+			service.actualizarAdicional(item);
+		}
+		
+		//actualizo el registro ComisionVentaMonto
+		registro.setMonto(valor);
+		service.actualizarVentaMonto(registro); 
+		return cantidadActualizados;
+	}
+
+	protected int agregarComisionProducto(int id, float monto) {
+		ComisionProductoMonto registro = new ComisionProductoMonto(service.getProducto(id), monto);
+		
+		for(ComisionProductoMonto item : service.getMontosProducto()){//busca un registro con el mismo producto
+			if (item.getProducto().getId() == id){
+				return item.getId();
+			}
+		}
+		
+		service.guardarProductoMonto(registro);
+		return 0;
+	}
+
+	public void borrarDeProductos(ArrayList<Producto> lista, int idProducto)
+	{
+		int index;
+		for (index=0; index<lista.size(); index++)
+			if (lista.get(index).getId() == idProducto)
+			{
+				lista.remove(index);
+				return;
+			}
+		return;
+	}
+	
+	public ArrayList<Producto> getProductosNoComisionProductoMonto()
+	{
+		ArrayList<Producto> todosProductos = service.getProductos();
+		ArrayList<Producto> seleccion = service.getProductos();
+		
+		if (service.getMontosProducto()==null || service.getMontosProducto().isEmpty())
+			return todosProductos;
+		
+		for (Producto producto : todosProductos)
+			for (ComisionProductoMonto item : service.getMontosProducto())
+				if (producto.getId()==item.getProducto().getId())
+					borrarDeProductos(seleccion, producto.getId());
+		return seleccion;
+	}
+	
 	public Usuario getUsuario() {
 		return usuario;
 	}

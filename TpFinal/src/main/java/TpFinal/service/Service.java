@@ -271,4 +271,6 @@ public interface Service {
 			GregorianCalendar hasta);
 
 	int getAdicional(Adicional registro);
+
+	void actualizarAdicional(Adicional adicional);
 }

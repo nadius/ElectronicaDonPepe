@@ -1,6 +1,7 @@
 package TpFinal.dataccess;
 
 import java.util.ArrayList;
+
 import TpFinal.domain.*;
 import TpFinal.domain.adicional.monto.ComisionProductoMonto;
 import TpFinal.domain.adicional.monto.ComisionVentaMonto;
@@ -213,4 +214,6 @@ public interface DataAccess {
 	
 	//Guardar
 	public void guardarCampania(Campania item);
+
+	void actualizarAdicional(Adicional adicional);
 }

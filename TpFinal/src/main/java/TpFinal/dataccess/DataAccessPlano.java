@@ -806,4 +806,13 @@ public class DataAccessPlano implements DataAccess
 		cerrarConexion();
 	}
 
+	@Override
+	public void actualizarAdicional(Adicional item) {
+		abrirConexion();
+		Transaction tx = session.beginTransaction();
+		session.update(item);
+		tx.commit();
+		cerrarConexion();
+	}
+
 }

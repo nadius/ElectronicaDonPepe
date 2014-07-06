@@ -17,7 +17,6 @@ public class AdicionalesModificarMontos extends Adicionales {
        
     public AdicionalesModificarMontos() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -33,19 +32,22 @@ public class AdicionalesModificarMontos extends Adicionales {
 			response.sendRedirect(request.getContextPath() + "/error");
 			return;
 		}
+		
 		request.setAttribute("comisionVenta", service.getMontosVenta());
 		request.setAttribute("comisionProducto", service.getMontosProducto());
 		request.setAttribute("premios", service.getMontosPremio());
-		request.setAttribute("productos", service.getProductos());
+		request.setAttribute("productos", getProductosNoComisionProductoMonto());
 		request.getRequestDispatcher("/WEB-INF/ModificarAdicionales.jsp").forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String cVenta = request.getParameter("cVenta");
+		int respuesta=0;
+		float valor=0;
+		
+/*		String cVenta = request.getParameter("cVenta");
 		String cProducto=request.getParameter("cProducto");
 		String Premio = request.getParameter("Premio");
 		
-		int cantModificados=0;
 		
 		if (cVenta!=null && cVenta.equals("true"))
 			cantModificados = actualizarRegistroComisionVenta(recuperarValores(request, "cVenta"));
@@ -55,14 +57,75 @@ public class AdicionalesModificarMontos extends Adicionales {
 			
 		if (Premio!=null && Premio.equals("true"))
 			cantModificados = actualizarRegistroPremio(recuperarValores(request, "Premio"));
+*/
+		String accion=request.getParameter("accion");
+		String tipo= request.getParameter("tipo");
+		int id=0;
+		
+		if (accion.equals("set")){//seteo los valores que se necesitan en el formulario de actualización : registro y tipo del mismo
+			request.setAttribute("tipo", request.getParameter("tipo"));
+			id= Integer.parseInt(request.getParameter("id"));
+			
+			if (tipo.equals("comisionVenta")){
+				request.setAttribute("registro", service.getMontoVenta(id));
+			}
+			
+			if (tipo.equals("comisionProducto")){
+				request.setAttribute("registro", service.getMontoProducto(id));
+			}
+			
+			if(tipo.equals("premio")){
+				request.setAttribute("registro", service.getMontoPremio(id));
+			}
+		}
+		
+		if (accion.equals("update")){//recupero el valor ingresado
+			valor = Float.parseFloat(request.getParameter("valor"));
+			id= Integer.parseInt(request.getParameter("id"));
+			
+			if (tipo.equals("comisionVenta")){
+				respuesta = actualizarRegistroComisionVenta(id, valor);
+			}
+			
+			if (tipo.equals("comisionProducto")){
+				respuesta = actualizarRegistroComisionProducto(id, valor);
+			}
+			
+			if(tipo.equals("premio")){
+				respuesta = actualizarRegistroPremio(id, valor);
+			}
+			request.setAttribute("actualizados", respuesta);
+		}
+		
+		if (accion.equals("producto")){//agrego un nuevo registro ComisionProductoMonto
+			id= Integer.parseInt(request.getParameter("nuevoId"));//FIXME: NumberFormatException !?
+			valor = Float.parseFloat(request.getParameter("nuevoMonto"));
+			respuesta = agregarComisionProducto(id, valor);
+			if (respuesta !=0){
+				request.setAttribute("addError", "El registro " + respuesta + " tiene al producto seleccionado como Comision por Producto.");
+			}
+		}
+		
+		/*if (accion.equals("status")){
+			id= Integer.parseInt(request.getParameter("id"));
+			if (tipo.equals("comisionProducto")){
+				respuesta = statusComisionProductoMonto(id);
+				
+			}
+		}*/
 			
 		request.setAttribute("comisionVenta", service.getMontosVenta());
 		request.setAttribute("comisionProducto", service.getMontosProducto());
 		request.setAttribute("premios", service.getMontosPremio());
-		request.setAttribute("actualizados", cantModificados);
+		request.setAttribute("productos", getProductosNoComisionProductoMonto());
 		request.getRequestDispatcher("/WEB-INF/ModificarAdicionales.jsp").forward(request, response);
 	}
 	
+/*	private int statusComisionProductoMonto(int id) {
+		ComisionProductoMonto registro = service.getMontoProducto(id);
+		if (registro.get)
+	}*/
+
 	@Override
 	public void init(ServletConfig config) {
 		super.init(config);

@@ -424,7 +424,11 @@ public class ServiceBasico implements Service {
 		if (adicional.getComisionVentas()!=null && adicional.getId()==0)//si o si tiene que haber comision por ventas para que se justifique guardar un adicional
 			dataAccess.guardarAdicional(adicional);
 	}
-
+	
+	@Override
+	public void actualizarAdicional(Adicional adicional) {
+		dataAccess.actualizarAdicional(adicional);
+	}
 	
 //COMISION
 	@Override

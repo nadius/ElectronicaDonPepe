@@ -175,6 +175,11 @@ public class DataAccessHibernateTemplate implements DataAccess {
 	public void guardarAdicional(Adicional adicional) {
 		this.hibernateTemplate.merge(adicional);
 	}
+	
+	@Override
+	public void actualizarAdicional(Adicional adicional) {
+		this.hibernateTemplate.update(adicional);
+	}
 
 //COMISION
 	@Override

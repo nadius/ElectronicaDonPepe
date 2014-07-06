@@ -116,18 +116,6 @@ public class AdicionalesAdministrarCampanias extends Adicionales {
 		return seleccion;
 	}
 	
-	public void borrarDeProductos(ArrayList<Producto> lista, int idProducto)
-	{
-		int index;
-		for (index=0; index<lista.size(); index++)
-			if (lista.get(index).getId() == idProducto)
-			{
-				lista.remove(index);
-				return;
-			}
-		return;
-	}
-	
 	public void borrarDeCampania(int idCampania)
 	{
 		int index;
