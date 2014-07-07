@@ -40,179 +40,151 @@
 		<div class="container">
 			<div class="page-header">
 				<h2>Adicionales existentes</h2>
-				
-				<%-- <form action="modificar" method="post">
-					<table class="table">
-						<thead>
+				<h3>Comision por Venta</h3>
+				<table class="table">
+					<thead>
+						<tr>
+							<td><center>Id</center></td>
+							<td><center>Cantidad mínima</center></td>
+							<td><center>Cantidad máxima</center></td>
+							<td><center>Valor</center></td>
+							<td></td>
+						</tr>
+					</thead>
+					<tbody>
+						<c:forEach items="${comisionVenta}" var="item" varStatus="i">
 							<tr>
-								<td><center>Nombre</center></td>
-								<td><center>Tipo</center></td>
-								<td><center>Detalle</center></td>
-								<td><center>Valor</center></td>
+								<td><center>${item.id}</center></td>
+								<td><center>${item.min}</center></td>
+								<td><center>${item.max}</center></td>
+								<td><center>${item.monto}</center></td>
+								<td>
+									<form action="modificar" method="post">
+										<input name="accion" type="hidden" value="set">
+										<input name="id" type="hidden" value="${item.id}">
+										<input name="tipo" type="hidden" value="comisionVenta">
+										<button class="btn btn-primary">Actualizar</button>
+									</form>
+								</td>
 							</tr>
-						</thead>
-						<tbody>
-						</tbody>
-					</table>
-				</form> --%>
-			
-				<div class="panel-group" id="accordion">
-				  
-				  <div class="panel panel-default">
-				    <div class="panel-heading">
-				      <h4 class="panel-title">
-				        <a data-toggle="collapse" data-parent="#accordion" href="#comisionVenta">
-				          Comision por Venta
-				        </a>
-				      </h4>
-				    </div>
-				    <div id="comisionVenta" class="panel-collapse collapse in">
-				      <div class="panel-body">
-				        	<form action="modificar" method="post">
-				        		<input type="hidden" name="cVenta" value="true">
-								<table class="table">
-									<thead>
-										<tr>
-											<td><center>Id</center></td>
-											<td><center>Cantidad mínima</center></td>
-											<td><center>Cantidad máxima</center></td>
-											<td><center>Valor</center></td>
-										</tr>
-									</thead>
-									<tbody>
-										<c:forEach items="${comisionVenta}" var="item" varStatus="i">
-											<tr>
-												<td><center>${item.id}</center></td>
-												<td><center>${item.min}</center></td>
-												<td><center>${item.max}</center></td>
-												<td><center><input type="text" name="cVenta${item.id}Valor" class="form-group" value="${item.monto}"></center></td>
-											</tr>
-										</c:forEach>
-									</tbody>
-								</table>
-								<button class="btn btn-primary" type="submit">Actualizar</button>
-							</form>
+						</c:forEach>
+					</tbody>
+				</table>
+				
+				<h3>Comision por Producto</h3>
+				<table class="table">
+					<thead>
+						<tr>
+							<td><center>Id</center></td>
+							<td><center>Producto</center></td>
+							<td><center>Valor</center></td>
+							<td><center>Actualizar</center></td>
+							<!-- <td><center>Habilitar/Deshabilitar</center></td> -->
+						</tr>
+					</thead>
+					<tbody>
+						<c:forEach items="${comisionProducto}" var="item" varStatus="i">
+							<tr>
+								<td><center>${item.id}</center></td>
+								<td><center>${item.producto.id} - ${item.producto.nombre}</center></td>
+								<td><center>${item.monto}</center></td>
+								<td>
+									<form action="modificar" method="post">
+										<input name="accion" type="hidden" value="set">
+										<input name="id" type="hidden" value="${item.id}">
+										<input name="tipo" type="hidden" value="comisionProducto">
+										<center><button class="btn btn-primary">Actualizar</button></center>
+									</form>
+								</td>
+							</tr>
+						</c:forEach>
+					</tbody>
+				</table>				  
+				<br>
+				<br>
+				  <h3>Premios</h3>
+				  <table class="table">
+					<thead>
+						<tr>
+							<td><center>Tipo</center></td>
+							<td><center>Valor</center></td>
+							<td></td>
+						</tr>
+					</thead>
+					<tbody>
+						<c:forEach items="${premios}" var="item" varStatus="i">
+							<tr>
+								<c:if test="${item.campania == 'true'}">
+									<td><center>Campaña</center></td>
+								</c:if>
+								<c:if test="${item.campania == 'false'}">
+									<td><center>Mejor vendedor mes</center></td>
+								</c:if>
+								<td><center>${item.monto}</center></td>
+								<td>
+									<form action="modificar" method="post">
+										<input name="accion" type="hidden" value="set">
+										<input name="id" type="hidden" value="${item.id}">
+										<input name="tipo" type="hidden" value="premio">
+										<button class="btn btn-primary">Actualizar</button>
+									</form>
+								</td>
+							</tr>
+						</c:forEach>
+					</tbody>
+				</table>
+				
+				<!-- Modal -->
+				<div class="modal fade" id="actualizarForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				  <div class="modal-dialog">
+				    <div class="modal-content">
+				      <div class="modal-header">
+				        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				        <h4 class="modal-title" id="myModalLabel">Actualizar montos</h4>
 				      </div>
-				    </div>
-				  </div>
-				  
-				   <div class="panel panel-default">
-				    <div class="panel-heading">
-				      <h4 class="panel-title">
-				        <a data-toggle="collapse" data-parent="#accordion" href="#comisionProducto">
-				          Comision por Producto
-				        </a>
-				      </h4>
-				    </div>
-				    <div id="comisionProducto" class="panel-collapse collapse">
-				      <div class="panel-body">
-				        	<form action="modificar" method="post">
-				        		<input type="hidden" name="cProducto" value="true">
-								<table class="table">
-									<thead>
-										<tr>
-											<td><center>Id</center></td>
-											<td><center>Producto</center></td>
-											<td><center>Valor</center></td>
-										</tr>
-									</thead>
-									<tbody>
-										<c:forEach items="${comisionProducto}" var="item" varStatus="i">
-											<tr>
-												<td><center>${item.id}</center></td>
-												<td><center>${item.producto.id} - ${item.producto.nombre}</center></td>
-												<td><center><input type="text" name="cProducto${item.id}Valor" class="form-group" value="${item.monto}"></center></td>
-											</tr>
-										</c:forEach>
-									</tbody>
-								</table>
-								<button class="btn btn-primary" type="submit">Actualizar</button>
-							</form>
-								
-							<div class="col-md-2"><button class="btn btn-primary" data-toggle="modal" data-target="#productos"> Agregar producto</button></div>
-							<!-- Modal -->
-							<div class="modal fade" id="productos" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-							  <div class="modal-dialog">
-							    <div class="modal-content">
-							      <div class="modal-header">
-							        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-							        <h4 class="modal-title" id="myModalLabel">Productos</h4>
-							      </div>
-							      <div class="modal-body">
-							        <table class="table">
-										<thead>
-											<tr>
-												<td><center>Nro</center></td>
-												<td><center>Nombre</center></td>
-												<td><center>Agregar</center></td>
-											</tr>
-										</thead>
-										<tbody>
-											<c:if test="${empty productos }">
-												<tr>
-													<td colspan="3"><center>Lista vacía</center></td>
-												</tr>
-											</c:if>
-											<c:forEach items="${productos}" var="producto" varStatus="i">
-												<tr>
-													<td><center>${producto.id}</center></td>
-													<td><center>${producto.nombre}</center></td>
-													<td>
-														<form>
-															<center><input type="radio" name="nuevaComisionProducto" value="${producto.id}"></center>
-														</form>
-													</td>
-												</tr>
-											</c:forEach>
-										</tbody>
-									</table>
-							      </div><!-- /.modal-body -->
-							    </div><!-- /.modal-content -->
-							  </div><!-- /.modal-dialog -->
-							</div><!-- /.modal -->
+				      <div class="modal-body">
+				        <label>Valor actual: ${registro.monto}</label>
+				        <div class="row">
+							<div class="col-md-3">
+				        		<label>Valor nuevo: </label>
+						    </div>
+							<div class="col-md-3">
+				        		<input type="text" id="monto" class="form-control">
+				        	</div>
+				        </div>
+				      </div><!-- /.modal-body -->
+				      <div class="modal-footer">
+				        		<button id="submit" class="btn btn-primary">Confirmar</button>
+				        		<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+			        	</div>
+				    </div><!-- /.modal-content -->
+				  </div><!-- /.modal-dialog -->
+				</div><!-- /.modal -->
+				
+				<!-- Modal -->
+				<div class="modal fade" id="confirmarForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				  <div class="modal-dialog">
+				    <div class="modal-content">
+				      <div class="modal-header">
+				        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				        <h4 class="modal-title" id="myModalLabel">Actualizar montos</h4>
 				      </div>
-				    </div>
-				  </div>
-				  
-				  <div class="panel panel-default">
-				    <div class="panel-heading">
-				      <h4 class="panel-title">
-				        <a data-toggle="collapse" data-parent="#accordion" href="#premios">
-				          Premios
-				        </a>
-				      </h4>
-				    </div>
-				    <div id="premios" class="panel-collapse collapse">
-				      <div class="panel-body">
+				      <div class="modal-body">
 				        	<form action="modificar" method="post">
-				        		<input type="hidden" name="Premio" value="true">
-								<table class="table">
-									<thead>
-										<tr>
-											<td><center>Tipo</center></td>
-											<td><center>Valor</center></td>
-										</tr>
-									</thead>
-									<tbody>
-										<c:forEach items="${premios}" var="item" varStatus="i">
-											<tr>
-												<c:if test="${item.campania == 'true'}">
-													<td><center>Campaña</center></td>
-												</c:if>
-												<c:if test="${item.campania == 'false'}">
-													<td><center>Mejor vendedor mes</center></td>
-												</c:if>
-												<td><center><input type="text" name="Premio${item.id}Valor" class="form-group" value="${item.monto}"></center></td>
-											</tr>
-										</c:forEach>
-									</tbody>
-								</table>
-								<button class="btn btn-primary btn-primary" type="submit">Actualizar</button>
-							</form>
-				      </div>
-				    </div>
-				  </div>
-				</div>	
+				        		<label id="labelConfirmacion"></label>
+				        		<input type="hidden" name="accion" value="update">
+				        		<input type="hidden" name="tipo" value="${tipo}">
+				        		<input type="hidden" name="id" value="${registro.id}">
+				        		<input type="hidden" id="valor" name="valor">
+				        		<div class="modal-footer">
+					        		<button class="btn btn-primary">Confirmar</button>
+					        		<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+				        		</div>
+				        	</form>
+				      </div><!-- /.modal-body -->
+				    </div><!-- /.modal-content -->
+				  </div><!-- /.modal-dialog -->
+				</div><!-- /.modal -->
 			</div>
 		</div>
 <%-- 		<c:if test="${not empty error}"> --%>
@@ -221,7 +193,46 @@
 		<script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
 		<!-- <script src="js/bootstrap.min.js"></script> -->
 		<script src="${origen}/js/bootstrap.js"></script>
-		<script type="text/javascript" src="${origen}/js/jquery.meiomask.js" charset="utf-8" ></script>
 		<script type="text/javascript" src="${origen}/js/MeioMaskStart.js"></script>
+		<script type="text/javascript" src="${origen}/js/jquery.meiomask.js" charset="utf-8" ></script>
+	
+				
+		<c:if test="${not empty registro}">
+			<script type="text/javascript"> <!-- si se seteo un registro se pasan esos valores al formulario actualizarForm -->
+				$(document).ready(function(){
+				    	$("#monto").val("${registro.monto}");
+						$("#actualizarForm").modal('show');
+				});
+			</script>
+		</c:if>
+		<c:if test="${not empty updateError}"> <!-- si algo salió mal se avisa -->
+   				<script type="text/javascript">
+   					$(document).ready(function(){
+   							$("#monto").val("${registro.monto}");
+   							$("#monto").addClass("has-error");
+   							$("#actualizarForm").modal('show');
+   					  });
+   					window.alert('${updateError}' + ". Por favor intente nuevamente");
+ 				</script>
+   		</c:if>
+   		
+   		<c:if test="${not empty addError}">
+   			<script type="text/javascript">
+   				window.alert('${addError}' + ". Por favor intente nuevamente");
+   			</script>
+   		</c:if>
+   		
+		<c:if test="${not empty actualizados}"> <!-- si se actualizó el importe y hay registros actualizados -->
+   				<script>window.alert('${actualizados}' + " registros actualizados");</script>
+   		</c:if>
+   		<script type="text/javascript"> <!-- cuando se hace click en el botón actualizar de actualizarForm, agrega el monto ingresado y muestra confirmacionForm -->
+	   		$(document).ready(function(){
+	   		    $("#submit").click(function(){
+ 	   				$("#labelConfirmacion").text("Se cambiará el valor por " + $("#monto").val());
+ 	   				$("#valor").val($("#monto").val());
+ 	   				$("#confirmarForm").modal('show');
+	   		    });
+			});
+   		</script>
 	</body>
 </html>

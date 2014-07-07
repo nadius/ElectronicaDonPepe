@@ -40,18 +40,46 @@ public class ServletAdicionalMonto extends ServletUtils {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		setRequestResponse(request, response);
 
-		String cVenta = getParameter("cVenta");
-		String cProducto=getParameter("cProducto");
-		String Premio = getParameter("Premio");
+		String accion=getParameter("accion");
+		String tipo= getParameter("tipo");
+		int id=0;
+		int respuesta=0;
+		float valor=0;
 		
-		if (cVenta!=null && cVenta.equals("true"))
-			service.actualizarMontoComisionVenta(recuperarValores("cVenta"));
+		if (accion.equals("set")){//seteo los valores que se necesitan en el formulario de actualización : registro y tipo del mismo
+			setAttribute("tipo", getParameter("tipo"));
+			id= Integer.parseInt(getParameter("id"));
 			
-		if (cProducto!=null && cProducto.equals("true"))
-			service.actualiarMontoComisionProducto(recuperarValores("cProducto"));
+			if (tipo.equals("comisionVenta")){
+				setAttribute("registro", service.getMontoComisionVenta(id));
+			}
 			
-		if (Premio!=null && Premio.equals("true"))
-			service.actualizarMontoPremio(recuperarValores("Premio"));
+			if (tipo.equals("comisionProducto")){
+				request.setAttribute("registro", service.getMontoComisionProducto(id));
+			}
+			
+			if(tipo.equals("premio")){
+				request.setAttribute("registro", service.getMontoPremio(id));
+			}
+		}
+		
+		if (accion.equals("update")){//recupero el valor ingresado
+			valor = Float.parseFloat(request.getParameter("valor"));
+			id= Integer.parseInt(request.getParameter("id"));
+			
+			if (tipo.equals("comisionVenta")){
+				respuesta = service.actualizarMontoComisionVenta(id, valor);
+			}
+			
+			if (tipo.equals("comisionProducto")){
+				respuesta = service.actualizarMontoComisionProducto(id, valor);
+			}
+			
+			if(tipo.equals("premio")){
+				respuesta = service.actualizarMontoPremio(id, valor);
+			}
+			request.setAttribute("actualizados", respuesta);
+		}
 			
 		setDefaultAttributes();
 		redirectPagina("ModificarAdicionales");

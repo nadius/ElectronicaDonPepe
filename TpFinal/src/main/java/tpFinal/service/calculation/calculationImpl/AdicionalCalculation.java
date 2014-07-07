@@ -157,6 +157,13 @@ public class AdicionalCalculation extends CalculationUtils{
 		
 		return registro;
 	}
+	
+	public void setAllTotales(){
+		for (Adicional item : dao.getAll()){
+			setTotales(item);
+			dao.update(item);
+		}
+	}
 
 	public void setTotales(Adicional registro)
 	{

@@ -35,23 +35,32 @@ public class AdicionalMontoService {
 	public ArrayList<PremioMonto> getAllMontosPremio() {
 		return montoPremioDao.getAll();
 	}
-	public void actualizarMontoPremio(float[] valores){
-		calculation.actualizarPremio(valores);
+	public PremioMonto getMontoPremio(int id){
+		return montoPremioDao.get(id);
+	}
+	public int actualizarMontoPremio(int id, float valor){
+		return calculation.actualizarPremio(id, valor);
 	}
 		
 	//ComisionVenta
 	public ArrayList<ComisionVentaMonto> getAllMontoComisionVenta() {
 		return montoVentaDao.getAll();
 	}
-	public void actualizarMontoComisionVenta(float[] valores){
-		calculation.actualizarComisionVenta(valores);
+	public ComisionVentaMonto getMontoComisionVenta(int id){
+		return montoVentaDao.get(id);
+	}
+	public int actualizarMontoComisionVenta(int id, float valor){
+		return calculation.actualizarComisionVenta(id, valor);
 	}
 
 	//ComisionProducto
 	public ArrayList<ComisionProductoMonto> getAllMontosComisionProducto() {
 		return montoProductoDao.getAll();
 	}
-	public void actualiarMontoComisionProducto(float[] valores){
-		calculation.actualizarComisionProducto(valores);
+	public ComisionProductoMonto getMontoComisionProducto(int id){
+		return montoProductoDao.get(id);
+	}
+	public int actualizarMontoComisionProducto(int id, float valor){
+		return calculation.actualizarComisionProducto(id, valor);
 	}
 }

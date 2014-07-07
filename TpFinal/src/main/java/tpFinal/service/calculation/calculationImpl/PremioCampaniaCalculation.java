@@ -101,13 +101,17 @@ public class PremioCampaniaCalculation extends CalculationUtils{
 	public ArrayList<Premio> calcularTodos() {
 		ArrayList<Campania> campaniasActivas=campaniaFindItem.getAllByFlag(true);
 		ArrayList<Premio> premiosCampania=new ArrayList<Premio>();
+		Premio premio;
 				
 		if (campaniasActivas!=null && !campaniasActivas.isEmpty())
 		{
-			for (Campania item : campaniasActivas)
-				premiosCampania.add(calcular(item.getProducto()));
+			for (Campania item : campaniasActivas){
+				premio = calcular(item.getProducto());
+				if (premio !=null )
+					premiosCampania.add(premio);
+			}
 		}
-		return premiosCampania;
+		return premiosCampania;//FIXME: regresa 9 registros cuando deberían ser 3 o 4 como mucho
 	}
 	
 	//@Override

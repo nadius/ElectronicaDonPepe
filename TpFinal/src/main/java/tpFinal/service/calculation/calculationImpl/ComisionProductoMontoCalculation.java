@@ -41,6 +41,31 @@ public class ComisionProductoMontoCalculation {
 		}
 	}
 	
+	public int actualizar(int id, float valor) {
+		ComisionProductoMonto registro=montoDao.get(id);
+		float importe=0;
+		int cantidadActualizados=0;
+		
+		if (!isChanged(registro, valor)){//si el registro no cambió.
+			return 0;
+		}
+		
+		//Actualizo los registros ComisionProducto
+		for (ComisionProducto comision : registroComisionDao.getAll()){
+			importe = comision.getImporte()/comision.getUnidades(); 
+			if(importe == registro.getMonto())//si el importe coincide con el mismo del registro a modificar
+			{
+				comision.setImporte(valor*comision.getUnidades());
+				registroComisionDao.update(comision);
+				cantidadActualizados++;
+			}
+		}
+
+		//actualizo el registro ComisionProductoMonto
+		actualizarRegistroMonto(registro, valor);
+		return cantidadActualizados;
+	}
+	
 	private boolean isChanged(ComisionProductoMonto registro, float valor){
 		if (registro.getMonto()!=valor){
 			return true;

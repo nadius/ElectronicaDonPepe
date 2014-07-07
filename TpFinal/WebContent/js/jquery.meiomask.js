@@ -179,6 +179,9 @@
                 'anio': {
                 	mask: '9999'
                 },
+                'decimal-non-reverse': {
+                    mask: '999999999999.99'
+                },
                 'cep': {
                     mask: '99999-999'
                 },

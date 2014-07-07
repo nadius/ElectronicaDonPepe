@@ -4,6 +4,7 @@ public class AdicionalMontoCalculation {
 	private ComisionProductoMontoCalculation comisionProducto;
 	private ComisionVentaMontoCalculation comisionVenta;
 	private PremioMontoCalculation premio;
+	private AdicionalCalculation adicional;
 	
 	
 	public void setComisionProducto(ComisionProductoMontoCalculation comisionProducto) {
@@ -15,16 +16,25 @@ public class AdicionalMontoCalculation {
 	public void setPremio(PremioMontoCalculation premio) {
 		this.premio = premio;
 	}
-	
-	public void actualizarComisionProducto(float[] valores){
-		comisionProducto.actualizar(valores);
+	public void setAdicional(AdicionalCalculation adicional) {
+		this.adicional = adicional;
 	}
 	
-	public void actualizarComisionVenta(float[] valores){
-		comisionVenta.actualizar(valores);
+	public int actualizarComisionProducto(int id, float valor){
+		int rta = comisionProducto.actualizar(id, valor);
+		adicional.setAllTotales();
+		return rta;
 	}
 	
-	public void actualizarPremio(float[] valores){
-		premio.actualizar(valores);
+	public int actualizarComisionVenta(int id, float valor){
+		int rta = comisionVenta.actualizar(id, valor);
+		adicional.setAllTotales();
+		return rta;
+	}
+	
+	public int actualizarPremio(int id, float valor){
+		int rta = premio.actualizar(id, valor);
+		adicional.setAllTotales();
+		return rta;
 	}
 }

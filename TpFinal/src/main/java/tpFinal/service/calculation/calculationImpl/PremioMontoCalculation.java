@@ -41,6 +41,39 @@ public class PremioMontoCalculation {
 		}
 	}
 	
+	protected int actualizar(int id, float valor) {
+		PremioMonto registro=montoDao.get(id);
+		int cantidadActualizados=0;
+		
+		//Actualizo los registros premio
+		if (registro.isCampania()){//si el registro es de las campañas
+			for (Premio premio : registroPremioDao.getAllCampania())//actualizo todos los importes de los premios por campaña
+			{
+				if(premio.getImporte()==registro.getMonto())
+				{
+					premio.setImporte(valor);
+					registroPremioDao.update(premio);
+					cantidadActualizados++;
+				}
+			}
+		}
+		else{//el registro corresponde a los premios por mejor vendedor del mes
+			for (Premio premio : registroPremioDao.getAllPremioMes())//actualizo todos los importes de los premios correspondientes
+			{
+				if(premio.getImporte()==registro.getMonto())
+				{
+					premio.setImporte(valor);
+					registroPremioDao.update(premio);
+					cantidadActualizados++;
+				}
+			}
+		}
+				
+		//actualizo el registro PremioMonto
+		actualizarRegistroMonto(registro, valor);
+		return cantidadActualizados;
+	}
+	
 	private boolean isChanged(PremioMonto registro, float valor){
 		if (registro.getMonto()!=valor){
 			return true;

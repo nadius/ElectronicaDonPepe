@@ -23,7 +23,31 @@ public class PremioDao implements daoInterface<Premio> {
 	public ArrayList<Premio> getAll() {
 		return (ArrayList<Premio>) dataAccess.getAll(Premio.class);
 	}
+	
+	public ArrayList<Premio> getAllCampania(){
+		ArrayList<Premio> all = getAll();
+		ArrayList<Premio> answer = new ArrayList<Premio>();
+		
+		for (Premio item : all){
+			if (item.isCampania()){
+				answer.add(item);
+			}
+		}
+		return answer;
+	}
 
+	public ArrayList<Premio> getAllPremioMes(){
+		ArrayList<Premio> all = getAll();
+		ArrayList<Premio> answer = new ArrayList<Premio>();
+		
+		for (Premio item : all){
+			if (!item.isCampania()){
+				answer.add(item);
+			}
+		}
+		return answer;
+	}
+	
 	@Override
 	public void save(Premio registro) {
 		dataAccess.save(registro);
