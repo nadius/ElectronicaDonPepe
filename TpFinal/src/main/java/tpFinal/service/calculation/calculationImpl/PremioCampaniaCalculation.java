@@ -65,7 +65,7 @@ public class PremioCampaniaCalculation extends CalculationUtils{
 		{
 			//System.out.println("\t " + vendedor.getNombre() + " " + vendedor.getApellido() + ":");
 			ventas=findVentas.findBySpecificDatesCreatorId(vendedor.getId(), fechaDesde, getFechaIntervaloHasta(fechaDesde));
-			if (ventas!=null && !ventas.isEmpty())//si se encontraron ventas para este vendedor
+			if (ventas!=null || !ventas.isEmpty())//si se encontraron ventas para este vendedor //TODO: probar si sirve
 			{
 				for(Venta venta : ventas)
 				{
