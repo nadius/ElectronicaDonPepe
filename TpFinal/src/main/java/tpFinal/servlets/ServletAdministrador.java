@@ -20,7 +20,7 @@ public class ServletAdministrador extends ServletUtils {
 	private static final long serialVersionUID = 1L;
 	private UsuarioCalculation usuarioCalculation;
 	private VendedorCalculation vendedorCalculation;
-	private int rolPagina =1;
+	private int rolPagina =3;
 	private String mensaje="";
 	
     public void setUsuarioCalculation(UsuarioCalculation usuarioCalculation) {
@@ -52,7 +52,7 @@ public class ServletAdministrador extends ServletUtils {
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		setRequestResponse(request, response);
-		String accion=request.getParameter("accion");
+		String accion=getParameter("accion");
 		mensaje="";
 		
 		//Usuario
@@ -65,7 +65,7 @@ public class ServletAdministrador extends ServletUtils {
 		
 		//Vendedor
 		if(accion.equals("nuevoVendedor"))
-			mensaje=vendedorCalculation.nuevo(request.getParameter("nombre"), request.getParameter("apellido"));
+			mensaje=vendedorCalculation.nuevo(getParameter("nombre"), getParameter("apellido"));
 			
 		if(accion.equals("estadoVendedor"))
 			mensaje=vendedorCalculation.cambiarEstado(parseString(getParameter("idVendedor")));
@@ -74,17 +74,17 @@ public class ServletAdministrador extends ServletUtils {
 		if (accion.contains("Usuario"))
 		{
 			if (mensaje.equals(""))
-				request.setAttribute("ok", "El usuario se guardo correctamente.");
+				setAttribute("ok", "El usuario se guardo correctamente.");
 			else
-				request.setAttribute("error", mensaje);
+				setAttribute("error", mensaje);
 		}
 		
 		if (accion.contains("Vendedor"))
 		{
 			if (mensaje.equals(""))
-				request.setAttribute("ok", "El vendedor se guardo correctamente.");
+				setAttribute("ok", "El vendedor se guardo correctamente.");
 			else
-				request.setAttribute("error", mensaje);
+				setAttribute("error", mensaje);
 		}
 			
 		redirectPagina("Admin");
