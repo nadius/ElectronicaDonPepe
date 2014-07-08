@@ -26,6 +26,14 @@ public class Adicionales extends HttpServlet {
 	//private DataAccess dataAccess;
 	protected Service service;
 	
+	public Service getService() {
+		return service;
+	}
+
+	public void setService(Service service) {
+		this.service = service;
+	}
+
 	private Usuario usuario;
 	private Date fechaHoy;
 	protected ArrayList<Vendedor> vendedores=null;

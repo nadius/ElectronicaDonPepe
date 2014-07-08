@@ -21,11 +21,10 @@ import TpFinal.service.Service;
 import TpFinal.servlets.Adicionales;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("application-context-test.xml")
+@ContextConfiguration("classpath:*applicationContext-test.xml")
 public class CalcularAdicionalesTest {
 	@Autowired
 	private Service service;
-	@Autowired
 	private Adicionales servlet;
 	
 	GregorianCalendar desde;
@@ -33,6 +32,7 @@ public class CalcularAdicionalesTest {
 
 	@Before
 	public void insertarDatos(){
+		servlet.setService(service);
 		desde = new GregorianCalendar(2013, GregorianCalendar.MARCH, 01);
 		hasta = new GregorianCalendar(2013, GregorianCalendar.MARCH, 31);
 	}
