@@ -144,13 +144,25 @@ public class AdicionalCalculation extends CalculationUtils{
 	
 	private Adicional calcularUno(Vendedor vendedor, Date fechaHoy, Date desde, Date hasta, Premio vendedorMes, ArrayList<Premio> campanias) {
 		ArrayList<ComisionProducto> cProductos=calculoComisionProducto.calcularTodos(vendedor);
+		ArrayList<Premio> campaniasVendedor = new ArrayList<Premio>();
 		ComisionVenta cVenta=calculoComisionVenta.calcular(vendedor);
 		Adicional registro;
 		
-		registro= new Adicional(fechaHoy, desde, hasta, vendedor, cVenta, cProductos, null, campanias);
+		registro= new Adicional(fechaHoy, desde, hasta, vendedor, cVenta, cProductos, null, null);
 		
+		//verifico que el premio por mejor vendedor del mes sea para este vendedor
 		if ((vendedorMes!=null) && (vendedorMes.getPremiado().getId() == vendedor.getId()))
 			registro.setMejorVendedorMes(vendedorMes);
+		
+		//verifico que las campanias sean realmente para este vendedor, y las agrego al ArrayList que le corresponde
+		for (Premio item : campanias){
+			if (item.getPremiado().getId() == vendedor.getId()){
+				campaniasVendedor.add(item);
+			}
+		}
+		if (!campaniasVendedor.isEmpty()){//si realmente hay premios por campania para este vendedor los guardo
+			registro.setCampanias(campaniasVendedor);
+		}
 		
 		if (findItem.findIdByObject(registro)!=0)
 			registro.setId(findItem.findIdByObject(registro));
@@ -181,14 +193,14 @@ public class AdicionalCalculation extends CalculationUtils{
 			i = 0;
 		
 		//comision productos
-		if (!registro.getComisionesProducto().isEmpty())
+		if (registro.getComisionesProducto()!=null && !registro.getComisionesProducto().isEmpty())
 		{
 			for (ComisionProducto comisionProducto : registro.getComisionesProducto())
 				subtotales[0] +=comisionProducto.getImporte();
 		}
 		
 		//premio por campania
-		if (!registro.getCampanias().isEmpty())
+		if (registro.getCampanias()!=null && !registro.getCampanias().isEmpty())
 		{
 			for (Premio campania : registro.getCampanias())
 				subtotales[1] +=campania.getImporte();

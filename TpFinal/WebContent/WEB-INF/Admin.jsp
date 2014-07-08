@@ -9,10 +9,6 @@
 	</head>
 	
 	<body>	
-		<c:if test="${empty origen}">
-			<c:set var="origen" scope="session" value="<%=request.getContextPath()%>"/>
-		</c:if>
-		
 		<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
 			<!-- Brand and toggle get grouped for better mobile display -->
 			<div class="navbar-header">
@@ -83,10 +79,10 @@
 													<input type="hidden" name="accion" value="estadoUsuario">
 													<input type="hidden" name="idUsuario" value="${usuario.id}">
 													<c:if test="${usuario.activo == 'true'}">
-														<input type="submit" value="Desactivar">
+														<button class="btn btn-primary">Desactivar</button>
 													</c:if>
 													<c:if test="${usuario.activo == 'false'}">
-														<input type="submit" value="Activar">
+														<button class="btn btn-primary">Activar</button>
 													</c:if>
 												</form>
 											</center>
@@ -96,12 +92,12 @@
 									<tr>
 										<!-- <td colspan="6"> -->
 											<form action="admin" method="post">
-												<td><input type="hidden" name="accion" value="nuevoUsuario"><label>Nuevo:</label></td>
-												<td><input id="username" name="username" type="text" class="form-control" placeholder="Nombre de usuario"></td>
-											  	<td><input id="password" name="password" type="text" class="form-control" placeholder="Contraseña"></td>
-											  	<td><input id="rol" name="rol" type="text" alt="integer" maxlength="1" class="form-control" placeholder="1: RRHH, 2: Vendedor, 3: Admin"></td>
-											  	<td><input id="vendedor" name="vendedor" type="text" alt="integer" class="form-control" placeholder="Id del vendedor (si el rol es vendedor)"></td>
-											  	<td><input type="submit" value="Guardar"></td>
+												<td><center><input type="hidden" name="accion" value="nuevoUsuario"><label>Nuevo:</label></center></td>
+												<td><center><input id="username" name="username" type="text" class="form-control" placeholder="Nombre de usuario"></center></td>
+											  	<td><center><input id="password" name="password" type="text" class="form-control" placeholder="Contraseña"></center></td>
+											  	<td><center><input id="rol" name="rol" type="text" alt="integer" maxlength="1" class="form-control" placeholder="1: RRHH, 2: Vendedor, 3: Admin"></center></td>
+											  	<td><center><input id="vendedor" name="vendedor" type="text" alt="integer" class="form-control" placeholder="Id del vendedor (si el rol es vendedor)"></center></td>
+											  	<td><center><button class="btn btn-primary">Guardar</button></center></td>
 											</form>
 										<!-- </td> -->
 									</tr>
@@ -139,10 +135,10 @@
 													<input type="hidden" name="accion" value="estadoVendedor">
 													<input type="hidden" name="idVendedor" value="${vendedor.id}">
 													<c:if test="${vendedor.activo == 'true'}">
-														<input type="submit" value="Desactivar">
+														<button class="btn btn-primary">Desactivar</button>
 													</c:if>
 													<c:if test="${vendedor.activo == 'false'}">
-														<input type="submit" value="Activar">
+														<button class="btn btn-primary">Activar</button>
 													</c:if>
 												</form>
 											</center>
@@ -152,54 +148,16 @@
 								<tr>
 									<!-- <td colspan="4"> -->
 										<form action="admin" method="post">
-											<td><input type="hidden" name="accion" value="nuevoVendedor"><label>Nuevo:</label></td>
-											<td><input id="nombre" name="nombre" type="text" class="form-control" placeholder="nombre"></td>
-										  	<td><input id="apellido" name="apellido" type="text" class="form-control" placeholder="apellido"></td>
-										  	<td><input type="submit" value="Guardar"></td>
+											<td><center><input type="hidden" name="accion" value="nuevoVendedor"><label>Nuevo:</label></center></td>
+											<td><center><input id="nombre" name="nombre" type="text" class="form-control" placeholder="nombre"></center></td>
+										  	<td><center><input id="apellido" name="apellido" type="text" class="form-control" placeholder="apellido"></center></td>
+										  	<td><center><button class="btn btn-primary">Guardar</button></center></td>
 										</form>
 									<!-- </td> -->
 								</tr>
 							</tbody>
 						</table>
 					<!-- </div> -->
-					<!-- <div class="col-md-4">
-						<c:if test="${not empty nuevoUsuario}">
-							<form action="admin" method="post">
-								<input type="hidden" name="accion" value="actualizarUsuario">
-								<div class="form-group">
-							    	<label id="username">Nombre de Usuario</label>
-							    	<input id="username" name="username" type="text" class="form-control" value="${editarUsuario.username}">
-							  	</div>
-								<div class="form-group">
-							    	<label id="password">Contraseña</label>
-							    	<input id="password" name="password" type="text" class="form-control" value="${editarUsuario.password}">
-							  	</div>
-							  	<div class="form-group">solucion temporaria 
-							    	<label id="rol">Rol (1: RRHH, 2: Vendedor, 3: Admin)</label>
-							    	<input id="rol" name="rol" type="text" class="form-control" value="${editarUsuario.rol.id}">
-							  	</div>
-							  	<div class="form-group">
-							    	<label id="vendedor">Vendedor</label>
-							    	<input id="vendedor" name="vendedor" type="text" class="form-control" value="${editarUsuario.username}">
-							  	</div>
-							  	<input type="submit" value="Guardar">
-							</form>
-						</c:if>
-						<c:if test="${not empty editarVendedor}">
-							<input type="hidden" name="accion" value="actualizarVendedor">
-							<form action="admin" method="post">
-								<div class="form-group">
-							    	<label id="username">Nombre</label>
-							    	<input id="username" name="username" type="text" class="form-control" value="${editarVendedor.nombre}">
-							  	</div>
-								<div class="form-group">
-							    	<label id="password">Apellido</label>
-							    	<input id="password" name="password" type="text" class="form-control" value="${editarVendedor.apellido}">
-							  	</div>
-							  	<input type="submit" value="Guardar">
-							</form>
-						</c:if>
-					</div> -->
 				</div>
 			</div>
 		</div>

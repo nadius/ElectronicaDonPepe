@@ -40,49 +40,63 @@ public class ServletAdicionalMonto extends ServletUtils {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		setRequestResponse(request, response);
 
-		String accion=getParameter("accion");
-		String tipo= getParameter("tipo");
+		String accion="";
+		String tipo= "";
 		int id=0;
 		int respuesta=0;
 		float valor=0;
 		
-		if (accion.equals("set")){//seteo los valores que se necesitan en el formulario de actualización : registro y tipo del mismo
-			setAttribute("tipo", getParameter("tipo"));
-			id= Integer.parseInt(getParameter("id"));
-			
-			if (tipo.equals("comisionVenta")){
-				setAttribute("registro", service.getMontoComisionVenta(id));
+		try {
+			accion=getParameter("accion");
+			tipo= getParameter("tipo");
+			if (accion.equals("set")){//seteo los valores que se necesitan en el formulario de actualización : registro y tipo del mismo
+				setAttribute("tipo", getParameter("tipo"));
+				id= parseString(getParameter("id"));
+				
+				if (tipo.equals("comisionVenta")){
+					setAttribute("registro", service.getMontoComisionVenta(id));
+				}
+				
+				if (tipo.equals("comisionProducto")){
+					setAttribute("registro", service.getMontoComisionProducto(id));
+				}
+				
+				if(tipo.equals("premio")){
+					setAttribute("registro", service.getMontoPremio(id));
+				}
 			}
 			
-			if (tipo.equals("comisionProducto")){
-				request.setAttribute("registro", service.getMontoComisionProducto(id));
+			if (accion.equals("update")){//recupero el valor ingresado
+				valor = Float.parseFloat(getParameter("valor"));
+				id= parseString(getParameter("id"));
+				
+				if (tipo.equals("comisionVenta")){
+					respuesta = service.actualizarMontoComisionVenta(id, valor);
+				}
+				
+				if (tipo.equals("comisionProducto")){
+					respuesta = service.actualizarMontoComisionProducto(id, valor);
+				}
+				
+				if(tipo.equals("premio")){
+					respuesta = service.actualizarMontoPremio(id, valor);
+				}
+				setAttribute("actualizados", respuesta);
 			}
-			
-			if(tipo.equals("premio")){
-				request.setAttribute("registro", service.getMontoPremio(id));
-			}
+		} catch (NullPointerException e){
+			e.printStackTrace();
+			setAttribute("error", "No se pudo encontrar un parámetro.");
+		} catch (NumberFormatException e) {
+			e.printStackTrace();
+			setAttribute("error", "No se pudo convertir uno de los números ingresados.");
+		} catch (Exception e){
+			e.printStackTrace();
+			setAttribute("error", "Ocurrió un error inesperado.");
 		}
-		
-		if (accion.equals("update")){//recupero el valor ingresado
-			valor = Float.parseFloat(request.getParameter("valor"));
-			id= Integer.parseInt(request.getParameter("id"));
-			
-			if (tipo.equals("comisionVenta")){
-				respuesta = service.actualizarMontoComisionVenta(id, valor);
-			}
-			
-			if (tipo.equals("comisionProducto")){
-				respuesta = service.actualizarMontoComisionProducto(id, valor);
-			}
-			
-			if(tipo.equals("premio")){
-				respuesta = service.actualizarMontoPremio(id, valor);
-			}
-			request.setAttribute("actualizados", respuesta);
+		finally{
+			setDefaultAttributes();
+			redirectPagina("ModificarAdicionales");
 		}
-			
-		setDefaultAttributes();
-		redirectPagina("ModificarAdicionales");
 	}
 	
 	@Override

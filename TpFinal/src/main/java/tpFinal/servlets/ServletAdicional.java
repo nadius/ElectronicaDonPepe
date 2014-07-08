@@ -53,21 +53,10 @@ public class ServletAdicional extends ServletUtils {
 		} catch (NullPointerException | IllegalArgumentException e) {
 			e.printStackTrace();
 			setAttribute("error", "Por favor revise los datos ingresados.");
-			//TODO: configurar CalcularAdicionales.jsp de forma tal que muestre el mensaje de errror si éste existe
 			setDefaultAttributes();
 			redirectPagina("CalcularAdicionales");
 			return;
 		}
-/*		finally{
-			setDefaultAttributes();
-			redirectPagina("CalcularAdicionales");
-		}
-		
-		Date fechaDesde = getFecha("desde");
-		Date fechaHasta = getFecha("hasta");
-		SimpleDateFormat df=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S");
-		System.out.println("Calculando adicionales desde " + df.format(fechaDesde) + " hasta " + df.format(fechaHasta));
-		setParamsVendedores();*/
 		
 		System.out.println("Calculando adicionales desde " + df.format(fechaDesde) + " hasta " + df.format(fechaHasta));
 		service.calcular(fechaDesde, fechaHasta);

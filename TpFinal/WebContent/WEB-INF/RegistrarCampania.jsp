@@ -87,7 +87,7 @@
 															<form action="campania" method="post">
 																<input type="hidden" name="accion" value="eliminar">
 																<input type="hidden" name="idCampania" value="${item.id}">
-																<input type="submit" value="Desactivar">
+																<button class="btn btn-primary">Desactivar</button>
 															</form>
 														</center>
 													</td>
@@ -98,7 +98,7 @@
 															<form action="campania" method="post">
 																<input type="hidden" name="accion" value="agregar">
 																<input type="hidden" name="idProducto" value="${item.producto.id}">
-																<input type="submit" value="Activar">
+																<button class="btn btn-primary">Activar</button>
 															</form>
 														</center>
 													</td>
@@ -149,7 +149,7 @@
 													<form action="campania" method="post">
 														<input type="hidden" name="accion" value="agregar">
 														<input type="hidden" name="idProducto" value="${item.id}">
-														<input type="submit" value="Si">
+														<button class="btn btn-primary">Si</button>
 													</form>
 												</center>
 											</td>
