@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="
+     http://www.springframework.org/schema/beans
+     http://www.springframework.org/schema/beans/spring-beans.xsd
+     http://www.springframework.org/schema/tx
+     http://www.springframework.org/schema/tx/spring-tx.xsd
+     http://www.springframework.org/schema/aop
+     http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+	<!-- Configuracion de Apache Tiles -->
+<!-- 	<bean id="viewResolver" class="org.springframework.web.servlet.view.tiles3.TilesViewResolver"/> -->
+<!-- 	<bean id="tilesConfigurer" class="org.springframework.web.servlet.view.tiles3.TilesConfigurer"/> -->
+
+	<!-- Capa de acceso a datos "Tradicional" -->
+	<!-- <bean id="dataAccessBean" class="TpFinal.dataccess.impl.DataAccessPlano"
+		scope="singleton">
+	</bean> -->
+
+	<!-- Capa de accesso a datos usando el hibernateTemplate de Spring -->
+	<bean id="dataAccessBean" class="TpFinal.dataccess.DataAccessHibernateTemplate" scope="singleton">
+		<property name="sessionFactory" ref="sessionFactoryBean"></property> 
+	</bean>
+
+	<bean id="dataSourceBean"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+		<property name="url" value="jdbc:mysql://localhost:3306/ElectronicaDonPepe_Master" />
+		<property name="username" value="root" />
+		<property name="password" value="root" />
+	</bean>
+
+	<!-- Session factory de Hibernate -->
+	<bean id="sessionFactoryBean"
+		class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+		<property name="dataSource" ref="dataSourceBean" />
+
+		<property name="annotatedClasses">
+			<list>
+				<value>TpFinal.security.Usuario</value>
+				<value>TpFinal.security.RolUsuario</value>
+				<value>TpFinal.domain.Producto</value>
+				<value>TpFinal.domain.Vendedor</value>
+				<value>TpFinal.domain.Venta</value>
+				<value>TpFinal.domain.Adicional</value>
+				<value>TpFinal.domain.Comision</value>
+				<value>TpFinal.domain.ComisionProducto</value>
+				<value>TpFinal.domain.ComisionVenta</value>
+				<value>TpFinal.domain.Premio</value>
+				<value>TpFinal.domain.Campania</value>
+				<!-- <value>TpFinal.domain.Payroll</value> -->
+				<value>TpFinal.domain.adicional.monto.ComisionProductoMonto</value>
+				<value>TpFinal.domain.adicional.monto.ComisionVentaMonto</value>
+				<value>TpFinal.domain.adicional.monto.PremioMonto</value>
+			</list>
+		</property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.MySQL5InnoDBDialect</prop>
+				<prop key="hibernate.hbm2ddl.auto">update</prop> <!-- CREACION DE LA BASE -->
+			</props>
+		</property>
+	</bean>
+
+	<!-- Transaction Manager -->
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactoryBean"></property>
+	</bean>
+
+	<!-- Para que lea los metodos anotados con @Transactional -->
+	<tx:annotation-driven transaction-manager="transactionManager" />
+
+	<bean id="serviceBean" class="TpFinal.service.ServiceBasico">
+		<property name="dataAccess" ref="dataAccessBean"></property>
+	</bean>
+</beans>

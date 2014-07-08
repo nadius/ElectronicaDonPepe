@@ -7,7 +7,10 @@ import java.util.GregorianCalendar;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import TpFinal.domain.ComisionProducto;
 import TpFinal.domain.ComisionVenta;
@@ -17,6 +20,8 @@ import TpFinal.domain.Vendedor;
 import TpFinal.service.Service;
 import TpFinal.servlets.Adicionales;
 
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration("application-context-test.xml")
 public class CalcularAdicionalesTest {
 	@Autowired
 	private Service service;
