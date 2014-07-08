@@ -60,7 +60,7 @@ public class ComisionProductoCalculation extends CalculationUtils{
 			for(ComisionProductoMonto item: montos)
 			{
 				//if (venta.getProductos().contains(item.getProducto()))//si el producto con adicional está en la lista de productos comprados
-				if (venta.getProductos().contains(item.getProducto()))
+				if (contarProductoVenta(venta, item.getProducto()) != 0)
 				{
 					//System.out.print("\t\t venta: " + venta.getId() + " - "+ item.getProducto().getNombre()+ " encontrado en ");
 					unidades=contarProductoVenta(venta, item.getProducto());

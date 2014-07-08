@@ -53,47 +53,40 @@ public class PremioCampaniaCalculation extends CalculationUtils{
 	 
 	public Premio calcular(Producto producto)
 	{
-		int cantidad=0, cuenta=0;
+		int i=0;
+		int[] cuenta = new int[vendedores.size()];
 		//ArrayList<Venta>ventas = new ArrayList<Venta>();
-		Vendedor premiado= new Vendedor();
 		PremioMonto monto=daoMontos.getMontoPremioCampania();
 		Premio registro;
 		
-		//System.out.println("Premio mejor vendedor campania: (" + producto.getNombre() + " " + df.format(desde) + " - " + df.format(hasta) + ")");
 		
 		for (Vendedor vendedor : vendedores)
 		{
-			//System.out.println("\t " + vendedor.getNombre() + " " + vendedor.getApellido() + ":");
+			cuenta[i] = 0;
 			ventas=findVentas.findBySpecificDatesCreatorId(vendedor.getId(), fechaDesde, getFechaIntervaloHasta(fechaDesde));
 			if (ventas!=null || !ventas.isEmpty())//si se encontraron ventas para este vendedor //TODO: probar si sirve
 			{
 				for(Venta venta : ventas)
 				{
-					//System.out.print("\t\t venta: " + venta.getId() + " - ");
-					cuenta=contarProductoVenta(venta, producto);
+					cuenta[i] += contarProductoVenta(venta, producto);
 					
-					if (cuenta>cantidad)
+					/*if (cuenta>cantidad)
 					{
 						cantidad=cuenta;
 						premiado=vendedor;
-					}
-					//System.out.print("\n");
+					}*/
 				}
-			}/*
-			else //Verificacion
-			{
-				System.out.println("\t\t No se encontraron ventas para el período buscado");
-			}*/
-			////System.out.print("\n");
+			}
+			i++;
 		}
 		
-		if (cantidad==0)//si el producto no está en ninguno de las ventas encontradas
+		if (getMax(cuenta) == -1)//si el producto no está en ninguno de las ventas encontradas
 			return null;
 		
-		registro = new Premio(fechaHoy, fechaDesde, fechaHasta, premiado, true, producto, monto.getMonto());
+		
+		registro = new Premio(fechaHoy, fechaDesde, fechaHasta, vendedores.get(getMax(cuenta)), true, producto, monto.getMonto());
 		if (findItem.findIdByObject(registro)!=0)//si ya existe un registro calculado con estos parámetros, así no insertamos registros repetidos //TODO: testear!!
 			registro.setId(findItem.findIdByObject(registro));
-		//
 		
 		return registro;
 	}
@@ -112,6 +105,32 @@ public class PremioCampaniaCalculation extends CalculationUtils{
 			}
 		}
 		return premiosCampania;//FIXME: regresa 9 registros cuando deberían ser 3 o 4 como mucho
+	}
+	
+	private int getMax(int[] cuenta){
+		int vendedor = -1 , valor=0;
+		
+		//si el producto esta la misma cantidad de veces para todos los vendedores, ie, no hay uno que lo haya vendido más veces
+		if (igualCantidadTodos(cuenta, cuenta[0])){
+			return -1;
+		}
+		
+		for (int i =0; i<cuenta.length; i++){
+			if (cuenta[i] > valor){
+				valor = cuenta[i];
+				vendedor = i;
+			}
+		}
+		return vendedor;
+	}
+	
+	private boolean igualCantidadTodos(int[] cuenta, int valor){//verifica si el valor buscado es el mismo en todo el array 
+		for (int i : cuenta){
+			if (i != valor){
+				return false;
+			}
+		}
+		return true;
 	}
 	
 	//@Override
