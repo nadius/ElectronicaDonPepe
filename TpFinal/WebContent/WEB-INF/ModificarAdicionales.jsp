@@ -205,23 +205,17 @@
 				});
 			</script>
 		</c:if>
-		<c:if test="${not empty updateError}"> <!-- si algo salió mal se avisa -->
+		<c:if test="${not empty error}"> <!-- si algo salió mal se avisa -->
    				<script type="text/javascript">
    					$(document).ready(function(){
    							$("#monto").val("${registro.monto}");
    							$("#monto").addClass("has-error");
    							$("#actualizarForm").modal('show');
    					  });
-   					window.alert('${updateError}' + ". Por favor intente nuevamente");
+   					window.alert('${error}' + " Por favor intente nuevamente");
  				</script>
    		</c:if>
-   		
-   		<c:if test="${not empty addError}">
-   			<script type="text/javascript">
-   				window.alert('${addError}' + ". Por favor intente nuevamente");
-   			</script>
-   		</c:if>
-   		
+   		   		
 		<c:if test="${not empty actualizados}"> <!-- si se actualizó el importe y hay registros actualizados -->
    				<script>window.alert('${actualizados}' + " registros actualizados");</script>
    		</c:if>
