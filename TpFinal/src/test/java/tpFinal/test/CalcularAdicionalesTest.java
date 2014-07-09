@@ -65,7 +65,7 @@ public class CalcularAdicionalesTest {
 	@Test
 	public void testCalcularPremioMejorVendedorMes() {
 		Premio premioMes = mes.calcular(desde.getTime());
-		assertEquals(3, premioMes.getPremiado().getId());
+		assertEquals(2, premioMes.getPremiado().getId());
 	}
 	
 	@Test
