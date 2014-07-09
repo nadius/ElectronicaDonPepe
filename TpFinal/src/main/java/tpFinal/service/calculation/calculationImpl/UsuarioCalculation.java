@@ -51,13 +51,20 @@ public class UsuarioCalculation {
 		Usuario registro=new Usuario(username, password, rolDao.get(idRol), null);//todavía no sé si es vendedor
 		String mensaje="";
 		
-		if (idRol==2)
+		
+		if (idRol==2){
+			if (vendedorDao.get(idVendedor) == null){ // si el vendedor elegido no existe
+				throw new NullPointerException("vendedor");
+			}
 			registro.setVendedor(vendedorDao.get(idVendedor));
+		}
 		
 		mensaje=verificar(registro);
 		
-		if(mensaje.equals(""))			
+		if(mensaje.equals("")){	
 			dao.save(registro);
+			mensaje = String.valueOf(registro.getId());
+		}
 		
 		return mensaje;
 	}
@@ -75,23 +82,23 @@ public class UsuarioCalculation {
 			registro.setActivo(true);
 		
 		dao.update(registro);
-		return "";
+		return String.valueOf(registro.getId());
 	}
 	
 	public String verificar(Usuario registro)
 	{
 		String mensaje="";
-		if (registro.getUsername().equals(""));
-			mensaje.concat(" nombre de usuario vacío");
+		if (registro.getUsername().equals(""))
+			mensaje = mensaje + "nombre de usuario vacío ";
 		if (registro.getPassword().equals(""))
-			mensaje.concat(" contraseña vacía");
+			mensaje = mensaje + "contraseña vacía ";
 		if (registro.getRol()==null)
-			mensaje.concat(" rol de usuario vacío o no válido");
+			mensaje = mensaje + "rol de usuario vacío o no válido ";
 		if (registro.getRol().getId()==2 && registro.getVendedor()==null)
-			mensaje.concat(" vendedor vacío o no válido");
+			mensaje = mensaje + "vendedor vacío o no válido ";
 		
 		if (findItem.findIdByObject(registro)!=0)
-			mensaje="Ya existe un registro para " + registro.getUsername();
+			mensaje = mensaje + "Ya existe un registro para " + registro.getUsername();
 		
 		return mensaje;
 	}

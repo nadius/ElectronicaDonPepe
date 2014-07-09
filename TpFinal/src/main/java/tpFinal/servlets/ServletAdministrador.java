@@ -1,6 +1,7 @@
 package tpFinal.servlets;
 
 import java.io.IOException;
+
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -52,41 +53,72 @@ public class ServletAdministrador extends ServletUtils {
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		setRequestResponse(request, response);
-		String accion=getParameter("accion");
+		String accion, username, password, nombre, apellido;
+		int rol, id;
 		mensaje="";
 		
-		//Usuario
-		if(accion.equals("nuevoUsuario"))
-			mensaje=usuarioCalculation.nuevo(getParameter("username"), getParameter("password"), parseString(getParameter("rol")), parseString(getParameter("vendedor")));
-		
-		if(accion.equals("estadoUsuario"))
-			mensaje=usuarioCalculation.cambiarEstado(parseString(getParameter("idUsuario")));
-		
-		
-		//Vendedor
-		if(accion.equals("nuevoVendedor"))
-			mensaje=vendedorCalculation.nuevo(getParameter("nombre"), getParameter("apellido"));
+		try {
+			accion =getParameter("accion");
 			
-		if(accion.equals("estadoVendedor"))
-			mensaje=vendedorCalculation.cambiarEstado(parseString(getParameter("idVendedor")));
-		
-		//mensajes
-		if (accion.contains("Usuario"))
-		{
-			if (mensaje.equals(""))
-				setAttribute("ok", "El usuario se guardo correctamente.");
-			else
+			//Usuario
+			if(accion.equals("nuevoUsuario")){//da de alta un nuevo usuario
+				username = getParameter("username");
+				password = getParameter("password");
+				rol = parseString(getParameter("rol"));
+				
+				if ((rol == 0) || (rol >3)){//si se ingreso un numero de rol no valido
+					throw new NullPointerException("rol");
+				}
+				
+				id = parseString(getParameter("vendedor"));
+				mensaje=usuarioCalculation.nuevo(username, password, rol, id);
+				
+				if (contarPalabras(mensaje) == 1){
+					setAttribute("ok", "El usuario se guardo correctamente");
+				}
+			}
+			
+			if(accion.equals("estadoUsuario")){//activa o desactiva un usuario elegido
+				id = parseString(getParameter("idUsuario"));
+				mensaje=usuarioCalculation.cambiarEstado(id);
+
+				if (contarPalabras(mensaje) == 1){
+					setAttribute("ok", "El usuario se actualizo correctamente");
+				}
+			}
+			
+			//Vendedor
+			if(accion.equals("nuevoVendedor")){//agrego un nuevo vendedor y su usuario asociado
+				nombre = getParameter("nombre");
+				apellido = getParameter("apellido");
+				mensaje=vendedorCalculation.nuevo(nombre, apellido);
+
+				if (contarPalabras(mensaje) == 1){
+					setAttribute("ok", "El vendedor y el usuario se guardaron correctamente");
+				}
+			}
+				
+			if(accion.equals("estadoVendedor")){
+				id = parseString(getParameter("idVendedor"));
+				mensaje=vendedorCalculation.cambiarEstado(id);
+
+				if (contarPalabras(mensaje) == 1){
+					setAttribute("ok", "El vendedor se actualizo correctamente");
+				}
+			}
+			
+			//mensajes
+			if (contarPalabras(mensaje) != 1){
 				setAttribute("error", mensaje);
+			}
+		} catch (NullPointerException e) {
+			e.printStackTrace();			
+			setAttribute("error", getCustomExceptionMessage(e.getMessage()));
+		} catch (NumberFormatException e){
+			setAttribute("error", getCustomExceptionMessage(e.getMessage()));
 		}
 		
-		if (accion.contains("Vendedor"))
-		{
-			if (mensaje.equals(""))
-				setAttribute("ok", "El vendedor se guardo correctamente.");
-			else
-				setAttribute("error", mensaje);
-		}
-			
+		setDefaultAttributes();
 		redirectPagina("Admin");
 	}
 	

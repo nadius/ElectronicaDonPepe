@@ -3,6 +3,7 @@ package tpFinal.servlets;
 import java.io.IOException;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.StringTokenizer;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -273,5 +274,17 @@ public class ServletUtils extends HttpServlet{//Funciones comunes a todos los se
  **/
 	public void invalidarSesion(){
 		request.getSession().invalidate();
+	}
+	
+	public int contarPalabras(String texto){
+		return new StringTokenizer(texto).countTokens();
+	}
+	
+	public String getCustomExceptionMessage(String exceptionMessage){		
+		//si el mensaje de error consta de una palabra, ie, si proviene de getParameter
+		if (contarPalabras(exceptionMessage) == 1)
+			return "Por favor revise el parametro " + exceptionMessage;
+		
+		return "Por favor revise los datos ingresados";
 	}
 }

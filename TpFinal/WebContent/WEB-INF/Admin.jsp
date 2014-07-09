@@ -95,8 +95,8 @@
 												<td><center><input type="hidden" name="accion" value="nuevoUsuario"><label>Nuevo:</label></center></td>
 												<td><center><input id="username" name="username" type="text" class="form-control" placeholder="Nombre de usuario"></center></td>
 											  	<td><center><input id="password" name="password" type="text" class="form-control" placeholder="Contraseña"></center></td>
-											  	<td><center><input id="rol" name="rol" type="text" alt="integer" maxlength="1" class="form-control" placeholder="1: RRHH, 2: Vendedor, 3: Admin"></center></td>
-											  	<td><center><input id="vendedor" name="vendedor" type="text" alt="integer" class="form-control" placeholder="Id del vendedor (si el rol es vendedor)"></center></td>
+											  	<td><center><input id="rol" name="rol" type="text" alt="3" maxlength="1" class="form-control" data-toggle="tooltip" data-placement="top" title="1: RRHH, 2: Vendedor, 3: Admin" placeholder="Rol"></center></td>
+											  	<td><center><input id="vendedor" name="vendedor" type="text" alt="integer" class="form-control" data-toggle="tooltip" data-placement="top" title="Id del vendedor (si el rol es vendedor)" placeholder="id del vendedor"></center></td>
 											  	<td><center><button class="btn btn-primary">Guardar</button></center></td>
 											</form>
 										<!-- </td> -->
@@ -105,6 +105,7 @@
 						</table>
 						<br>
 						<h2>Vendedores</h2>
+						<i>Al crear un vendedor nuevo automaticamente se da de alta el usuario correspondiente.</i>
 						<table class="table">
 							<thead>
 								<tr><b>
@@ -166,5 +167,15 @@
 		<script src="${origen}/js/bootstrap.js"></script>
 		<script type="text/javascript" src="${origen}/js/jquery.meiomask.js" charset="utf-8" ></script>
 		<script type="text/javascript" src="${origen}/js/MeioMaskStart.js"></script>
+		
+		<c:if test="${not empty error}">
+   				<script>window.alert('${error}');</script>
+   		</c:if>
+   		
+   		<c:if test="${not empty ok}">
+   				<script>window.alert('${ok}');</script>
+   		</c:if>
+   		
+		
 	</body>
 </html>
