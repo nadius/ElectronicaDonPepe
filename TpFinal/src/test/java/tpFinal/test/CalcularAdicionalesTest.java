@@ -26,7 +26,7 @@ import tpFinal.service.findItem.findItemImpl.VendedorFindItem;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:*applicationContext-test.xml")
-public class CalcularAdicionalesTest {
+public class CalcularAdicionalesTest {//TESTS CORRESPONDIENTES AL CALCULO DE ADICIONALES
 // Los calculation
 	@Autowired
 	private ComisionVentaCalculation comisionVenta;

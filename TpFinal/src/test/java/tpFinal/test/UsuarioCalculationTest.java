@@ -14,6 +14,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import tpFinal.dao.impl.UsuarioDao;
+import tpFinal.domain.Vendedor;
 import tpFinal.security.Usuario;
 import tpFinal.service.calculation.calculationImpl.UsuarioCalculation;
 
@@ -30,45 +31,73 @@ public class UsuarioCalculationTest {
 	String apellido;
 	String password;
 	Usuario registroTest;
+	int registroTestCambiarEstado = 6;//corresponde al usuario JuanPerez
+	int ultimoRegistroNoTest;
 
 	@Before
 	public void setUp(){
 		username = "prueba";
 		password = "prueba";
+		ultimoRegistroNoTest = dao.getAll().size();
 	}
 	
 	@After
 	public void tearDown(){
-		dao.delete(registroTest);
+		for (Usuario registro : dao.getAll()){
+			if (registro.getId() > ultimoRegistroNoTest){
+				dao.delete(registro);
+			}
+		}
+	}
+	
+	public int contarPalabras(String texto){
+		return new StringTokenizer(texto).countTokens();
 	}
 
+//TESTS CORRESPONDIENTES A LA ADMINISTRACION DE USUARIOS
 	@Test
-	public void testNuevoSuccess() {//creo un usuario de rrhh (rol = 1)
+	public void testNuevoUsuarioSuccess() {//creo un usuario de rrhh (rol = 1)
 		mensaje = calculation.nuevo(username, password, 1, 0);
 		assertEquals(1, contarPalabras(mensaje));//solo tiene que devolver el id
-		assertNotNull(dao.get(Integer.parseInt(mensaje)));
+		assertNotNull(dao.get(Integer.parseInt(mensaje)));//tiene que haber algo guardado en la base de datos
 		registroTest = dao.get(Integer.parseInt(mensaje));//guardo el registro para poder borrarlo despues
 	}
 	
 	@Test
 	@ExpectedException(NullPointerException.class)
-	public void testNuevoFailException() {//creo un usuario vendedor (rol = 2) especificando un vendedor inexistente
+	public void testNuevoUsuarioFailException() {//creo un usuario vendedor (rol = 2) especificando un vendedor inexistente
 		calculation.nuevo(username, password, 2, 0);
 	}
 	
 	@Test
-	public void testNuevoFail() {//creo un usuario de rrhh (rol = 1) con parametros vacios
-		mensaje = calculation.nuevo("", "", 1, 0);
+	public void testNuevoUsuarioFail() {//creo un usuario de rrhh (rol = 1) con parametros vacios
+		mensaje = calculation.nuevo("", "", 1, 0);//verifico que el id devuelto realmente pertenece a un registro
 		assertNotEquals(1, contarPalabras(mensaje));//no devuelve el id porque ocurre un error
 	}
 
 	@Test
 	public void testCambiarEstado() {
-		mensaje = calculation.cambiarEstado(4);//cambio de estado el registro de Juan, que está desactivado
-		assertEquals(1, contarPalabras(mensaje));
+		boolean estadoOriginal = dao.get(registroTestCambiarEstado).isActivo();//guardo el valor del estado
+		mensaje = calculation.cambiarEstado(registroTestCambiarEstado);//cambio de estado el registro de Juan, que está desactivado
+		assertEquals(registroTestCambiarEstado, Integer.parseInt(mensaje));//la funcion tiene que devolver el id del regstro actualizado
+		assertNotEquals(estadoOriginal, dao.get(registroTestCambiarEstado).isActivo());//los estados no tienen que ser iguales
 	}
 	
-	public int contarPalabras(String texto){
-		return new StringTokenizer(texto).countTokens();
+//TESTS DE LOGIN
+	@Test
+	public void testLoginSuccess(){
+		Usuario usuarioTest = dao.get(1);//el usuario 1 está activo
+		assertTrue(calculation.login(usuarioTest.getUsername(), usuarioTest.getPassword()));
+	}
+	
+	@Test
+	public void testLoginFailNoExisteUsuario(){
+		assertFalse(calculation.login("pepe", "pepe"));
+	}
+	
+	@Test
+	public void testLoginFailUsuarioNoActivo(){
+		Usuario usuarioTest = dao.get(4);//el usuario 4 (Juan Perez) no esta activo
+		assertFalse(calculation.login(usuarioTest.getUsername(), usuarioTest.getPassword()));
 	}
 }
