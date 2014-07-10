@@ -75,16 +75,18 @@
 										</td>
 										<td>
 											<center>
-												<form action="admin" method="post">
-													<input type="hidden" name="accion" value="estadoUsuario">
-													<input type="hidden" name="idUsuario" value="${usuario.id}">
-													<c:if test="${usuario.activo == 'true'}">
-														<button class="btn btn-primary">Desactivar</button>
-													</c:if>
-													<c:if test="${usuario.activo == 'false'}">
-														<button class="btn btn-primary">Activar</button>
-													</c:if>
-												</form>
+												<c:if test="${usuario.rol != 2}">
+													<form action="admin" method="post">
+														<input type="hidden" name="accion" value="estadoUsuario">
+														<input type="hidden" name="idUsuario" value="${usuario.id}">
+														<c:if test="${usuario.activo == 'true'}">
+															<button class="btn btn-primary">Desactivar</button>
+														</c:if>
+														<c:if test="${usuario.activo == 'false'}">
+															<button class="btn btn-primary">Activar</button>
+														</c:if>
+													</form>
+												</c:if>
 											</center>
 										</td>
 									</tr>

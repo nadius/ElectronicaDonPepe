@@ -25,17 +25,18 @@ public class VendedorCalculation {
 
 	public String nuevo(String nombre, String apellido)
 	{
-		Vendedor nuevo=new Vendedor(nombre, apellido);
+		Vendedor registro=new Vendedor(nombre, apellido);
 				
-		String mensaje=verificar(nuevo);
+		String mensaje=verificar(registro);
 		
 		if(!mensaje.equals(""))			
 			return mensaje;
 		
-		dao.save(nuevo);
-		usuarioCalculation.nuevo(nombre+apellido, "vendedor", 2, nuevo.getId());//al crear un vendedor también crea un usuario
+		dao.save(registro);
+		usuarioCalculation.nuevo(nombre+apellido, "vendedor", 2, registro.getId());//al crear un vendedor también crea un usuario
+		mensaje = String.valueOf(registro.getId());
 		
-		return "";
+		return mensaje;
 	}
 	
 	public String cambiarEstado(int id)
@@ -50,8 +51,10 @@ public class VendedorCalculation {
 		else//si el usuario no esta activo
 			registro.setActivo(true);
 		
+		usuarioCalculation.cambiarEstadoUsuarioVendedor(id);
+		
 		dao.update(registro);
-		return "";
+		return String.valueOf(registro.getId());
 	}
 	
 	public String verificar(Vendedor registro)

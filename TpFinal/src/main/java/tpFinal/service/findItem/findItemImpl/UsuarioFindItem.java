@@ -42,5 +42,13 @@ public class UsuarioFindItem implements FindItemWithFlag<Usuario>{
 				return item;
 		return null;
 	}
+	
+	public Usuario findByIdVendedor(int idVendedor){
+		ArrayList<Usuario> todos = getAllByFlag(true);
+		for (Usuario item : todos)
+			if (item.getVendedor().getId() == idVendedor)
+				return item;
+		return null;
+	}
 
 }
