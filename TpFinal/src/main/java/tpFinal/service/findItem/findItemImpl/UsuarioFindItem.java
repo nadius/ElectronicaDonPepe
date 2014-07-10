@@ -44,7 +44,7 @@ public class UsuarioFindItem implements FindItemWithFlag<Usuario>{
 	}
 	
 	public Usuario findByIdVendedor(int idVendedor){
-		ArrayList<Usuario> todos = getAllByFlag(true);
+		ArrayList<Usuario> todos = dao.getAll();
 		for (Usuario item : todos)
 			if (item.getVendedor().getId() == idVendedor)
 				return item;

@@ -64,12 +64,6 @@ public class UsuarioCalculationTest {
 	}
 	
 	@Test
-	@ExpectedException(NullPointerException.class)
-	public void testNuevoUsuarioFailException() {//creo un usuario vendedor (rol = 2) especificando un vendedor inexistente
-		calculation.nuevo(username, password, 2, 0);
-	}
-	
-	@Test
 	public void testNuevoUsuarioFail() {//creo un usuario de rrhh (rol = 1) con parametros vacios
 		mensaje = calculation.nuevo("", "", 1, 0);//verifico que el id devuelto realmente pertenece a un registro
 		assertNotEquals(1, contarPalabras(mensaje));//no devuelve el id porque ocurre un error
@@ -97,7 +91,7 @@ public class UsuarioCalculationTest {
 	
 	@Test
 	public void testLoginFailUsuarioNoActivo(){
-		Usuario usuarioTest = dao.get(4);//el usuario 4 (Juan Perez) no esta activo
+		Usuario usuarioTest = dao.get(6);//el usuario 6 (Juan Perez) no esta activo
 		assertFalse(calculation.login(usuarioTest.getUsername(), usuarioTest.getPassword()));
 	}
 }

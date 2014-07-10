@@ -64,8 +64,8 @@ public class CalcularAdicionalesTest {//TESTS CORRESPONDIENTES AL CALCULO DE ADI
 
 	@Test
 	public void testCalcularPremioMejorVendedorMes() {
-		Premio premioMes = mes.calcular(desde.getTime());
-		assertEquals(2, premioMes.getPremiado().getId());
+		Premio premioMes = mes.calcular(hasta.getTime());
+		assertEquals(3, premioMes.getPremiado().getId());
 	}
 	
 	@Test
@@ -82,8 +82,12 @@ public class CalcularAdicionalesTest {//TESTS CORRESPONDIENTES AL CALCULO DE ADI
 	@Test
 	public void testCalcularComisionVenta(){
 		ArrayList<ComisionVenta> comisionesVenta = new ArrayList<ComisionVenta>();
+		ComisionVenta registro;
+		
 		for(Vendedor vendedor : vendedores){
-			comisionesVenta.add(comisionVenta.calcular(vendedor));
+			registro = comisionVenta.calcular(vendedor);
+			if (registro != null)
+				comisionesVenta.	add(registro);
 		}
 		
 		assertEquals(3, comisionesVenta.size());//cantidad de comisiones calculadas
