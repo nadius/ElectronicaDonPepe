@@ -52,7 +52,7 @@ public class ServletAdicional extends ServletUtils {
 			//service.calcular(fechaDesde, fechaHasta);
 		} catch (NullPointerException | IllegalArgumentException e) {
 			e.printStackTrace();
-			setAttribute("error", "Por favor revise los datos ingresados.");
+			setAttribute("error", getCustomExceptionMessage(e.getMessage()));
 			setDefaultAttributes();
 			redirectPagina("CalcularAdicionales");
 			return;

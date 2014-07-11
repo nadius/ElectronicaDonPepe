@@ -81,6 +81,7 @@ public class VentaCalculationTest {
 		service.Agregar(6);
 		service.Agregar(1);
 		service.Agregar(8);
+		service.Agregar(7);
 		
 		mensaje = service.calcular(null);
 		assertNotEquals("", mensaje);//el mensaje no puede ser nulo

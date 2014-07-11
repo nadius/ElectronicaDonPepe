@@ -70,12 +70,7 @@ public class CalcularAdicionalesTest {//TESTS CORRESPONDIENTES AL CALCULO DE ADI
 	
 	@Test
 	public void testCalcularPremioCampania(){
-		ArrayList<Premio> campanias= new ArrayList<Premio>();
-		ArrayList<Producto> productos = productoDao.getAll();
-		for (Producto item : productos){
-		 campanias.add(campania.calcular(item));
-		}
-		
+		ArrayList<Premio> campanias= campania.calcularTodos();		
 		assertEquals(2, campanias.size());//cantidad de campanias calculadas
 	}
 	

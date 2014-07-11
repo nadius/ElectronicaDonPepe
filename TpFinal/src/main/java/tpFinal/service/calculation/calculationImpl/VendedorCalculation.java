@@ -46,10 +46,11 @@ public class VendedorCalculation {
 		if (registro==null)//si no se encontro nada
 			return "No se pudo encontrar el vendedor.";
 		
-		if (registro.isActivo())//si el usuario esta activo
-			registro.setActivo(false);
-		else//si el usuario no esta activo
+		if (registro.isActivo()){//si el usuario esta activo
+			registro.setActivo(false);}
+		else{//si el usuario no esta activo
 			registro.setActivo(true);
+		}
 		
 		usuarioCalculation.cambiarEstadoUsuarioVendedor(id);
 		

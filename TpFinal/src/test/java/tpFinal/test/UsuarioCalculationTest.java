@@ -75,6 +75,7 @@ public class UsuarioCalculationTest {
 		mensaje = calculation.cambiarEstado(registroTestCambiarEstado);//cambio de estado el registro de Juan, que está desactivado
 		assertEquals(registroTestCambiarEstado, Integer.parseInt(mensaje));//la funcion tiene que devolver el id del regstro actualizado
 		assertNotEquals(estadoOriginal, dao.get(registroTestCambiarEstado).isActivo());//los estados no tienen que ser iguales
+		calculation.cambiarEstado(registroTestCambiarEstado);//lo vuelvo a desactivar
 	}
 	
 //TESTS DE LOGIN
