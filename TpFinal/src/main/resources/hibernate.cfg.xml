@@ -6,7 +6,7 @@
 		<property name="connection.driver_class">com.mysql.jdbc.Driver</property>
 		<property name="connection.username">root</property>
 		<property name="connection.password">root</property>
-		<property name="connection.url">jdbc:mysql://localhost:3306/ElectronicaDonPepe_Branch</property> <!-- Modificado para branch Campania -->
+		<property name="connection.url">jdbc:mysql://localhost:3311/ElectronicaDonPepe_Branch</property> <!-- Modificado para branch Campania -->
 		<!-- <property name="connection.url">jdbc:mysql://localhost:3306/ElectronicaDonPepe_Master</property> --> <!-- Original -->
 		<property name="dialect">org.hibernate.dialect.MySQLDialect</property>
 		<property name="show_sql">true</property>
@@ -15,20 +15,20 @@
 		
 		<!-- ESTO CREA LA BASE A PARTIR DE LAS ENTIDADES -->
 		<property name="hibernate.hbm2ddl.auto">create</property>
-		<mapping class="TpFinal.security.Usuario"></mapping>
-		<mapping class="TpFinal.security.RolUsuario"></mapping>
-		<mapping class="TpFinal.domain.Producto"></mapping>
-		<mapping class="TpFinal.domain.Vendedor"></mapping>
-		<mapping class="TpFinal.domain.Venta"></mapping>
-		<mapping class="TpFinal.domain.Adicional"></mapping>
-		<mapping class="TpFinal.domain.Comision"></mapping>
-		<mapping class="TpFinal.domain.ComisionProducto"></mapping>
-		<mapping class="TpFinal.domain.ComisionVenta"></mapping>
-		<mapping class="TpFinal.domain.Premio"></mapping>
-		<mapping class="TpFinal.domain.Campania"></mapping>
-		<!-- <mapping class="TpFinal.domain.Payroll"></mapping> -->
-		<mapping class="TpFinal.domain.adicional.monto.ComisionProductoMonto"></mapping>
-		<mapping class="TpFinal.domain.adicional.monto.ComisionVentaMonto"></mapping>
-		<mapping class="TpFinal.domain.adicional.monto.PremioMonto"></mapping>
+		<mapping class="tpFinal.security.Usuario"></mapping>
+		<mapping class="tpFinal.security.RolUsuario"></mapping>
+		<mapping class="tpFinal.domain.Producto"></mapping>
+		<mapping class="tpFinal.domain.Vendedor"></mapping>
+		<mapping class="tpFinal.domain.Venta"></mapping>
+		<mapping class="tpFinal.domain.Adicional"></mapping>
+		<mapping class="tpFinal.domain.Comision"></mapping>
+		<mapping class="tpFinal.domain.ComisionProducto"></mapping>
+		<mapping class="tpFinal.domain.ComisionVenta"></mapping>
+		<mapping class="tpFinal.domain.Premio"></mapping>
+		<mapping class="tpFinal.domain.Campania"></mapping>
+		<!-- <mapping class="tpFinal.domain.Payroll"></mapping> -->
+		<mapping class="tpFinal.domain.adicional.monto.ComisionProductoMonto"></mapping>
+		<mapping class="tpFinal.domain.adicional.monto.ComisionVentaMonto"></mapping>
+		<mapping class="tpFinal.domain.adicional.monto.PremioMonto"></mapping>
 	</session-factory>
 </hibernate-configuration>
