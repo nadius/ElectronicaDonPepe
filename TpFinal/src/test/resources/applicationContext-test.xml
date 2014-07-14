@@ -17,7 +17,7 @@
 	<bean id="dataSourceBean"
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
-		<property name="url" value="jdbc:mysql://localhost:3311/electronicadonpepe_test" />
+		<property name="url" value="jdbc:mysql://localhost:3306/ElectronicaDonPepe_Test" />
 		<property name="username" value="root" />
 		<property name="password" value="root" />
 	</bean>
@@ -40,7 +40,6 @@
 				<value>tpFinal.domain.ComisionVenta</value>
 				<value>tpFinal.domain.Premio</value>
 				<value>tpFinal.domain.Campania</value>
-				<!-- <value>tpFinal.domain.Payroll</value> -->
 				<value>tpFinal.domain.adicional.monto.ComisionProductoMonto</value>
 				<value>tpFinal.domain.adicional.monto.ComisionVentaMonto</value>
 				<value>tpFinal.domain.adicional.monto.PremioMonto</value>
@@ -196,11 +195,6 @@
 		<property name="montoDao" ref="PremioMontoDao"></property>
 		<property name="registroPremioDao" ref="PremioDao"></property>
 	</bean>
-	<bean id="AdicionalMontoCalculation" class="tpFinal.service.calculation.calculationImpl.AdicionalMontoCalculation">
-		<property name="comisionProducto" ref="ComisionProductoMontoCalculation"></property>
-		<property name="comisionVenta" ref="ComisionVentaMontoCalculation"></property>
-		<property name="premio" ref="PremioMontoCalculation"></property>
-	</bean>
 	<bean id="VendedorCalculation" class="tpFinal.service.calculation.calculationImpl.VendedorCalculation">
 		<property name="dao" ref="VendedorDao"></property>
 		<property name="findItem" ref="VendedorFindItem"></property>
@@ -216,6 +210,12 @@
 		<property name="calculoComisionProducto" ref="ComisionProductoCalculation"></property>
 		<property name="calculoComisionVenta" ref="ComisionVentaCalculation"></property>
 	</bean>
+	<bean id="AdicionalMontoCalculation" class="tpFinal.service.calculation.calculationImpl.AdicionalMontoCalculation">
+		<property name="comisionProducto" ref="ComisionProductoMontoCalculation"></property>
+		<property name="comisionVenta" ref="ComisionVentaMontoCalculation"></property>
+		<property name="premio" ref="PremioMontoCalculation"></property>
+		<property name="adicional" ref="AdicionalCalculation"></property>
+	</bean>
 	
 	<!-- tpFinal.service -->
 	<bean id="AdicionalService" class="tpFinal.service.AdicionalService">
@@ -227,6 +227,7 @@
 		<property name="montoVentaDao" ref="ComisionVentaMontoDao"></property>
 		<property name="montoProductoDao" ref="ComisionProductoMontoDao"></property>
 		<property name="montoPremioDao" ref="PremioMontoDao"></property>
+		<property name="calculation" ref="AdicionalMontoCalculation"></property>
 	</bean>
 	<bean id="VentaService" class="tpFinal.service.VentaService">
 		<property name="findItem" ref="VentaFindItem"></property>
