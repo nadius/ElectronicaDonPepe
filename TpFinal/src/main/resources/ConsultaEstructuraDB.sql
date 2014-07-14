@@ -7,11 +7,11 @@
 -- Versión del servidor: 5.5.35
 -- Versión de PHP: 5.3.10-1ubuntu3.9
 
-SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
-SET time_zone = "+00:00";
+-- SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
+-- SET time_zone = "+00:00";
 
 --
--- Base de datos: `test`
+-- Base de datos: `ElectronicaDonPepe_Branch`
 --
 
 -- --------------------------------------------------------
@@ -25,10 +25,15 @@ CREATE TABLE IF NOT EXISTS `Adicional` (
   `fechaCreacion` datetime NOT NULL,
   `fechaDesde` datetime NOT NULL,
   `fechaHasta` datetime NOT NULL,
+  `total` float DEFAULT NULL,
+  `comisionVenta_id` int(11) DEFAULT NULL,
+  `premioVendedor_id` int(11) DEFAULT NULL,
   `vendedor_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `FK9AAF8BB6A06644B0` (`vendedor_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+  KEY `FK9AAF8BB6E6996CD0` (`vendedor_id`),
+  KEY `FK9AAF8BB612273084` (`comisionVenta_id`),
+  KEY `FK9AAF8BB6E3622F69` (`premioVendedor_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -39,9 +44,37 @@ CREATE TABLE IF NOT EXISTS `Adicional` (
 CREATE TABLE IF NOT EXISTS `Adicional_ComisionProducto` (
   `Adicional_id` int(11) NOT NULL,
   `comisionesProducto_id` int(11) NOT NULL,
-  KEY `FKC152FC6C3833CE2` (`comisionesProducto_id`),
-  KEY `FKC152FC6238D1464` (`Adicional_id`)
+  KEY `FKC152FC6609C4502` (`comisionesProducto_id`),
+  KEY `FKC152FC6A3BEF044` (`Adicional_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `Adicional_Premio`
+--
+
+CREATE TABLE IF NOT EXISTS `Adicional_Premio` (
+  `Adicional_id` int(11) NOT NULL,
+  `campanias_id` int(11) NOT NULL,
+  KEY `FK204DB1999754C433` (`campanias_id`),
+  KEY `FK204DB199A3BEF044` (`Adicional_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `Campania`
+--
+
+CREATE TABLE IF NOT EXISTS `Campania` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `activo` bit(1) NOT NULL,
+  `fechaCreacion` datetime NOT NULL,
+  `producto_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FKFB837826F4566E30` (`producto_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
 
 -- --------------------------------------------------------
 
@@ -58,7 +91,7 @@ CREATE TABLE IF NOT EXISTS `Comision` (
   `unidades` int(11) NOT NULL,
   `vendedor_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `FKDFC02DDDA06644B0` (`vendedor_id`)
+  KEY `FKDFC02DDDE6996CD0` (`vendedor_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -77,8 +110,8 @@ CREATE TABLE IF NOT EXISTS `ComisionProducto` (
   `vendedor_id` int(11) DEFAULT NULL,
   `producto_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `FKDFC02DDDA06644B0ee5d365d` (`vendedor_id`),
-  KEY `FKEE5D365DAE234610` (`producto_id`)
+  KEY `FKDFC02DDDE6996CD0ee5d365d` (`vendedor_id`),
+  KEY `FKEE5D365DF4566E30` (`producto_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -96,7 +129,7 @@ CREATE TABLE IF NOT EXISTS `ComisionVenta` (
   `unidades` int(11) NOT NULL,
   `vendedor_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `FKDFC02DDDA06644B0405e6e6f` (`vendedor_id`)
+  KEY `FKDFC02DDDE6996CD0405e6e6f` (`vendedor_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -108,8 +141,8 @@ CREATE TABLE IF NOT EXISTS `ComisionVenta` (
 CREATE TABLE IF NOT EXISTS `ComisionVenta_Venta` (
   `ComisionVenta_id` int(11) NOT NULL,
   `elementos_id` int(11) NOT NULL,
-  KEY `FK862F7C5CF80644A4` (`ComisionVenta_id`),
-  KEY `FK862F7C5C394D3190` (`elementos_id`)
+  KEY `FK862F7C5C12273084` (`ComisionVenta_id`),
+  KEY `FK862F7C5C2D87FD70` (`elementos_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -123,7 +156,7 @@ CREATE TABLE IF NOT EXISTS `Comision_Producto_Monto` (
   `monto` float NOT NULL,
   `producto_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `FK4F0ED58AAE234610` (`producto_id`)
+  KEY `FK4F0ED58AF4566E30` (`producto_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
 
 -- --------------------------------------------------------
@@ -167,9 +200,9 @@ CREATE TABLE IF NOT EXISTS `Premio` (
   `premiado_id` int(11) DEFAULT NULL,
   `producto_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `FK8EF9B8F0AE234610` (`producto_id`),
-  KEY `FK8EF9B8F0C925830A` (`premiado_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+  KEY `FK8EF9B8F0F4566E30` (`producto_id`),
+  KEY `FK8EF9B8F0F58AB2A` (`premiado_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -223,8 +256,8 @@ CREATE TABLE IF NOT EXISTS `Usuario` (
   `rol_id` int(11) DEFAULT NULL,
   `vendedor_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `FK5B4D8B0EC302D3C4` (`rol_id`),
-  KEY `FK5B4D8B0EA06644B0` (`vendedor_id`)
+  KEY `FK5B4D8B0EED24EBE4` (`rol_id`),
+  KEY `FK5B4D8B0EE6996CD0` (`vendedor_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
 
 -- --------------------------------------------------------
@@ -248,13 +281,13 @@ CREATE TABLE IF NOT EXISTS `Vendedor` (
 --
 
 CREATE TABLE IF NOT EXISTS `Venta` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL,
   `fecha` datetime NOT NULL,
-  `importe` float DEFAULT NULL,
+  `importe` float NOT NULL,
   `vendedor_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `FK4EB7A2CA06644B0` (`vendedor_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=15 ;
+  KEY `FK4EB7A2CE6996CD0` (`vendedor_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -265,8 +298,8 @@ CREATE TABLE IF NOT EXISTS `Venta` (
 CREATE TABLE IF NOT EXISTS `Venta_Producto` (
   `Venta_id` int(11) NOT NULL,
   `productos_id` int(11) NOT NULL,
-  KEY `FK1D689E33DD7BBDA4` (`Venta_id`),
-  KEY `FK1D689E3344597B7D` (`productos_id`)
+  KEY `FK1D689E33D1B68984` (`Venta_id`),
+  KEY `FK1D689E338A8CA39D` (`productos_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -277,70 +310,85 @@ CREATE TABLE IF NOT EXISTS `Venta_Producto` (
 -- Filtros para la tabla `Adicional`
 --
 ALTER TABLE `Adicional`
-  ADD CONSTRAINT `FK9AAF8BB6A06644B0` FOREIGN KEY (`vendedor_id`) REFERENCES `Vendedor` (`id`);
+  ADD CONSTRAINT `FK9AAF8BB6E3622F69` FOREIGN KEY (`premioVendedor_id`) REFERENCES `Premio` (`id`),
+  ADD CONSTRAINT `FK9AAF8BB612273084` FOREIGN KEY (`comisionVenta_id`) REFERENCES `ComisionVenta` (`id`),
+  ADD CONSTRAINT `FK9AAF8BB6E6996CD0` FOREIGN KEY (`vendedor_id`) REFERENCES `Vendedor` (`id`);
 
 --
 -- Filtros para la tabla `Adicional_ComisionProducto`
 --
 ALTER TABLE `Adicional_ComisionProducto`
-  ADD CONSTRAINT `FKC152FC6238D1464` FOREIGN KEY (`Adicional_id`) REFERENCES `Adicional` (`id`),
-  ADD CONSTRAINT `FKC152FC6C3833CE2` FOREIGN KEY (`comisionesProducto_id`) REFERENCES `ComisionProducto` (`id`);
+  ADD CONSTRAINT `FKC152FC6A3BEF044` FOREIGN KEY (`Adicional_id`) REFERENCES `Adicional` (`id`),
+  ADD CONSTRAINT `FKC152FC6609C4502` FOREIGN KEY (`comisionesProducto_id`) REFERENCES `ComisionProducto` (`id`);
+
+--
+-- Filtros para la tabla `Adicional_Premio`
+--
+ALTER TABLE `Adicional_Premio`
+  ADD CONSTRAINT `FK204DB199A3BEF044` FOREIGN KEY (`Adicional_id`) REFERENCES `Adicional` (`id`),
+  ADD CONSTRAINT `FK204DB1999754C433` FOREIGN KEY (`campanias_id`) REFERENCES `Premio` (`id`);
+
+--
+-- Filtros para la tabla `Campania`
+--
+ALTER TABLE `Campania`
+  ADD CONSTRAINT `FKFB837826F4566E30` FOREIGN KEY (`producto_id`) REFERENCES `Producto` (`id`);
 
 --
 -- Filtros para la tabla `Comision`
 --
 ALTER TABLE `Comision`
-  ADD CONSTRAINT `FKDFC02DDDA06644B0` FOREIGN KEY (`vendedor_id`) REFERENCES `Vendedor` (`id`);
+  ADD CONSTRAINT `FKDFC02DDDE6996CD0` FOREIGN KEY (`vendedor_id`) REFERENCES `Vendedor` (`id`);
 
 --
 -- Filtros para la tabla `ComisionProducto`
 --
 ALTER TABLE `ComisionProducto`
-  ADD CONSTRAINT `FKDFC02DDDA06644B0ee5d365d` FOREIGN KEY (`vendedor_id`) REFERENCES `Vendedor` (`id`),
-  ADD CONSTRAINT `FKEE5D365DAE234610` FOREIGN KEY (`producto_id`) REFERENCES `Producto` (`id`);
+  ADD CONSTRAINT `FKEE5D365DF4566E30` FOREIGN KEY (`producto_id`) REFERENCES `Producto` (`id`),
+  ADD CONSTRAINT `FKDFC02DDDE6996CD0ee5d365d` FOREIGN KEY (`vendedor_id`) REFERENCES `Vendedor` (`id`);
 
 --
 -- Filtros para la tabla `ComisionVenta`
 --
 ALTER TABLE `ComisionVenta`
-  ADD CONSTRAINT `FKDFC02DDDA06644B0405e6e6f` FOREIGN KEY (`vendedor_id`) REFERENCES `Vendedor` (`id`);
+  ADD CONSTRAINT `FKDFC02DDDE6996CD0405e6e6f` FOREIGN KEY (`vendedor_id`) REFERENCES `Vendedor` (`id`);
 
 --
 -- Filtros para la tabla `ComisionVenta_Venta`
 --
 ALTER TABLE `ComisionVenta_Venta`
-  ADD CONSTRAINT `FK862F7C5C394D3190` FOREIGN KEY (`elementos_id`) REFERENCES `Venta` (`id`),
-  ADD CONSTRAINT `FK862F7C5CF80644A4` FOREIGN KEY (`ComisionVenta_id`) REFERENCES `ComisionVenta` (`id`);
+  ADD CONSTRAINT `FK862F7C5C2D87FD70` FOREIGN KEY (`elementos_id`) REFERENCES `Venta` (`id`),
+  ADD CONSTRAINT `FK862F7C5C12273084` FOREIGN KEY (`ComisionVenta_id`) REFERENCES `ComisionVenta` (`id`);
 
 --
 -- Filtros para la tabla `Comision_Producto_Monto`
 --
 ALTER TABLE `Comision_Producto_Monto`
-  ADD CONSTRAINT `FK4F0ED58AAE234610` FOREIGN KEY (`producto_id`) REFERENCES `Producto` (`id`);
+  ADD CONSTRAINT `FK4F0ED58AF4566E30` FOREIGN KEY (`producto_id`) REFERENCES `Producto` (`id`);
 
 --
 -- Filtros para la tabla `Premio`
 --
 ALTER TABLE `Premio`
-  ADD CONSTRAINT `FK8EF9B8F0AE234610` FOREIGN KEY (`producto_id`) REFERENCES `Producto` (`id`),
-  ADD CONSTRAINT `FK8EF9B8F0C925830A` FOREIGN KEY (`premiado_id`) REFERENCES `Vendedor` (`id`);
+  ADD CONSTRAINT `FK8EF9B8F0F58AB2A` FOREIGN KEY (`premiado_id`) REFERENCES `Vendedor` (`id`),
+  ADD CONSTRAINT `FK8EF9B8F0F4566E30` FOREIGN KEY (`producto_id`) REFERENCES `Producto` (`id`);
 
 --
 -- Filtros para la tabla `Usuario`
 --
 ALTER TABLE `Usuario`
-  ADD CONSTRAINT `FK5B4D8B0EA06644B0` FOREIGN KEY (`vendedor_id`) REFERENCES `Vendedor` (`id`),
-  ADD CONSTRAINT `FK5B4D8B0EC302D3C4` FOREIGN KEY (`rol_id`) REFERENCES `RolUsuario` (`id`);
+  ADD CONSTRAINT `FK5B4D8B0EE6996CD0` FOREIGN KEY (`vendedor_id`) REFERENCES `Vendedor` (`id`),
+  ADD CONSTRAINT `FK5B4D8B0EED24EBE4` FOREIGN KEY (`rol_id`) REFERENCES `RolUsuario` (`id`);
 
 --
 -- Filtros para la tabla `Venta`
 --
 ALTER TABLE `Venta`
-  ADD CONSTRAINT `FK4EB7A2CA06644B0` FOREIGN KEY (`vendedor_id`) REFERENCES `Vendedor` (`id`);
+  ADD CONSTRAINT `FK4EB7A2CE6996CD0` FOREIGN KEY (`vendedor_id`) REFERENCES `Vendedor` (`id`);
 
 --
 -- Filtros para la tabla `Venta_Producto`
 --
 ALTER TABLE `Venta_Producto`
-  ADD CONSTRAINT `FK1D689E3344597B7D` FOREIGN KEY (`productos_id`) REFERENCES `Producto` (`id`),
-  ADD CONSTRAINT `FK1D689E33DD7BBDA4` FOREIGN KEY (`Venta_id`) REFERENCES `Venta` (`id`);
+  ADD CONSTRAINT `FK1D689E338A8CA39D` FOREIGN KEY (`productos_id`) REFERENCES `Producto` (`id`),
+  ADD CONSTRAINT `FK1D689E33D1B68984` FOREIGN KEY (`Venta_id`) REFERENCES `Venta` (`id`);

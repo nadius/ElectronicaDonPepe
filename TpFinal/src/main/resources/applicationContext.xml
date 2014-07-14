@@ -40,7 +40,6 @@
 				<value>tpFinal.domain.ComisionVenta</value>
 				<value>tpFinal.domain.Premio</value>
 				<value>tpFinal.domain.Campania</value>
-				<!-- <value>tpFinal.domain.Payroll</value> -->
 				<value>tpFinal.domain.adicional.monto.ComisionProductoMonto</value>
 				<value>tpFinal.domain.adicional.monto.ComisionVentaMonto</value>
 				<value>tpFinal.domain.adicional.monto.PremioMonto</value>
@@ -49,7 +48,8 @@
 		<property name="hibernateProperties">
 			<props>
 				<prop key="hibernate.dialect">org.hibernate.dialect.MySQL5InnoDBDialect</prop>
-				<prop key="hibernate.hbm2ddl.auto">update</prop> <!-- CREACION DE LA BASE -->
+				<prop key="hibernate.hbm2ddl.auto">create</prop> <!-- CREACION DE LA BASE -->
+				<prop key="hibernate.hbm2ddl.import_files">ConsultaDatosDB.sql</prop> <!-- Se crea la base importando los datos de este archivo -->
 			</props>
 		</property>
 	</bean>
@@ -195,11 +195,6 @@
 		<property name="montoDao" ref="PremioMontoDao"></property>
 		<property name="registroPremioDao" ref="PremioDao"></property>
 	</bean>
-	<bean id="AdicionalMontoCalculation" class="tpFinal.service.calculation.calculationImpl.AdicionalMontoCalculation">
-		<property name="comisionProducto" ref="ComisionProductoMontoCalculation"></property>
-		<property name="comisionVenta" ref="ComisionVentaMontoCalculation"></property>
-		<property name="premio" ref="PremioMontoCalculation"></property>
-	</bean>
 	<bean id="VendedorCalculation" class="tpFinal.service.calculation.calculationImpl.VendedorCalculation">
 		<property name="dao" ref="VendedorDao"></property>
 		<property name="findItem" ref="VendedorFindItem"></property>
@@ -215,6 +210,12 @@
 		<property name="calculoComisionProducto" ref="ComisionProductoCalculation"></property>
 		<property name="calculoComisionVenta" ref="ComisionVentaCalculation"></property>
 	</bean>
+	<bean id="AdicionalMontoCalculation" class="tpFinal.service.calculation.calculationImpl.AdicionalMontoCalculation">
+		<property name="comisionProducto" ref="ComisionProductoMontoCalculation"></property>
+		<property name="comisionVenta" ref="ComisionVentaMontoCalculation"></property>
+		<property name="premio" ref="PremioMontoCalculation"></property>
+		<property name="adicional" ref="AdicionalCalculation"></property>
+	</bean>
 	
 	<!-- tpFinal.service -->
 	<bean id="AdicionalService" class="tpFinal.service.AdicionalService">
@@ -226,6 +227,7 @@
 		<property name="montoVentaDao" ref="ComisionVentaMontoDao"></property>
 		<property name="montoProductoDao" ref="ComisionProductoMontoDao"></property>
 		<property name="montoPremioDao" ref="PremioMontoDao"></property>
+		<property name="calculation" ref="AdicionalMontoCalculation"></property>
 	</bean>
 	<bean id="VentaService" class="tpFinal.service.VentaService">
 		<property name="findItem" ref="VentaFindItem"></property>
