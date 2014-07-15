@@ -143,13 +143,13 @@
 				        <h4 class="modal-title" id="myModalLabel">Actualizar montos</h4>
 				      </div>
 				      <div class="modal-body">
-				        <label>Valor actual: ${registro.monto}</label>
+				        <label>Valor actual: ${montoActual}</label>
 				        <div class="row">
 							<div class="col-md-3">
 				        		<label>Valor nuevo: </label>
 						    </div>
 							<div class="col-md-3">
-				        		<input type="text" id="monto" class="form-control">
+				        		<input type="text" id="monto" class="form-control" value="${montoNuevo}">
 				        	</div>
 				        </div>
 				      </div><!-- /.modal-body -->
@@ -174,7 +174,7 @@
 				        		<label id="labelConfirmacion"></label>
 				        		<input type="hidden" name="accion" value="update">
 				        		<input type="hidden" name="tipo" value="${tipo}">
-				        		<input type="hidden" name="id" value="${registro.id}">
+				        		<input type="hidden" name="id" value="${id}">
 				        		<input type="hidden" id="valor" name="valor">
 				        		<div class="modal-footer">
 					        		<button class="btn btn-primary">Confirmar</button>
@@ -197,10 +197,10 @@
 		<script type="text/javascript" src="${origen}/js/jquery.meiomask.js" charset="utf-8" ></script>
 	
 				
-		<c:if test="${not empty registro}">
+		<c:if test="${not empty montoActual}">
 			<script type="text/javascript"> <!-- si se seteo un registro se pasan esos valores al formulario actualizarForm -->
 				$(document).ready(function(){
-				    	$("#monto").val("${registro.monto}");
+				    	$("#monto").val("${montoActual}");
 						$("#actualizarForm").modal('show');
 				});
 			</script>
@@ -208,7 +208,7 @@
 		<c:if test="${not empty error}"> <!-- si algo salió mal se avisa -->
    				<script type="text/javascript">
    					$(document).ready(function(){
-   							$("#monto").val("${registro.monto}");
+   							$("#monto").val("${montoActual}");
    							$("#monto").addClass("has-error");
    							$("#actualizarForm").modal('show');
    					  });
@@ -217,7 +217,7 @@
    		</c:if>
    		   		
 		<c:if test="${not empty actualizados}"> <!-- si se actualizó el importe y hay registros actualizados -->
-   				<script>window.alert('${actualizados}' + " registros actualizados");</script>
+   				<script>window.alert('${actualizados}' + " registros " +  '${tipo}' +" actualizados");</script>
    		</c:if>
    		<script type="text/javascript"> <!-- cuando se hace click en el botón actualizar de actualizarForm, agrega el monto ingresado y muestra confirmacionForm -->
 	   		$(document).ready(function(){

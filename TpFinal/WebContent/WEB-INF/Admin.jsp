@@ -75,7 +75,7 @@
 										</td>
 										<td>
 											<center>
-												<c:if test="${usuario.rol != 2}">
+												<c:if test="${usuario.rol.id != 2}">
 													<form action="admin" method="post">
 														<input type="hidden" name="accion" value="estadoUsuario">
 														<input type="hidden" name="idUsuario" value="${usuario.id}">
@@ -97,8 +97,7 @@
 												<td><center><input type="hidden" name="accion" value="nuevoUsuario"><label>Nuevo:</label></center></td>
 												<td><center><input id="username" name="username" type="text" class="form-control" placeholder="Nombre de usuario"></center></td>
 											  	<td><center><input id="password" name="password" type="text" class="form-control" placeholder="Contraseña"></center></td>
-											  	<td><center><input id="rol" name="rol" type="text" alt="3" maxlength="1" class="form-control" data-toggle="tooltip" data-placement="top" title="1: RRHH, 2: Vendedor, 3: Admin" placeholder="Rol"></center></td>
-											  	<td><center><input id="vendedor" name="vendedor" type="text" alt="integer" class="form-control" data-toggle="tooltip" data-placement="top" title="Id del vendedor (si el rol es vendedor)" placeholder="id del vendedor"></center></td>
+											  	<td><center><input id="rol" name="rol" type="text" alt="3" maxlength="1" class="form-control" data-toggle="tooltip" data-placement="top" title="1: RRHH, 3: Admin" placeholder="Rol"></center></td>
 											  	<td><center><button class="btn btn-primary">Guardar</button></center></td>
 											</form>
 										<!-- </td> -->
