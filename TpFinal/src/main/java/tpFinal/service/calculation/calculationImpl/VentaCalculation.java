@@ -10,10 +10,8 @@ import tpFinal.dao.impl.VentaDao;
 import tpFinal.domain.Producto;
 import tpFinal.domain.Vendedor;
 import tpFinal.domain.Venta;
-//import tpFinal.service.findItem.findItemImpl.VentaFindItem;
 
 public class VentaCalculation {
-	//private VentaFindItem findItem;
 	private VentaDao dao;
 	private ProductoDao productoDao;
 	private ArrayList<Producto> listaComprados=null;
@@ -27,9 +25,6 @@ public class VentaCalculation {
 		this.productoDao = productoDao;
 	}
 
-/*	public void setFindItem(VentaFindItem findItem) {
-		this.findItem = findItem;
-	}*/
 
 	public ArrayList<Producto> getListaTodosProductos() {
 		return productoDao.getAll();
@@ -55,8 +50,7 @@ public class VentaCalculation {
 	
 	public String calcular(Vendedor vendedor)//si el id de la venta es opcional
 	{			
-		Venta registro=new Venta(listaComprados, total, vendedor);
-		registro.setFecha(new Date());
+		Venta registro=new Venta(dao.getAll().size() +1, new Date(), listaComprados, total, vendedor);
 				
 		String mensaje=verificarDatos(registro);//si todo salio bien
 		if (mensaje.equals(""))
@@ -98,6 +92,7 @@ public class VentaCalculation {
 		return mensaje;
 	}
 	
+	@SuppressWarnings("unused")
 	private float calcularImporte()
 	{
 		float importe=0;
@@ -108,8 +103,6 @@ public class VentaCalculation {
 	
 	private String verificarDatos(Venta venta)
 	{
-		//if (venta.getId())
-		//Venta verificacion=dataAccess.getVenta(id);
 		if (venta.getFecha()==null)
 			venta.setFecha(new Date());
 		if (venta.getProductos()==null || venta.getProductos().isEmpty() || total==0)

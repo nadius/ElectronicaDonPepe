@@ -54,8 +54,8 @@ public class PremioCampaniaCalculation extends CalculationUtils{
 	public Premio calcular(Producto producto)
 	{
 		int i=0;
+		int premiado = 0;
 		int[] cuenta = new int[vendedores.size()];
-		//ArrayList<Venta>ventas = new ArrayList<Venta>();
 		PremioMonto monto=daoMontos.getMontoPremioCampania();
 		Premio registro;
 		
@@ -64,28 +64,23 @@ public class PremioCampaniaCalculation extends CalculationUtils{
 		{
 			cuenta[i] = 0;
 			ventas=findVentas.findBySpecificDatesCreatorId(vendedor.getId(), fechaDesde, getFechaIntervaloHasta(fechaDesde));
-			if (ventas!=null || !ventas.isEmpty())//si se encontraron ventas para este vendedor //TODO: probar si sirve
+			if (ventas!=null || !ventas.isEmpty())//si se encontraron ventas para este vendedor
 			{
-				for(Venta venta : ventas)
-				{
+				for(Venta venta : ventas){
 					cuenta[i] += contarProductoVenta(venta, producto);
-					
-					/*if (cuenta>cantidad)
-					{
-						cantidad=cuenta;
-						premiado=vendedor;
-					}*/
 				}
 			}
 			i++;
 		}
 		
-		if (getMax(cuenta) == -1)//si el producto no está en ninguno de las ventas encontradas
+		premiado = getMax(cuenta);
+		
+		if (premiado == -1)//si el producto no está en ninguno de las ventas encontradas
 			return null;
 		
 		
-		registro = new Premio(fechaHoy, fechaDesde, fechaHasta, vendedores.get(getMax(cuenta)), true, producto, monto.getMonto());
-		if (findItem.findIdByObject(registro)!=0)//si ya existe un registro calculado con estos parámetros, así no insertamos registros repetidos //TODO: testear!!
+		registro = new Premio(fechaHoy, fechaDesde, fechaHasta, vendedores.get(premiado), true, producto, monto.getMonto());
+		if (findItem.findIdByObject(registro)!=0)//si ya existe un registro calculado con estos parámetros, así no insertamos registros repetidos
 			registro.setId(findItem.findIdByObject(registro));
 		
 		return registro;
@@ -104,7 +99,7 @@ public class PremioCampaniaCalculation extends CalculationUtils{
 					premiosCampania.add(premio);
 			}
 		}
-		return premiosCampania;//FIXME: regresa 9 registros cuando deberían ser 3 o 4 como mucho
+		return premiosCampania;
 	}
 	
 	private int getMax(int[] cuenta){

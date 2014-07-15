@@ -2,14 +2,11 @@ package tpFinal.service.calculation.calculationImpl;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.GregorianCalendar;
-
 import tpFinal.dao.impl.AdicionalDao;
 import tpFinal.domain.Adicional;
 import tpFinal.domain.ComisionProducto;
 import tpFinal.domain.ComisionVenta;
 import tpFinal.domain.Premio;
-import tpFinal.domain.Producto;
 import tpFinal.domain.Vendedor;
 import tpFinal.domain.Venta;
 import tpFinal.service.calculation.CalculationUtils;
@@ -113,18 +110,6 @@ public class AdicionalCalculation extends CalculationUtils{
 				
 		for(Vendedor vendedor : vendedores)
 		{
-			/*if ((service.getAdicional(vendedor.getId(), desde, hasta)==null) && (service.existenVentas(vendedor, desde, hasta)))//si no hay un registro para esas fechas y vendedor
-			{
-				adicional=calcularAdicionalVendedor(getFechaHoy(), desde, hasta, vendedor, premioMejorVendedorMes, premiosCampania);
-				setTotales(adicional);
-				service.guardarAdicional(adicional);
-			}
-			else
-				adicional=service.getAdicional(vendedor.getId(), desde, hasta);//lo traigo de la base
-			
-			if (adicional!=null)//si en efecto hay un adicional calculado
-				adicionales.add(adicional);*/
-			
 			ventas=findVentas.findBySpecificDatesCreatorId(vendedor.getId(), fechaDesde, getFechaIntervaloHasta(fechaDesde));
 			
 			if (ventas!=null && !ventas.isEmpty())
@@ -217,19 +202,7 @@ public class AdicionalCalculation extends CalculationUtils{
 		
 		return subtotales;
 	}
-	
-/*	protected int contarProductoVenta(Venta venta, Producto producto)
-	{
-		int i=0;
-		ArrayList<Producto> productosVenta=(ArrayList<Producto>) venta.getProductos();
-		for (Producto item : productosVenta)
-			if (item.getId()==producto.getId())
-				i++;
 		
-		//System.out.print(i + " veces");
-		return i;
-	}*/
-	
 	//@Override
 	public String showResult(Adicional object) {
 		return object.getId() + "\n\t Creado: " + object.getFechaCreacion().toString() + 

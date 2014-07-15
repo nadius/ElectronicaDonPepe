@@ -9,12 +9,6 @@ import tpFinal.domain.Venta;
 import tpFinal.service.findItem.findItemImpl.VentaFindItem;
 
 public class CalculationUtils {
-/*	protected VentaFindItem findVentas;//TODO: encontrar la forma de injectar este bean, porque sino el calculo no funciona. 
-	
-	public void setFindVentas(VentaFindItem findVentas) {
-		this.findVentas = findVentas;
-	}*/
-
 	public int contarProductoVenta(Venta venta, Producto producto)
 	{
 		int i=0;

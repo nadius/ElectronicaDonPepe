@@ -50,17 +50,32 @@ public class UsuarioCalculation {
 	{	
 		Usuario registro=new Usuario(username, password, rolDao.get(idRol), null);//todavía no sé si es vendedor
 		String mensaje="";
+				
+		if (idRol == 2){
+			return "El alta de vendedores se realiza desde la seccion correspondiente";
+		}
+		
+		mensaje=verificar(registro);
+		
+		if(mensaje.equals("")){	
+			dao.save(registro);
+			mensaje = String.valueOf(registro.getId());
+		}
+		
+		return mensaje;
+	}
+	
+	public String nuevoVendedor(String username, String password, int idRol, int idVendedor)
+	{	
+		Usuario registro=new Usuario(username, password, rolDao.get(idRol), null);//todavía no sé si es vendedor
+		String mensaje="";
 		
 		
-/*		if (idRol==2){
+		if (idRol==2){
 			if (vendedorDao.get(idVendedor) == null){ // si el vendedor elegido no existe
 				throw new NullPointerException("vendedor");
 			}
 			registro.setVendedor(vendedorDao.get(idVendedor));
-		}*/
-		
-		if (idRol == 2){
-			return "El alta de vendedores se realiza desde la seccion correspondiente";
 		}
 		
 		mensaje=verificar(registro);
@@ -103,10 +118,7 @@ public class UsuarioCalculation {
 		if (registro.getPassword().equals(""))
 			mensaje = mensaje + "contraseña vacía ";
 		if (registro.getRol()==null)
-			mensaje = mensaje + "rol de usuario vacío o no válido ";
-		/*if (registro.getRol().getId()==2 && registro.getVendedor()==null)
-			mensaje = mensaje + "vendedor vacío o no válido ";*/
-		
+			mensaje = mensaje + "rol de usuario vacío o no válido ";		
 		if (findItem.findIdByObject(registro)!=0)
 			mensaje = mensaje + "Ya existe un registro para " + registro.getUsername();
 		

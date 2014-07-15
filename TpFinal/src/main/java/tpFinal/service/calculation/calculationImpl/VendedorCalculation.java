@@ -1,6 +1,7 @@
 package tpFinal.service.calculation.calculationImpl;
 
 import java.util.ArrayList;
+import java.util.StringTokenizer;
 
 import tpFinal.dao.impl.VendedorDao;
 import tpFinal.domain.Vendedor;
@@ -33,9 +34,14 @@ public class VendedorCalculation {
 			return mensaje;
 		
 		dao.save(registro);
-		usuarioCalculation.nuevo(nombre+apellido, "vendedor", 2, registro.getId());//al crear un vendedor también crea un usuario
-		mensaje = String.valueOf(registro.getId());
+		mensaje = usuarioCalculation.nuevoVendedor(nombre+apellido, "vendedor", 2, registro.getId());//al crear un vendedor también crea un usuario
 		
+		if (contarPalabras(mensaje) == 1){//si el mensaje devuelve el id del usuario creado
+			mensaje = String.valueOf(registro.getId());
+		}
+		else{//si ocurrio algun error
+			dao.delete(registro);//borro el registro creado
+		}
 		return mensaje;
 	}
 	
@@ -74,5 +80,9 @@ public class VendedorCalculation {
 	
 	public ArrayList<Vendedor> getAll(){
 		return dao.getAll();
+	}
+	
+	public int contarPalabras(String texto){
+		return new StringTokenizer(texto).countTokens();
 	}
 }
