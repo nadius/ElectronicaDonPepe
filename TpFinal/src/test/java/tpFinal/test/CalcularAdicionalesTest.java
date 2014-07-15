@@ -82,7 +82,7 @@ public class CalcularAdicionalesTest {//TESTS CORRESPONDIENTES AL CALCULO DE ADI
 		for(Vendedor vendedor : vendedores){
 			registro = comisionVenta.calcular(vendedor);
 			if (registro != null)
-				comisionesVenta.	add(registro);
+				comisionesVenta.add(registro);
 		}
 		
 		assertEquals(3, comisionesVenta.size());//cantidad de comisiones calculadas

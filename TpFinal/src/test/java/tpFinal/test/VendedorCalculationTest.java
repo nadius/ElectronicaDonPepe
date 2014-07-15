@@ -39,6 +39,7 @@ public class VendedorCalculationTest {//TESTS CORRESPONDIENTES A LA ADMINISTRACI
 		ultimoRegistroNoTest = dao.getAll().size();
 	}
 
+/*
 	@After
 	public void tearDown() throws Exception {
 		for (Vendedor registro : dao.getAll()){
@@ -47,6 +48,7 @@ public class VendedorCalculationTest {//TESTS CORRESPONDIENTES A LA ADMINISTRACI
 			}
 		}
 	}
+*/
 	
 	public int contarPalabras(String texto){
 		return new StringTokenizer(texto).countTokens();

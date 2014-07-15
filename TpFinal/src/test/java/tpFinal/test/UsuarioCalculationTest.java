@@ -41,6 +41,7 @@ public class UsuarioCalculationTest {
 		ultimoRegistroNoTest = dao.getAll().size();
 	}
 	
+/*
 	@After
 	public void tearDown(){
 		for (Usuario registro : dao.getAll()){
@@ -49,6 +50,7 @@ public class UsuarioCalculationTest {
 			}
 		}
 	}
+*/
 	
 	public int contarPalabras(String texto){
 		return new StringTokenizer(texto).countTokens();
@@ -57,7 +59,7 @@ public class UsuarioCalculationTest {
 //TESTS CORRESPONDIENTES A LA ADMINISTRACION DE USUARIOS
 	@Test
 	public void testNuevoUsuarioSuccess() {//creo un usuario de rrhh (rol = 1)
-		mensaje = calculation.nuevo(username, password, 1, 0);
+		mensaje = calculation.nuevo(username, password, 1);
 		assertEquals(1, contarPalabras(mensaje));//solo tiene que devolver el id
 		assertNotNull(dao.get(Integer.parseInt(mensaje)));//tiene que haber algo guardado en la base de datos
 		registroTest = dao.get(Integer.parseInt(mensaje));//guardo el registro para poder borrarlo despues
@@ -65,7 +67,7 @@ public class UsuarioCalculationTest {
 	
 	@Test
 	public void testNuevoUsuarioFail() {//creo un usuario de rrhh (rol = 1) con parametros vacios
-		mensaje = calculation.nuevo("", "", 1, 0);//verifico que el id devuelto realmente pertenece a un registro
+		mensaje = calculation.nuevo("", "", 1);//verifico que el id devuelto realmente pertenece a un registro
 		assertNotEquals(1, contarPalabras(mensaje));//no devuelve el id porque ocurre un error
 	}
 
@@ -75,7 +77,6 @@ public class UsuarioCalculationTest {
 		mensaje = calculation.cambiarEstado(registroTestCambiarEstado);//cambio de estado el registro de Juan, que está desactivado
 		assertEquals(registroTestCambiarEstado, Integer.parseInt(mensaje));//la funcion tiene que devolver el id del regstro actualizado
 		assertNotEquals(estadoOriginal, dao.get(registroTestCambiarEstado).isActivo());//los estados no tienen que ser iguales
-		calculation.cambiarEstado(registroTestCambiarEstado);//lo vuelvo a desactivar
 	}
 	
 //TESTS DE LOGIN

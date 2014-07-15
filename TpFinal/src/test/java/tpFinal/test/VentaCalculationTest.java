@@ -47,7 +47,7 @@ public class VentaCalculationTest {
 		hasta = new GregorianCalendar(2013, GregorianCalendar.MARCH, 31);
 	}
 
-	@After
+/*	@After
 	public void tearDown() throws Exception {
 		for (Venta registro : dao.getAll()){
 			if (registro.getId() > ultimoRegistroNoTest){
@@ -55,7 +55,7 @@ public class VentaCalculationTest {
 			}
 		}
 	}
-
+*/
 	@Test
 	public void calcularSinIdSuccess() {//guardo una venta y dejo que la base de datos calcule el id
 		Venta registroTest;
@@ -119,7 +119,15 @@ public class VentaCalculationTest {
 				service.Agregar(1);
 				service.Agregar(10);
 				
-		mensaje = service.calcular(vendedorTest, idProximoRegistro);
+		mensaje = service.calcular(vendedorTest, 2);//ya hay una venta con ese id
+		assertNotEquals("", mensaje);//el mensaje tiene que estar vacio
+		assertEquals(cantidadOriginal, dao.getAll().size());//debe haber igual cantidad de registros
+		
+		mensaje = service.calcular(vendedorTest, 0);//id no valido
+		assertNotEquals("", mensaje);//el mensaje tiene que estar vacio
+		assertEquals(cantidadOriginal, dao.getAll().size());//debe haber igual cantidad de registros
+		
+		mensaje = service.calcular(null, idProximoRegistro);//el vendedor no puede ser nulo
 		assertNotEquals("", mensaje);//el mensaje tiene que estar vacio
 		assertEquals(cantidadOriginal, dao.getAll().size());//debe haber igual cantidad de registros
 	}
@@ -134,6 +142,18 @@ public class VentaCalculationTest {
 	public void buscarFechasFail(){//busco en una fecha donde no hay registros (marzo 2013, Juan Perez)
 		ArrayList<Venta> respuesta = service.findBySpecificDatesCreatorId(vendedorTest.getId(), desde.getTime(), hasta.getTime());
 		assertTrue(respuesta.isEmpty());
+	}
+	
+	@Test
+	public void checkImporte(){
+		ArrayList<Producto> productos;
+		for(Venta registro : dao.getAll()){
+			service.resetCarrito();
+			for (Producto producto : registro.getProductos()){
+				service.Agregar(producto.getId());
+			}
+			assertEquals(registro.getImporte(), service.getTotal(), 0.1);
+		}
 	}
 	
 	private Venta getUltimo(){
