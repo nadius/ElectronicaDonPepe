@@ -43,7 +43,8 @@ public class ComisionProducto extends Comision{
 		if (!super.equals(registro))
 			return false;
 		
-		if (!this.getProducto().equals(registro.getProducto()))
+		if ((this.getProducto() != null && registro.getProducto() != null) &&
+				!this.getProducto().equals(registro.getProducto()))
 			return false;
 		
 		return true;

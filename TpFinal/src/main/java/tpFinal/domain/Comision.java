@@ -116,8 +116,11 @@ public class Comision implements Serializable {
 	
 	public boolean equals(Comision registro)
 	{
-		if (this.getFechaCreacion().compareTo(registro.getFechaCreacion())!=0)
+		if (registro == null)
 			return false;
+		
+		/*if (this.getFechaCreacion().compareTo(registro.getFechaCreacion())!=0)
+			return false;*/
 		
 		if (this.getFechaDesde().compareTo(registro.getFechaDesde())!=0)
 			return false;

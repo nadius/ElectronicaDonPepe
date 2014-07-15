@@ -48,6 +48,9 @@ public class ComisionVenta extends Comision{
 		if (!super.equals(registro))
 			return false;
 		
+		if (!(this.getVentas() != null && registro.getVentas() != null))
+			return false;
+		
 		if (thisVentas.size() != registroVentas.size())//si no tienen la misma cantidad de ventas
 			return false;
 		

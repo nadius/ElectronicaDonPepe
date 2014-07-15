@@ -190,8 +190,26 @@ public class Adicional implements Serializable {
 	
 	public boolean equals(Adicional registro)
 	{
-		if (this.getFechaCreacion().compareTo(registro.getFechaCreacion())!=0)
+		ArrayList<ComisionProducto> thisComision = null;
+		ArrayList<ComisionProducto> registroComision = null;
+		ArrayList<Premio> thisCampanias = null;
+		ArrayList<Premio> registroCampanias = null;
+		
+		if (registro == null)
 			return false;
+		
+		if (this.comisionesProducto != null && registro.getComisionesProducto() !=null){
+			thisComision = new ArrayList<ComisionProducto>(this.getComisionesProducto());
+			registroComision = new ArrayList<ComisionProducto>(registro.getComisionesProducto());
+		}
+		
+		if (this.getCampanias() != null && registro.getCampanias() !=null){
+			thisCampanias = new ArrayList<Premio>(this.getCampanias());
+			registroCampanias = new ArrayList<Premio>(registro.getCampanias());
+		}
+		
+/*		if (this.getFechaCreacion().compareTo(registro.getFechaCreacion())!=0)
+			return false;*/
 		
 		if (this.getFechaDesde().compareTo(registro.getFechaDesde())!=0)
 			return false;
@@ -202,21 +220,57 @@ public class Adicional implements Serializable {
 		if (!this.getVendedor().equals(registro.getVendedor()))
 			return false;
 		
-		if (!this.getComisionVentas().equals(registro.getComisionVentas()))
+		if ((this.comisionVentas != null && registro.getComisionVentas() != null) &&
+				!this.getComisionVentas().equals(registro.getComisionVentas()))
 			return false;
 		
-		if (!this.getComisionesProducto().containsAll(registro.getComisionesProducto()))
+		if ((this.comisionesProducto != null && registro.getComisionesProducto() !=null) &&
+			(!this.comisionesProducto.isEmpty() && !registro.getComisionesProducto().isEmpty()) &&
+				!isMismasComisionesProducto(thisComision, registroComision))
 			return false;
 		
-		if (!this.getMejorVendedorMes().equals(registro.getMejorVendedorMes()))
+		if ((this.mejorVendedorMes != null && registro.getMejorVendedorMes() != null) &&
+				!this.getMejorVendedorMes().equals(registro.getMejorVendedorMes()))
 			return false;
 		
-		if (!this.getCampanias().equals(registro.getCampanias()))
+		if ((this.getCampanias() != null && registro.getCampanias() !=null) &&
+				(!this.getCampanias().isEmpty() && !registro.getCampanias().isEmpty()) &&
+				!isMismosPremiosCampania(thisCampanias, registroCampanias))
 			return false;
 		
 		if (this.getTotalAdicionales() != registro.getTotalAdicionales())
 			return false;
 		
 		return true;
+	}
+	
+	private boolean isMismasComisionesProducto(ArrayList<ComisionProducto> thisComision, ArrayList<ComisionProducto> registroComision){
+		int cuenta=0;
+		for (int i=0; i<thisComision.size(); i++){//uso un for tradicional para evitar que busque un null en elementos
+			for (int j=0; j<registroComision.size(); j++){
+				if (thisComision.get(i).getId() == registroComision.get(j).getId())//comparo los ids de las ventas
+					cuenta++;
+			}
+		}
+		
+		if(cuenta == thisComision.size())
+			return true;
+
+		return false;
+	}
+	
+	private boolean isMismosPremiosCampania(ArrayList<Premio> thisCampanias, ArrayList<Premio> registroCampanias){
+		int cuenta=0;
+		for (int i=0; i<thisCampanias.size(); i++){//uso un for tradicional para evitar que busque un null en elementos
+			for (int j=0; j<registroCampanias.size(); j++){
+				if (thisCampanias.get(i).getId() == registroCampanias.get(j).getId())//comparo los ids de las ventas
+					cuenta++;
+			}
+		}
+		
+		if(cuenta == thisCampanias.size())
+			return true;
+
+		return false;
 	}
 }
