@@ -1,15 +1,13 @@
 package tpFinal.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
@@ -27,7 +25,7 @@ public class Venta implements Serializable {
 	private int id;
 	@Column(nullable=false)
 	private Date fecha=null;
-	@ManyToMany(cascade=CascadeType.ALL, fetch= FetchType.EAGER)
+	@ManyToMany(fetch= FetchType.EAGER)
 	@Fetch(value = FetchMode.SUBSELECT)
 	private List<Producto> productos=null;
 	@Column(nullable=false)
@@ -35,11 +33,8 @@ public class Venta implements Serializable {
 	@OneToOne//(cascade=CascadeType.ALL, fetch= FetchType.LAZY)
 	private Vendedor vendedor=null;
 	
-	public Venta() {/*
-		this.fecha=new Date();
-		this.productos = null;
-		this.importe = 0;
-		this.vendedor = null;*/
+	public Venta() {
+		//nada para hacer
 	}
 	
 	public Venta(List<Producto> productos, float importe, Vendedor vendedor) {
@@ -96,24 +91,36 @@ public class Venta implements Serializable {
 	
 	public boolean equals(Venta registro)
 	{
-		if (!this.getFecha().equals(registro.getFecha()))
+		ArrayList<Producto> thisProductos=new ArrayList<Producto>(this.getProductos());
+		ArrayList<Producto> registroProductos=new ArrayList<Producto>(registro.getProductos());
+		
+		if (this.getFecha().compareTo(registro.getFecha())!=0)
 			return false;
 		
 		if (!this.getVendedor().equals(registro.getVendedor()))
 			return false;
 		
-		if (!this.getProductos().containsAll(registro.getProductos()))
-			return false;
-		
 		if (this.getImporte()!= registro.getImporte())
 			return false;
 		
+		if (!isMismosProductos(thisProductos, registroProductos))
+			return false;
+		
 		return true;
-		/*if (this.getFecha().compareTo(registro.getFecha())==0 && 
-			this.getVendedor().equals(registro.getVendedor()) &&
-			this.getProductos().containsAll(registro.getProductos()) &&
-			this.getImporte() == registro.getImporte())
+	}
+	
+	private boolean isMismosProductos(ArrayList<Producto> thisProductos, ArrayList<Producto> registroProductos){
+		int cuenta=0;
+		for (int i=0; i<thisProductos.size(); i++){//uso un for tradicional para evitar que busque un null en elementos
+			for (int j=0; j<registroProductos.size(); j++){
+				if (thisProductos.get(i).getId() == registroProductos.get(j).getId())//comparo los ids de las ventas
+					cuenta++;
+			}
+		}
+		
+		if(cuenta == thisProductos.size())
 			return true;
-		return false;*/
+
+		return false;
 	}
 }

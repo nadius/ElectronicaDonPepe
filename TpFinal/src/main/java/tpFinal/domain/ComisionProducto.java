@@ -1,27 +1,17 @@
 package tpFinal.domain;
 
-//import java.util.List;
-
-//import javax.persistence.CascadeType;
 import java.util.Date;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-//import javax.persistence.FetchType;
-//import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Transient;
-
-//import org.hibernate.annotations.Fetch;
-//import org.hibernate.annotations.FetchMode;
 
 @Entity
 @DiscriminatorValue(value="P")
 public class ComisionProducto extends Comision{
 	@Transient
 	private static final long serialVersionUID = 1L;
-	//@ManyToMany(cascade=CascadeType.ALL, fetch= FetchType.EAGER)
-	//@Fetch(value = FetchMode.SUBSELECT)
 	@ManyToOne
 	private Producto producto;
 

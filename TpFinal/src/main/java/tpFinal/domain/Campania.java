@@ -73,8 +73,8 @@ public class Campania {
 	
 	public boolean equals(Campania campania)
 	{
-		/*if (!this.getFechaCreacion().equals(campania.getFechaCreacion()))
-			return false;*/
+		if (this.getFechaCreacion().compareTo(campania.getFechaCreacion())!=0)
+			return false;
 		
 		if (!this.getProducto().equals(campania.getProducto()))
 			return false;

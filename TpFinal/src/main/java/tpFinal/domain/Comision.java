@@ -17,11 +17,8 @@ import javax.persistence.InheritanceType;
 import javax.persistence.ManyToOne;
 import javax.persistence.Transient;
 
-//import org.hibernate.annotations.DiscriminatorOptions;
-
 @Entity
 @Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
-//@DiscriminatorOptions(force = true)
 @DiscriminatorColumn(name="tipo", discriminatorType=DiscriminatorType.STRING)
 public class Comision implements Serializable {
 	@Transient
@@ -35,9 +32,7 @@ public class Comision implements Serializable {
 	private Date fechaDesde;
 	@Column(nullable=false)
 	private Date fechaHasta;
-	//@Column(nullable=false)
 	@ManyToOne(cascade=CascadeType.ALL, fetch= FetchType.EAGER)
-	//@Fetch(value = FetchMode.SUBSELECT)
 	private Vendedor vendedor;
 	@Column(nullable=false)
 	private int unidades=0;
@@ -51,8 +46,7 @@ public class Comision implements Serializable {
 	public Comision(int unidades, float importe) {
 		this.unidades= unidades;
 		this.importe = importe;
-	}
-	
+	}	
 	
 	
 	public Comision(Date fechaCreacion, Date fechaDesde, Date fechaHasta, Vendedor vendedor, int unidades, float importe) {
@@ -122,8 +116,8 @@ public class Comision implements Serializable {
 	
 	public boolean equals(Comision registro)
 	{
-		/*if (this.getFechaCreacion().compareTo(registro.getFechaCreacion())!=0)
-			return false;*/
+		if (this.getFechaCreacion().compareTo(registro.getFechaCreacion())!=0)
+			return false;
 		
 		if (this.getFechaDesde().compareTo(registro.getFechaDesde())!=0)
 			return false;

@@ -121,8 +121,8 @@ public class Premio implements Serializable {
 		if (this.isCampania() != registro.isCampania())
 			return false;
 		
-		/*if (this.getFechaCreacion().compareTo(registro.getFechaCreacion())!=0)
-			return false;*/
+		if (this.getFechaCreacion().compareTo(registro.getFechaCreacion())!=0)
+			return false;
 		
 		if (this.getFechaDesde().compareTo(registro.getFechaDesde())!=0)
 			return false;

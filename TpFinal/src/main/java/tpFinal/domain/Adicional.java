@@ -16,7 +16,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
-import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Transient;
 
 import org.hibernate.annotations.Fetch;
@@ -28,7 +27,6 @@ import tpFinal.domain.Premio;
 import tpFinal.domain.Vendedor;
 
 @Entity
-//no estoy segura si esto debería verse reflejado en la base de datos
 public class Adicional implements Serializable {
 	@Transient
 	private static final long serialVersionUID = 1L;
@@ -45,7 +43,6 @@ public class Adicional implements Serializable {
 	private Vendedor vendedor;
 	@OneToOne(cascade=CascadeType.ALL, fetch= FetchType.EAGER)
 	@JoinColumn(name="comisionVenta_id")
-	//@PrimaryKeyJoinColumn
 	private ComisionVenta comisionVentas;
 	@ManyToMany(cascade=CascadeType.ALL, fetch= FetchType.EAGER)
 	@Fetch(value = FetchMode.SUBSELECT)
@@ -193,8 +190,8 @@ public class Adicional implements Serializable {
 	
 	public boolean equals(Adicional registro)
 	{
-		/*if (this.getFechaCreacion().compareTo(registro.getFechaCreacion())!=0)
-			return false;*/
+		if (this.getFechaCreacion().compareTo(registro.getFechaCreacion())!=0)
+			return false;
 		
 		if (this.getFechaDesde().compareTo(registro.getFechaDesde())!=0)
 			return false;
