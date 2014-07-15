@@ -41,11 +41,11 @@ public class ServletVentaNueva extends ServletUtils {
 		String accion = getParameter("accion");
 		
 		if (accion.equals("agregar"))
-			service.Agregar(parseString(getParameter("idProducto")));
+			service.Agregar(parseStringToInt(getParameter("idProducto")));
 		if (accion.equals("guardar"))
 		{
 			try {
-				error=service.calcular(usuario.getVendedor(), parseString(getParameter("id")));
+				error=service.calcular(usuario.getVendedor(), parseStringToInt(getParameter("id")));
 			} catch (NullPointerException | NumberFormatException e) {//por si no se puede recuperar el id o parsear a int
 				e.printStackTrace();
 				error="Revisar " + e.getMessage();

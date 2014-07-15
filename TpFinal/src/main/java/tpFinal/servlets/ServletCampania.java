@@ -19,8 +19,7 @@ public class ServletCampania extends ServletUtils{
 	private CampaniaCalculation calculation;
        
     public ServletCampania() {
-        super();
-        // TODO Auto-generated constructor stub
+        //nada para hacer
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -43,10 +42,10 @@ public class ServletCampania extends ServletUtils{
 		String accion=getParameter("accion");
 		
 		if (accion.equals("agregar"))
-			calculation.agregar(parseString(getParameter("idProducto")));
+			calculation.agregar(parseStringToInt(getParameter("idProducto")));
 		
 		if (accion.equals("eliminar"))
-			calculation.eliminar(parseString(getParameter("idCampania")));
+			calculation.eliminar(parseStringToInt(getParameter("idCampania")));
 		
 		setDefaultAttributes();		
 		redirectPagina("RegistrarCampania");

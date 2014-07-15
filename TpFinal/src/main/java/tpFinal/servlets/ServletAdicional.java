@@ -13,7 +13,6 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import tpFinal.service.AdicionalService;
-import tpFinal.service.findItem.findItemImpl.VentaFindItem;
 import tpFinal.servlets.ServletUtils;
 
 public class ServletAdicional extends ServletUtils {
@@ -49,7 +48,6 @@ public class ServletAdicional extends ServletUtils {
 			fechaDesde = getFechaSoloMesAnio("desde");
 			fechaHasta = getFechaUnMesMas("desde");
 			setParamsVendedores();
-			//service.calcular(fechaDesde, fechaHasta);
 		} catch (NullPointerException | IllegalArgumentException e) {
 			e.printStackTrace();
 			setAttribute("error", getCustomExceptionMessage(e.getMessage()));
@@ -59,7 +57,11 @@ public class ServletAdicional extends ServletUtils {
 		}
 		
 		System.out.println("Calculando adicionales desde " + df.format(fechaDesde) + " hasta " + df.format(fechaHasta));
-		service.calcular(fechaDesde, fechaHasta);
+		
+		if (service.calcular(fechaDesde, fechaHasta).isEmpty()){//si el cálculo devuelve un arraylist vacío
+			setAttribute("error", "No se encontraron ventas para el período buscado");
+		}
+		
 		setDefaultAttributes();
 		redirectPagina("CalcularAdicionales");
 	}
@@ -79,11 +81,13 @@ public class ServletAdicional extends ServletUtils {
 		int cantVendedores=service.getVendedoresActivos().size(), i;
 		int[] vendedoresElegidosInteger=new int[cantVendedores];
 		
-		/*for (i=0; i<cantVendedores; i++)
-			vendedoresElegidosInteger[i]=0;*/
-		
-		for (i=1; i<cantVendedores; i++)//recupero todos los parametros
-			vendedoresElegidosInteger[i-1]=parseString(getParameter("vendedor"+i));//si el vendedor no está seleccionado parseString devuelve un cero
+		for (i=1; i<=cantVendedores; i++){//recupero todos los parametros
+			try {
+				vendedoresElegidosInteger[i-1]=parseStringToInt(getParameter("vendedor"+i));//si el vendedor no está seleccionado getParameter lanza una NullPointerException
+			} catch (NullPointerException e) {
+				vendedoresElegidosInteger[i-1]=0;
+			}
+		}
 		
 		return vendedoresElegidosInteger;
 	}

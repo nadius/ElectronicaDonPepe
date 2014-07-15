@@ -54,8 +54,8 @@ public class ServletVentaConsulta extends ServletUtils {
 		try {
 			fechaDesde = getFecha("desde");
 			fechaHasta = getFecha("hasta");
-			System.out.println("Calculando adicionales desde " + df.format(fechaDesde) + " hasta " + df.format(fechaHasta));
-			lista = service.findBySpecificDatesCreatorId(usuario.getVendedor().getId(), fechaDesde, fechaHasta);
+			System.out.println("Buscando ventas desde " + df.format(fechaDesde) + " hasta " + df.format(fechaHasta));
+			lista = service.findBySpecificDatesCreatorId(usuario.getVendedor().getId(), fechaDesde, getFechaUnDiaMas(fechaHasta));
 		} catch (NullPointerException | IllegalArgumentException e) {
 			e.printStackTrace();
 			error = "Por favor revise los datos ingresados.";

@@ -89,14 +89,29 @@ public class ServletUtils extends HttpServlet{//Funciones comunes a todos los se
  * Convierte un string en un int
  * @param el objeto a parsear
  * @return el objeto convertido a int
- * @throws NumberFormatException si no puede parsear el String.
+ * @throws NumberFormatException si no puede parsear el String o si el numero en cuestion es menor o igual a cero.
  **/
-	public int parseString(String object){
+	public int parseStringToInt(String object){
 		try {
+			if (Integer.parseInt(object) <= 0)//en ningún caso el numero puede ser menor o igual a cero
+				throw new NumberFormatException();
 			return Integer.parseInt(object);
 		} catch (NumberFormatException e) {
 			return 0;
 		}
+	}
+	
+/*
+ * Convierte un String en un float
+ * @param el objeto a parsear
+ * @return el objeto convertido a int
+ * @throws NumberFormatException si no puede parsear el String o si el numero en cuestion es menor o igual a cero.
+ */
+	public float parseStringToFloat(String object){
+		if (Float.parseFloat(object) <= 0){//en ningún caso el numero puede ser menor o igual a cero
+			throw new NumberFormatException();
+		}
+		return Float.parseFloat(object);
 	}
 
 /**
@@ -142,7 +157,8 @@ public class ServletUtils extends HttpServlet{//Funciones comunes a todos los se
  **/
 	public String getParameter(String nombreAttr){
 		String param = request.getParameter(nombreAttr);
-		if (param.equals("")){
+		if ((param == null) || (param.equals(""))){
+			param = "";
 			throw new NullPointerException(nombreAttr);
 		}
 		return param;
@@ -211,9 +227,9 @@ public class ServletUtils extends HttpServlet{//Funciones comunes a todos los se
 	public Date getFecha(String tipo)
 	{
 		Integer dia, mes, anio;
-		dia = parseString(getParameter(tipo+"Dia"));
-		mes = parseString(getParameter(tipo+"Mes"))-1;
-		anio = parseString(getParameter(tipo+"Anio"));
+		dia = parseStringToInt(getParameter(tipo+"Dia"));
+		mes = parseStringToInt(getParameter(tipo+"Mes"))-1;
+		anio = parseStringToInt(getParameter(tipo+"Anio"));
 		
 		if (dia<=0 || dia>31 || mes<0 || mes>12 || anio<0){
 			throw new IllegalArgumentException("fecha " + tipo);
@@ -270,18 +286,47 @@ public class ServletUtils extends HttpServlet{//Funciones comunes a todos los se
 	}
 	
 /**
+ * Calcula una fecha nueva cuyo dia sea uno mas que el provisto por la fecha dada.
+ * Ej: Dada una fecha 2013.01.01, la función devuelve 2013.01.02
+ * Esta función es utilizada en busqueda de ventas.
+ * @param fecha Date con la fecha con la que se trabajara
+ * @return un Date con la fecha calculada
+ **/
+	public Date getFechaUnDiaMas(Date fecha) {
+		GregorianCalendar calendar = new GregorianCalendar();
+		calendar.setTime(fecha);
+		calendar.add(GregorianCalendar.DAY_OF_MONTH, 1); 
+		return calendar.getTime();
+	}
+	
+/**
  * Finaliza la sesión, invalidándola
  **/
 	public void invalidarSesion(){
 		request.getSession().invalidate();
 	}
-	
+
+/**
+ * Calcula la cantidad de palabras de un String dado
+ * @param texto String con el que se trabajará
+ * @return un int con la cantidad de palabras del String
+ */
 	public int contarPalabras(String texto){
 		return new StringTokenizer(texto).countTokens();
 	}
-	
+
+/**
+ * Devuelve un mensaje de excepción distinto teniendo en cuenta el que contiene la excepción atrapada en el servlet.
+ * Si la excepción fue disparada por una función que manejaba un parámetro, se devuelve un mensaje acorde; de lo contrario se devuelve un mensaje genérico.
+ * @param exceptionMessage el mensaje de la excepción atrapada
+ * @return el mensaje que corresponda
+ */
 	public String getCustomExceptionMessage(String exceptionMessage){		
 		//si el mensaje de error consta de una palabra, ie, si proviene de getParameter
+		if (exceptionMessage == null){
+			exceptionMessage = "";
+		}
+		
 		if (contarPalabras(exceptionMessage) == 1)
 			return "Por favor revise el parametro " + exceptionMessage;
 		

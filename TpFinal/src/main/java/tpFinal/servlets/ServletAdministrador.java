@@ -54,7 +54,7 @@ public class ServletAdministrador extends ServletUtils {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		setRequestResponse(request, response);
 		String accion, username, password, nombre, apellido;
-		int rol, id;
+		int rol=0, id=0;
 		mensaje="";
 		
 		try {
@@ -64,14 +64,13 @@ public class ServletAdministrador extends ServletUtils {
 			if(accion.equals("nuevoUsuario")){//da de alta un nuevo usuario
 				username = getParameter("username");
 				password = getParameter("password");
-				rol = parseString(getParameter("rol"));
+				rol = parseStringToInt(getParameter("rol"));
 				
 				if ((rol == 0) || (rol >3)){//si se ingreso un numero de rol no valido
 					throw new NullPointerException("rol");
 				}
 				
-				id = parseString(getParameter("vendedor"));
-				mensaje=usuarioCalculation.nuevo(username, password, rol, id);
+				mensaje=usuarioCalculation.nuevo(username, password, rol);
 				
 				if (contarPalabras(mensaje) == 1){
 					setAttribute("ok", "El usuario se guardo correctamente");
@@ -79,7 +78,7 @@ public class ServletAdministrador extends ServletUtils {
 			}
 			
 			if(accion.equals("estadoUsuario")){//activa o desactiva un usuario elegido
-				id = parseString(getParameter("idUsuario"));
+				id = parseStringToInt(getParameter("idUsuario"));
 				mensaje=usuarioCalculation.cambiarEstado(id);
 
 				if (contarPalabras(mensaje) == 1){
@@ -99,7 +98,7 @@ public class ServletAdministrador extends ServletUtils {
 			}
 				
 			if(accion.equals("estadoVendedor")){
-				id = parseString(getParameter("idVendedor"));
+				id = parseStringToInt(getParameter("idVendedor"));
 				mensaje=vendedorCalculation.cambiarEstado(id);
 
 				if (contarPalabras(mensaje) == 1){

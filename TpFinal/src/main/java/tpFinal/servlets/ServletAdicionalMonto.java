@@ -17,7 +17,15 @@ public class ServletAdicionalMonto extends ServletUtils {
 	private static final long serialVersionUID = 1L;
 	private int rolPagina=1;
 	private AdicionalMontoService service;
-       
+      
+	//parametros de los formularios
+	String accion="";
+	String tipo= "";
+	int id=0;
+	int respuesta=0;
+	float montoActual = 0;
+	float montoNuevo=0;
+	
     public ServletAdicionalMonto() {
       //nada para hacer
     }
@@ -40,58 +48,61 @@ public class ServletAdicionalMonto extends ServletUtils {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		setRequestResponse(request, response);
 
-		String accion="";
-		String tipo= "";
-		int id=0;
-		int respuesta=0;
-		float valor=0;
-		
 		try {
 			accion=getParameter("accion");
 			tipo= getParameter("tipo");
 			if (accion.equals("set")){//seteo los valores que se necesitan en el formulario de actualización : registro y tipo del mismo
-				setAttribute("tipo", getParameter("tipo"));
-				id= parseString(getParameter("id"));
+				id= parseStringToInt(getParameter("id"));
 				
 				if (tipo.equals("comisionVenta")){
-					setAttribute("registro", service.getMontoComisionVenta(id));
+					montoActual = service.getMontoComisionVenta(id).getMonto();
 				}
 				
 				if (tipo.equals("comisionProducto")){
-					setAttribute("registro", service.getMontoComisionProducto(id));
+					montoActual = service.getMontoComisionProducto(id).getMonto();
 				}
 				
 				if(tipo.equals("premio")){
-					setAttribute("registro", service.getMontoPremio(id));
+					montoActual = service.getMontoPremio(id).getMonto();
 				}
+				
+				setActualizacionParams();
 			}
 			
 			if (accion.equals("update")){//recupero el valor ingresado
-				valor = Float.parseFloat(getParameter("valor"));
-				id= parseString(getParameter("id"));
+				tipo = getParameter("tipo");
+				montoNuevo = parseStringToFloat(getParameter("valor"));
+				id= parseStringToInt(getParameter("id"));
 				
 				if (tipo.equals("comisionVenta")){
-					respuesta = service.actualizarMontoComisionVenta(id, valor);
+					respuesta = service.actualizarMontoComisionVenta(id, montoNuevo);
 				}
 				
 				if (tipo.equals("comisionProducto")){
-					respuesta = service.actualizarMontoComisionProducto(id, valor);
+					respuesta = service.actualizarMontoComisionProducto(id, montoNuevo);
 				}
 				
 				if(tipo.equals("premio")){
-					respuesta = service.actualizarMontoPremio(id, valor);
+					respuesta = service.actualizarMontoPremio(id, montoNuevo);
 				}
+				setAttribute("tipo", tipo);
 				setAttribute("actualizados", respuesta);
 			}
 		} catch (NullPointerException e){
 			e.printStackTrace();
 			setAttribute("error", "No se pudo encontrar un parámetro.");
+			setActualizacionParams();
+			setAttribute("montoNuevo", montoNuevo);
 		} catch (NumberFormatException e) {
 			e.printStackTrace();
 			setAttribute("error", "No se pudo convertir uno de los números ingresados.");
+			setActualizacionParams();
+			setAttribute("montoNuevo", montoNuevo);
 		} catch (Exception e){
 			e.printStackTrace();
 			setAttribute("error", "Ocurrió un error inesperado.");
+			setActualizacionParams();
+			setAttribute("montoNuevo", montoNuevo);
 		}
 		finally{
 			setDefaultAttributes();
@@ -110,53 +121,15 @@ public class ServletAdicionalMonto extends ServletUtils {
 		this.service = service;
 	}
 
-	public float[] recuperarValores (String nombreCampo)
-	{
-		float[] valores;
-		Integer cantidad=0, i, j=0;
-		String[] valoresString;
-		
-		//recuepro la cantidad de montos existentes
-		if (nombreCampo.equals("cVenta"))
-			cantidad=service.getAllMontoComisionVenta().size();
-		
-		if (nombreCampo.equals("cProducto"))
-			cantidad=service.getAllMontosComisionProducto().size();
-		
-		if (nombreCampo.equals("Premio"))
-			cantidad=service.getAllMontosPremio().size();		
-		
-		valores = new float[cantidad];
-		valoresString = new String[cantidad];
-		
-		for (i=1; i<=cantidad; i++)//recupero todos los parametros
-			valoresString[i-1]=getParameter(nombreCampo+i.toString()+ "Valor");
-		
-		
-		System.out.println("Montos a modificar en " + nombreCampo);
-		//Verificacion 1 (string)
-		System.out.print("\t String:");
-		for (String valor : valoresString)
-			System.out.print(" " + valor);
-		System.out.print("\n");
-		
-		//paso los valores al array
-		for (i=0; i<cantidad; i++)
-			if (valoresString[i]!=null)
-				valores[j++]=Float.parseFloat(valoresString[i]);
-		
-		//Verificacion 2 (float)
-		System.out.print("\t float:");
-		for (float valor : valores)
-			System.out.print(" " + valor);
-		System.out.print("\n");
-		
-		return valores;
-	}
-
 	private void setDefaultAttributes() {
 		setAttribute("comisionVenta", service.getAllMontoComisionVenta());
 		setAttribute("comisionProducto", service.getAllMontosComisionProducto());
 		setAttribute("premios", service.getAllMontosPremio());
+	}
+	
+	private void setActualizacionParams() {
+		setAttribute("tipo", tipo);
+		setAttribute("id", id);
+		setAttribute("montoActual", montoActual);
 	}
 }

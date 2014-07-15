@@ -24,7 +24,7 @@ public class ServletVentaDetalle extends ServletUtils {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		setRequestResponse(request, response);
-		int idVenta=parseString(getParameter("venta"));
+		int idVenta=parseStringToInt(getParameter("venta"));
 		
 		if (!isLogedIn()){
 			redirectLogin();
