@@ -112,14 +112,19 @@ public class AdicionalCalculation extends CalculationUtils{
 		{
 			ventas=findVentas.findBySpecificDatesCreatorId(vendedor.getId(), fechaDesde, getFechaIntervaloHasta(fechaDesde));
 			
-			if (ventas!=null && !ventas.isEmpty())
-			{
-				adicional=calcularUno(vendedor, fechaHoy, fechaDesde, fechaHasta, premioMejorVendedorMes, premiosCampania);
-				setTotales(adicional);
-				dao.merge(adicional);
-				if (adicional!=null)//si en efecto hay un adicional calculado
-					adicionales.add(adicional);
+			if (ventas == null || ventas.isEmpty()){
+				System.out.println("No se encontraron ventas para el período buscado");
+				return adicionales;
 			}
+		
+			adicional=calcularUno(vendedor, fechaHoy, fechaDesde, fechaHasta, premioMejorVendedorMes, premiosCampania);
+			setTotales(adicional);
+			
+			if (adicional.getId() == 0)//si la funcion findIdByObject no devolvio un id valido
+				dao.saveOrUpdate(adicional);
+			
+			if (adicional!= null)//si en efecto hay un adicional calculado
+				adicionales.add(adicional);
 		}
 		
 		//mostrarResultado(adicionales);
@@ -148,6 +153,8 @@ public class AdicionalCalculation extends CalculationUtils{
 		if (!campaniasVendedor.isEmpty()){//si realmente hay premios por campania para este vendedor los guardo
 			registro.setCampanias(campaniasVendedor);
 		}
+		
+		setTotales(registro);
 		
 		if (findItem.findIdByObject(registro)!=0)
 			registro.setId(findItem.findIdByObject(registro));

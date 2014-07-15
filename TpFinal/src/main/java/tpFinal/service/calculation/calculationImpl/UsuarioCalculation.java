@@ -46,7 +46,7 @@ public class UsuarioCalculation {
 		return true;
 	}
 	
-	public String nuevo(String username, String password, int idRol, int idVendedor)
+	public String nuevo(String username, String password, int idRol)
 	{	
 		Usuario registro=new Usuario(username, password, rolDao.get(idRol), null);//todavía no sé si es vendedor
 		String mensaje="";

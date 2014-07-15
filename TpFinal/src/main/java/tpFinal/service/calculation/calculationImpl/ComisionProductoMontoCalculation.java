@@ -53,7 +53,7 @@ public class ComisionProductoMontoCalculation {
 		//Actualizo los registros ComisionProducto
 		for (ComisionProducto comision : registroComisionDao.getAll()){
 			importe = comision.getImporte()/comision.getUnidades(); 
-			if(importe == registro.getMonto())//si el importe coincide con el mismo del registro a modificar
+			if((importe == registro.getMonto()) && (comision.getProducto().getId() == registro.getProducto().getId()))//si el importe y el producto coinciden con el mismo del registro a modificar
 			{
 				comision.setImporte(valor*comision.getUnidades());
 				registroComisionDao.update(comision);

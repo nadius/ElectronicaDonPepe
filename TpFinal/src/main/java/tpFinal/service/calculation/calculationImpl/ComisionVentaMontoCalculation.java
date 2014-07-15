@@ -52,7 +52,7 @@ public class ComisionVentaMontoCalculation {
 		//actualizo todos los importes de los registros
 		for (ComisionVenta item : registroComisionDao.getAll())
 		{
-			if(item.getImporte() == registro.getMonto())//si el importe coincide con el mismo del registro a modificar
+			if(item.getImporte() == registro.getMonto() && (item.getUnidades() >= registro.getMin()) && (item.getUnidades() <= registro.getMax()))//si el importe coincide con el mismo del registro a modificar
 			{
 				item.setImporte(valor);
 				registroComisionDao.update(item);
